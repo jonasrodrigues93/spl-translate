@@ -1,0 +1,880 @@
+<title>Ed3book pt-BR — Style Proofs</title>
+
+<style>
+/* ---------------------------------------------------------------- tokens */
+:root {
+  --studio:      #edeae2;
+  --studio-2:    #e3dfd4;
+  --studio-ink:  #1f1d18;
+  --studio-mut:  #6f6858;
+  --studio-rule: #cfc9b9;
+
+  --paper:       #fbf9f4;
+  --paper-edge:  #ded8c8;
+  --ink:         #17150f;
+  --mut:         #756d5d;
+  --rule:        #d6d0c0;
+  --blue:        #1c1ce6;
+  --tint:        #f2efe4;
+
+  --ok:          #3f6b47;
+  --warn:        #8a6a20;
+  --risk:        #8f4a3c;
+
+  --serif: Georgia, "Times New Roman", Times, serif;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, Menlo, Consolas, "DejaVu Sans Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --studio:      #131211;
+    --studio-2:    #1b1a17;
+    --studio-ink:  #e9e4d8;
+    --studio-mut:  #948c7b;
+    --studio-rule: #322f29;
+
+    --paper:       #1c1a17;
+    --paper-edge:  #35312a;
+    --ink:         #e4dfd2;
+    --mut:         #948c7b;
+    --rule:        #3b372f;
+    --blue:        #98a5ff;
+    --tint:        #232019;
+
+    --ok:          #7fae86;
+    --warn:        #c3a35c;
+    --risk:        #d08a7a;
+  }
+}
+
+:root[data-theme="dark"] {
+  --studio:      #131211;
+  --studio-2:    #1b1a17;
+  --studio-ink:  #e9e4d8;
+  --studio-mut:  #948c7b;
+  --studio-rule: #322f29;
+  --paper:       #1c1a17;
+  --paper-edge:  #35312a;
+  --ink:         #e4dfd2;
+  --mut:         #948c7b;
+  --rule:        #3b372f;
+  --blue:        #98a5ff;
+  --tint:        #232019;
+  --ok:          #7fae86;
+  --warn:        #c3a35c;
+  --risk:        #d08a7a;
+}
+
+:root[data-theme="light"] {
+  --studio:      #edeae2;
+  --studio-2:    #e3dfd4;
+  --studio-ink:  #1f1d18;
+  --studio-mut:  #6f6858;
+  --studio-rule: #cfc9b9;
+  --paper:       #fbf9f4;
+  --paper-edge:  #ded8c8;
+  --ink:         #17150f;
+  --mut:         #756d5d;
+  --rule:        #d6d0c0;
+  --blue:        #1c1ce6;
+  --tint:        #f2efe4;
+  --ok:          #3f6b47;
+  --warn:        #8a6a20;
+  --risk:        #8f4a3c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--studio);
+  color: var(--studio-ink);
+  font-family: var(--sans);
+  line-height: 1.55;
+  margin: 0;
+  padding: 0 1.25rem 5rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 60rem; margin: 0 auto; }
+
+/* ----------------------------------------------------------------- head */
+.masthead { padding: 3.5rem 0 1.75rem; border-bottom: 1px solid var(--studio-rule); }
+
+.kicker {
+  font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--studio-mut); margin: 0 0 .9rem;
+}
+
+.masthead h1 {
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3rem); line-height: 1.08;
+  margin: 0 0 .75rem; text-wrap: balance; letter-spacing: -.015em;
+}
+
+.standfirst {
+  font-family: var(--serif); font-size: 1.06rem; line-height: 1.65;
+  color: var(--studio-mut); max-width: 34em; margin: 0;
+}
+
+/* ---------------------------------------------------------------- thesis */
+.thesis {
+  margin: 2rem 0 0; padding: 1.15rem 1.3rem;
+  background: var(--studio-2); border-left: 3px solid var(--blue);
+  font-size: .95rem; line-height: 1.6; max-width: 42em;
+}
+.thesis strong { color: var(--studio-ink); }
+
+/* --------------------------------------------------------------- toolbar */
+.toolbar {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; flex-wrap: wrap; gap: .55rem; align-items: center;
+  padding: .75rem 0; margin: 0 0 2.5rem;
+  background: var(--studio);
+  border-bottom: 1px solid var(--studio-rule);
+}
+.toolbar .lbl {
+  font-size: .68rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--studio-mut); margin-right: .35rem;
+}
+.sw {
+  font: inherit; font-size: .8rem; cursor: pointer;
+  padding: .4rem .8rem; border-radius: 2px;
+  border: 1px solid var(--studio-rule);
+  background: transparent; color: var(--studio-ink);
+  transition: background .15s, border-color .15s;
+}
+.sw:hover { border-color: var(--studio-mut); }
+.sw:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.sw[aria-pressed="true"] {
+  background: var(--studio-ink); color: var(--studio);
+  border-color: var(--studio-ink);
+}
+
+/* -------------------------------------------------------------- sections */
+section { margin: 0 0 4rem; scroll-margin-top: 5rem; }
+
+.sec-head { margin: 0 0 1.5rem; }
+.sec-head .code {
+  font-size: .7rem; letter-spacing: .2em; color: var(--blue);
+  font-weight: 600; display: block; margin-bottom: .4rem;
+}
+.sec-head h2 {
+  font-family: var(--serif); font-size: 1.65rem; margin: 0 0 .6rem;
+  letter-spacing: -.01em;
+}
+.sec-head p { margin: 0; max-width: 40em; color: var(--studio-mut); font-size: .95rem; }
+.sec-head p + p { margin-top: .55rem; }
+
+/* ----------------------------------------------------------------- proof */
+.proof { margin: 0 0 2.25rem; }
+
+.proof-bar {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem;
+  margin: 0 0 .6rem;
+}
+.proof-bar .id {
+  font-size: .74rem; font-weight: 700; letter-spacing: .1em;
+  color: var(--studio); background: var(--studio-ink);
+  padding: .15rem .45rem; border-radius: 2px;
+}
+.proof-bar .nm { font-weight: 600; font-size: .95rem; }
+.proof-bar .tags { display: flex; gap: .35rem; margin-left: auto; flex-wrap: wrap; }
+.chip {
+  font-size: .66rem; letter-spacing: .06em; text-transform: uppercase;
+  padding: .2rem .5rem; border: 1px solid currentColor; border-radius: 999px;
+  white-space: nowrap;
+}
+.chip.ok { color: var(--ok); }
+.chip.warn { color: var(--warn); }
+.chip.risk { color: var(--risk); }
+.chip.sel {
+  color: var(--studio); background: var(--blue); border-color: var(--blue);
+  font-weight: 700;
+}
+
+/* the approved option, marked in place */
+.proof.chosen .paper { border-color: var(--blue); border-width: 2px; }
+.proof.chosen .proof-bar .id { background: var(--blue); }
+
+.note {
+  font-size: .87rem; color: var(--studio-mut); margin: .7rem 0 0;
+  max-width: 44em; line-height: 1.55;
+}
+.note b { color: var(--studio-ink); font-weight: 600; }
+
+/* ----------------------------------------------------------------- paper */
+.paper {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--serif);
+  border: 1px solid var(--paper-edge);
+  padding: 2rem 2.25rem;
+  line-height: 1.62;
+  font-size: 1.02rem;
+  overflow-x: auto;
+  transition: filter .2s, max-width .2s;
+}
+
+/* e-ink simulation — the point of the whole exercise */
+:root.eink .paper { filter: grayscale(1) contrast(1.06); }
+
+/* 6-inch Kindle measure */
+:root.narrow .paper { max-width: 24rem; padding: 1.4rem 1.5rem; font-size: .95rem; }
+
+.paper p { margin: 0 0 .75em; }
+.paper p.run + p.run { text-indent: 1.2em; margin-top: -.35em; }
+
+/* =======================================================================
+   A — CHAPTER OPENINGS
+   ==================================================================== */
+.eyebrow-ch {
+  font-size: .78em; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--mut); margin: 0 0 .15em; line-height: 1;
+}
+.numeral {
+  font-size: 3.6em; line-height: .92; color: var(--blue);
+  font-weight: 400; margin: 0;
+}
+.ch-title {
+  font-size: 1.85em; font-weight: 700; line-height: 1.12;
+  margin: 0; letter-spacing: -.015em; text-wrap: balance;
+}
+
+/* A1 — faithful masthead, display:table (KF8-safe) */
+.a1 { display: table; width: 100%; margin: 0 0 1.6em; }
+.a1 .cell { display: table-cell; vertical-align: bottom; }
+.a1 .left { width: 1%; white-space: nowrap; padding-right: 1em; text-align: left; }
+.a1 .bar { width: 1px; background: var(--rule); padding: 0; }
+.a1 .right { padding-left: 1em; }
+
+/* A2 — standing plate */
+.a2 { margin: 0 0 1.6em; }
+.a2 hr { border: 0; border-top: 2px solid var(--ink); margin: .35em 0 .5em; }
+
+/* A3 — one baseline */
+.a3 { margin: 0 0 1.6em; }
+.a3 .line { display: table; width: 100%; }
+.a3 .line > * { display: table-cell; vertical-align: bottom; }
+.a3 .n { width: 1%; white-space: nowrap; padding-right: .55em;
+         font-size: 2.6em; line-height: .95; color: var(--blue); }
+.a3 .t { font-size: 1.6em; font-weight: 700; line-height: 1.15; }
+.a3 hr { border: 0; border-top: 1px solid var(--rule); margin: .55em 0 0; }
+
+/* A4 — folio */
+.a4 { margin: 0 0 1.6em; }
+.a4 .folio {
+  font-size: .78em; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--mut); margin: 0 0 .5em;
+}
+.a4 .ch-title { font-size: 2.1em; }
+.a4 hr { border: 0; border-top: 1px solid var(--rule); margin: .7em 0 0; }
+
+/* =======================================================================
+   B — EPIGRAPHS
+   ==================================================================== */
+.dlg { font-family: var(--mono); font-size: .8em; line-height: 1.5; margin: 0; }
+.dlg .turn { display: table; width: 100%; margin: 0 0 .15em; }
+.dlg .who, .dlg .said { display: table-cell; vertical-align: top; }
+.dlg .who { width: 1%; white-space: nowrap; padding-right: .9em; color: var(--mut); }
+.dlg .said { }
+
+.attrib {
+  text-align: right; font-size: .84em; color: var(--blue);
+  margin: .7em 0 0;
+}
+
+/* B1 — faithful inset */
+.b1 { margin: 0 0 1.6em; padding-left: 8%; }
+
+/* B2 — ruled */
+.b2 { margin: 0 0 1.6em; padding: .9em 0; border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule); }
+.b2 .attrib { color: var(--mut); font-style: italic; }
+
+/* B3 — panel */
+.b3 { margin: 0 0 1.6em; background: var(--tint); padding: 1em 1.1em;
+      border-left: 3px solid var(--rule); }
+.b3 .attrib { color: var(--mut); }
+
+/* prose-form epigraph */
+.epi-prose { font-style: italic; color: var(--blue); margin: 0; }
+:root.eink .epi-prose { font-style: italic; }
+
+/* =======================================================================
+   C — TAGS
+   ==================================================================== */
+/* C1 — margin rail */
+.c1 .tag {
+  float: left; clear: left; width: 22%; margin: .25em 0 .4em -26%;
+  font-size: .72em; font-weight: 700; text-align: right;
+  color: var(--blue); line-height: 1.3;
+}
+.c1 { margin-left: 26%; }
+
+/* C2 — chip above paragraph */
+.tagchip {
+  display: inline-block; font-family: var(--sans);
+  font-size: .68em; letter-spacing: .07em; text-transform: uppercase;
+  font-weight: 600; color: var(--mut);
+  border: 1px solid var(--rule); border-radius: 2px;
+  padding: .12em .5em; margin: 0 .3em .45em 0;
+}
+.c2 p.tagline { margin: 1.1em 0 .3em; line-height: 1; }
+
+/* C3 — inline definition mark */
+.defterm {
+  font-weight: 700;
+  border-bottom: 1px dotted var(--mut);
+}
+.defterm .mk {
+  font-family: var(--sans); font-size: .62em; font-weight: 600;
+  vertical-align: .45em; color: var(--blue); letter-spacing: .04em;
+  margin-left: .12em;
+}
+
+/* C4 — section term bar */
+.termbar {
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  padding: .5em 0; margin: 0 0 1em;
+  font-size: .78em; line-height: 1.7;
+}
+.termbar .hd {
+  font-family: var(--sans); font-size: .8em; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--mut); margin-right: .5em;
+}
+.termbar .t { font-weight: 700; }
+.termbar .sep { color: var(--rule); margin: 0 .35em; }
+
+/* =======================================================================
+   D — CITATIONS
+   ==================================================================== */
+.cite-d1 { color: var(--blue); text-decoration: none; }
+.cite-d2 { color: inherit; text-decoration: none; }
+.cite-d2 .au { font-variant: small-caps; letter-spacing: .02em; }
+.cite-d2 .yr { color: var(--blue); }
+.cite-d3 { color: var(--blue); text-decoration: none; font-size: .72em;
+           vertical-align: .42em; font-family: var(--sans); font-weight: 600; }
+
+.bib { font-size: .88em; line-height: 1.5; }
+.bib .entry { padding-left: 1.4em; text-indent: -1.4em; margin: 0 0 .6em; }
+.bib .au { font-variant: small-caps; letter-spacing: .02em; }
+.bib .ti { font-style: italic; }
+.bib .back { font-size: .82em; color: var(--blue); margin-left: .35em; }
+
+/* -------------------------------------------------------------- closing */
+.closing {
+  border-top: 1px solid var(--studio-rule); padding-top: 2rem; margin-top: 1rem;
+}
+.closing h2 { font-family: var(--serif); font-size: 1.4rem; margin: 0 0 1rem; }
+.asklist { margin: 0; padding: 0; list-style: none; }
+.asklist li {
+  display: flex; gap: .8rem; padding: .7rem 0;
+  border-bottom: 1px solid var(--studio-rule); font-size: .94rem;
+}
+.asklist li:last-child { border-bottom: 0; }
+.asklist .q { font-weight: 600; min-width: 8.5rem; }
+.asklist .a { color: var(--studio-mut); }
+
+.caveat {
+  margin: 1.75rem 0 0; padding: 1.1rem 1.25rem;
+  border: 1px solid var(--studio-rule); background: var(--studio-2);
+  font-size: .9rem; line-height: 1.6;
+}
+.caveat h3 {
+  font-size: .7rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--studio-mut); margin: 0 0 .6rem; font-weight: 600;
+}
+.caveat ul { margin: 0; padding-left: 1.15rem; }
+.caveat li { margin: 0 0 .45rem; }
+.caveat li:last-child { margin-bottom: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="kicker">Speech and Language Processing · 3rd ed. · pt-BR</p>
+    <h1>Style proofs: chapter openings, epigraphs, tags &amp; references</h1>
+    <p class="standfirst">Four decisions to approve before the translation resumes. Specimens are set
+    in the actual Kindle font stack, so what you approve is what renders.</p>
+  </header>
+
+  <div class="thesis">
+    <p style="margin:0 0 .7em"><strong>The print design carries all four distinctions in one colour: blue.</strong>
+    Chapter numerals, margin tags, citations and epigraphs are all <span style="color:var(--blue)">#0000fc</span>
+    and nothing else sets them apart.</p>
+    <p style="margin:0">On a Paperwhite that blue is a single mid-grey. Every option below therefore
+    carries its distinction in <strong>weight, case, rule or indent first</strong>, with colour as a bonus on
+    Colorsoft, tablets and the app. Toggle <em>E-ink</em> to judge them the way most reading will happen.</p>
+  </div>
+
+  <div class="toolbar">
+    <span class="lbl">Simulate</span>
+    <button class="sw" id="sw-eink" aria-pressed="false" type="button">E-ink (grayscale)</button>
+    <button class="sw" id="sw-narrow" aria-pressed="false" type="button">6″ Kindle width</button>
+  </div>
+
+  <!-- ================================================== A -->
+  <section id="a">
+    <div class="sec-head">
+      <span class="code">A</span>
+      <h2>Chapter opening</h2>
+      <p>The print sets a grey <em>CHAPTER</em> eyebrow over a 60&nbsp;pt blue numeral, a vertical hairline,
+      then the title on the numeral's baseline. What we ship now is a bare <code>&lt;h1&gt;</code> with a
+      border under it — the numeral was dropped by the extractor entirely.</p>
+    </div>
+
+    <div class="proof chosen">
+      <div class="proof-bar">
+        <span class="id">A1</span><span class="nm">Faithful masthead</span>
+        <span class="tags">
+          <span class="chip sel">approved</span>
+          <span class="chip ok">closest to print</span>
+          <span class="chip warn">cramped under 6″</span>
+        </span>
+      </div>
+      <div class="paper">
+        <div class="a1">
+          <div class="cell left">
+            <p class="eyebrow-ch">Chapter</p>
+            <p class="numeral">2</p>
+          </div>
+          <div class="cell bar"></div>
+          <div class="cell right">
+            <h1 class="ch-title">Words and Tokens</h1>
+          </div>
+        </div>
+        <p class="run">The dialogue above is from <strong>ELIZA</strong>, an early natural language processing
+        system that could carry on a limited conversation with a user by imitating the responses of a
+        Rogerian psychotherapist.</p>
+      </div>
+      <p class="note">Built on <b>display:table</b>, not flexbox — flex is unsupported on older KF8 readers,
+      tables are not. Holds up to a long title, but at 6″ the numeral column eats a third of the measure.</p>
+    </div>
+
+    <div class="proof">
+      <div class="proof-bar">
+        <span class="id">A2</span><span class="nm">Standing plate</span>
+        <span class="tags">
+          <span class="chip ok">works everywhere</span>
+          <span class="chip ok">strongest at 6″</span>
+        </span>
+      </div>
+      <div class="paper">
+        <div class="a2">
+          <p class="eyebrow-ch">Chapter</p>
+          <p class="numeral">2</p>
+          <hr/>
+          <h1 class="ch-title">Words and Tokens</h1>
+        </div>
+        <p class="run">The dialogue above is from <strong>ELIZA</strong>, an early natural language processing
+        system that could carry on a limited conversation with a user by imitating the responses of a
+        Rogerian psychotherapist.</p>
+      </div>
+      <p class="note">Trades the vertical rule for a horizontal one and stacks the plate. Nothing here can
+      break: no tables, no floats. The numeral keeps its scale because it no longer competes for width.</p>
+    </div>
+
+    <div class="proof">
+      <div class="proof-bar">
+        <span class="id">A3</span><span class="nm">Single baseline</span>
+        <span class="tags">
+          <span class="chip ok">compact</span>
+          <span class="chip warn">numeral loses weight</span>
+        </span>
+      </div>
+      <div class="paper">
+        <div class="a3">
+          <p class="eyebrow-ch">Chapter</p>
+          <div class="line">
+            <div class="n">2</div>
+            <div class="t">Words and Tokens</div>
+          </div>
+          <hr/>
+        </div>
+        <p class="run">The dialogue above is from <strong>ELIZA</strong>, an early natural language processing
+        system that could carry on a limited conversation with a user by imitating the responses of a
+        Rogerian psychotherapist.</p>
+      </div>
+      <p class="note">Numeral and title share one baseline, rule underneath both. Saves roughly a third of
+      the vertical space — worth considering given 51 chapter openings across the book.</p>
+    </div>
+
+    <div class="proof">
+      <div class="proof-bar">
+        <span class="id">A4</span><span class="nm">Folio only</span>
+        <span class="tags">
+          <span class="chip ok">most robust</span>
+          <span class="chip risk">drops the numeral</span>
+        </span>
+      </div>
+      <div class="paper">
+        <div class="a4">
+          <p class="folio">Chapter 2</p>
+          <h1 class="ch-title">Words and Tokens</h1>
+          <hr/>
+        </div>
+        <p class="run">The dialogue above is from <strong>ELIZA</strong>, an early natural language processing
+        system that could carry on a limited conversation with a user by imitating the responses of a
+        Rogerian psychotherapist.</p>
+      </div>
+      <p class="note">The honest minimum. Included as the baseline to beat — if the big numeral isn't
+      earning its space on a 6″ screen, this is what's left.</p>
+    </div>
+  </section>
+
+  <!-- ================================================== B -->
+  <section id="b">
+    <div class="sec-head">
+      <span class="code">B</span>
+      <h2>Epigraph &amp; attribution</h2>
+      <p>Chapter 2 opens on an ELIZA transcript, attributed right-aligned to <em>Weizenbaum (1966)</em>.
+      Chapter 3 opens on a generated Austen sentence. Same slot, two forms — the treatment has to hold both.</p>
+      <p><strong>What broke:</strong> the attribution was swallowed into the first body paragraph. The block
+      currently reads <em>“Weizenbaum (1966) The dialogue above is from ELIZA…”</em> — the citation is
+      glued to the prose, and it isn't a reference.</p>
+    </div>
+
+    <div class="proof chosen">
+      <div class="proof-bar">
+        <span class="id">B1</span><span class="nm">Faithful inset</span>
+        <span class="tags">
+          <span class="chip sel">approved</span>
+          <span class="chip ok">closest to print</span>
+          <span class="chip warn">indent costs measure</span>
+        </span>
+      </div>
+      <div class="paper">
+        <div class="b1">
+          <div class="dlg">
+            <div class="turn"><span class="who">User:</span><span class="said">I need some help, that much seems certain.</span></div>
+            <div class="turn"><span class="who">ELIZA:</span><span class="said">WHAT WOULD IT MEAN TO YOU IF YOU GOT SOME HELP</span></div>
+            <div class="turn"><span class="who">User:</span><span class="said">Perhaps I could learn to get along with my mother.</span></div>
+            <div class="turn"><span class="who">ELIZA:</span><span class="said">TELL ME MORE ABOUT YOUR FAMILY</span></div>
+          </div>
+          <p class="attrib"><a class="cite-d1" href="#bib">Weizenbaum (1966)</a></p>
+        </div>
+        <p class="run">The dialogue above is from <strong>ELIZA</strong>, an early natural language processing
+        system that could carry on a limited conversation with a user.</p>
+      </div>
+      <p class="note">Speaker and utterance are a two-cell table, so a long turn wraps under itself instead of
+      breaking the column — the failure mode of a raw <code>&lt;pre&gt;</code> at 6″. Attribution is a real
+      link into the bibliography.</p>
+    </div>
+
+    <div class="proof">
+      <div class="proof-bar">
+        <span class="id">B2</span><span class="nm">Ruled band</span>
+        <span class="tags">
+          <span class="chip ok">reads as epigraph in grey</span>
+          <span class="chip ok">full measure</span>
+        </span>
+      </div>
+      <div class="paper">
+        <div class="b2">
+          <div class="dlg">
+            <div class="turn"><span class="who">User:</span><span class="said">I need some help, that much seems certain.</span></div>
+            <div class="turn"><span class="who">ELIZA:</span><span class="said">WHAT WOULD IT MEAN TO YOU IF YOU GOT SOME HELP</span></div>
+            <div class="turn"><span class="who">User:</span><span class="said">Perhaps I could learn to get along with my mother.</span></div>
+            <div class="turn"><span class="who">ELIZA:</span><span class="said">TELL ME MORE ABOUT YOUR FAMILY</span></div>
+          </div>
+          <p class="attrib"><a class="cite-d1" href="#bib">Weizenbaum (1966)</a></p>
+        </div>
+        <p class="run">The dialogue above is from <strong>ELIZA</strong>, an early natural language processing
+        system that could carry on a limited conversation with a user.</p>
+      </div>
+      <p class="note">Hairlines do the work colour does in print, so the block still announces itself with the
+      e-ink toggle on. Keeps the full measure, which matters for the wider transcripts later in the book.</p>
+    </div>
+
+    <div class="proof">
+      <div class="proof-bar">
+        <span class="id">B3</span><span class="nm">Tinted panel</span>
+        <span class="tags">
+          <span class="chip ok">unmistakable</span>
+          <span class="chip risk">collides with example boxes</span>
+        </span>
+      </div>
+      <div class="paper">
+        <div class="b3">
+          <div class="dlg">
+            <div class="turn"><span class="who">User:</span><span class="said">I need some help, that much seems certain.</span></div>
+            <div class="turn"><span class="who">ELIZA:</span><span class="said">WHAT WOULD IT MEAN TO YOU IF YOU GOT SOME HELP</span></div>
+            <div class="turn"><span class="who">User:</span><span class="said">Perhaps I could learn to get along with my mother.</span></div>
+            <div class="turn"><span class="who">ELIZA:</span><span class="said">TELL ME MORE ABOUT YOUR FAMILY</span></div>
+          </div>
+          <p class="attrib"><a class="cite-d1" href="#bib">Weizenbaum (1966)</a></p>
+        </div>
+        <p class="run">The dialogue above is from <strong>ELIZA</strong>, an early natural language processing
+        system that could carry on a limited conversation with a user.</p>
+      </div>
+      <p class="note"><b>The risk:</b> the approved template already uses a tinted left-bordered box for
+      linguistic examples. Two tinted boxes on one page start to read as the same thing.</p>
+    </div>
+
+    <div class="proof">
+      <div class="proof-bar">
+        <span class="id">B·alt</span><span class="nm">The other form — chapter 3</span>
+        <span class="tags"><span class="chip ok">same slot, prose</span></span>
+      </div>
+      <div class="paper">
+        <div class="b2">
+          <p class="epi-prose">“You are uniformly charming!” cried he, with a smile of associating and now
+          and then I bowed and they perceived a chaise and four to wish for.</p>
+          <p class="attrib">Random sentence generated from a Jane Austen trigram model</p>
+        </div>
+      </div>
+      <p class="note">Shown in B2 to prove the treatment generalises: italic prose instead of a transcript,
+      attribution that is a note rather than a citation. Whichever of B1–B3 you pick has to hold this too.</p>
+    </div>
+  </section>
+
+  <!-- ================================================== C -->
+  <section id="c">
+    <div class="sec-head">
+      <span class="code">C</span>
+      <h2>Tags — the words in the margin</h2>
+      <p>You're right that these aren't subheadings. In the print they are <strong>index anchors</strong>:
+      a blue keyword in the left margin marking the line where a term is <em>defined</em>, and the Subject
+      Index at the back points back to exactly those pages. There are <strong>3,843</strong> of them.</p>
+      <p>The template currently renders them as small-caps mini-headings above the paragraph, which reads as
+      a subtitle and breaks the flow. Four ways to say “this term is defined here” instead.</p>
+    </div>
+
+    <div class="proof">
+      <div class="proof-bar">
+        <span class="id">C1</span><span class="nm">Margin rail</span>
+        <span class="tags">
+          <span class="chip ok">true to print</span>
+          <span class="chip risk">floats are unreliable on KF8</span>
+        </span>
+      </div>
+      <div class="paper">
+        <div class="c1">
+          <p class="tag">ELIZA</p>
+          <p class="run">The dialogue above is from <strong>ELIZA</strong>, an early natural language
+          processing system that could carry on a limited conversation with a user by imitating the responses
+          of a Rogerian psychotherapist.</p>
+          <p class="tag">tokenization</p>
+          <p class="run">Yet the pattern-based approach to words instantiated in ELIZA is still relevant today
+          in the context of <strong>tokenization</strong>, the task of separating out words and word parts
+          from running text.</p>
+        </div>
+      </div>
+      <p class="note">Reproduces the page exactly, and dies exactly where you'd expect: a negative-margin
+      float costs a quarter of a 6″ measure, and readers that ignore the float drop the tag inline mid-sentence.
+      <b>Shown so the option is on the table, not because I'd ship it.</b></p>
+    </div>
+
+    <div class="proof chosen">
+      <div class="proof-bar">
+        <span class="id">C2</span><span class="nm">Keycap chip</span>
+        <span class="tags">
+          <span class="chip sel">approved</span>
+          <span class="chip ok">unambiguously not a heading</span>
+          <span class="chip ok">safe everywhere</span>
+        </span>
+      </div>
+      <div class="paper">
+        <div class="c2">
+          <p class="tagline"><span class="tagchip">ELIZA</span></p>
+          <p class="run">The dialogue above is from <strong>ELIZA</strong>, an early natural language
+          processing system that could carry on a limited conversation with a user by imitating the responses
+          of a Rogerian psychotherapist.</p>
+          <p class="tagline"><span class="tagchip">tokenization</span></p>
+          <p class="run">Yet the pattern-based approach to words instantiated in ELIZA is still relevant today
+          in the context of <strong>tokenization</strong>, the task of separating out words and word parts
+          from running text.</p>
+        </div>
+      </div>
+      <p class="note">Boxed, sans-serif, smaller than body — three signals at once that it is metadata and not
+      a title. Multi-word tags stay on one chip, which fixes the <em>“regular” / “expressions”</em> split
+      the extractor currently produces.</p>
+    </div>
+
+    <div class="proof">
+      <div class="proof-bar">
+        <span class="id">C3</span><span class="nm">Inline definition mark</span>
+        <span class="tags">
+          <span class="chip ok">zero interruption</span>
+          <span class="chip ok">most Kindle-native</span>
+          <span class="chip warn">needs term↔paragraph matching</span>
+        </span>
+      </div>
+      <div class="paper">
+        <p class="run">The dialogue above is from <span class="defterm">ELIZA<a class="mk" href="#c">▸</a></span>,
+        an early natural language processing system that could carry on a limited conversation with a user by
+        imitating the responses of a Rogerian psychotherapist.</p>
+        <p class="run">Yet the pattern-based approach to words instantiated in ELIZA is still relevant today in
+        the context of <span class="defterm">tokenization<a class="mk" href="#c">▸</a></span>, the task of
+        separating out words and word parts from running text.</p>
+      </div>
+      <p class="note">The tag stops being a separate object: the defined term is marked <em>in place</em>,
+      dotted-underlined, with a small marker linking to the index. This is what the margin note actually
+      <em>means</em>, expressed the way a reflowable book would express it.
+      <b>Cost:</b> the term has to be located inside the paragraph — it usually appears verbatim in bold, but
+      not always, and never after translation unless the glossary maps it.</p>
+    </div>
+
+    <div class="proof">
+      <div class="proof-bar">
+        <span class="id">C4</span><span class="nm">Section term bar</span>
+        <span class="tags">
+          <span class="chip ok">scannable</span>
+          <span class="chip warn">loses per-paragraph precision</span>
+        </span>
+      </div>
+      <div class="paper">
+        <h2 style="font-size:1.25em;margin:0 0 .5em">2.1 Words and Corpora</h2>
+        <div class="termbar">
+          <span class="hd">Defined here</span>
+          <span class="t">ELIZA</span><span class="sep">·</span>
+          <span class="t">tokenization</span><span class="sep">·</span>
+          <span class="t">BPE</span><span class="sep">·</span>
+          <span class="t">regular expressions</span>
+        </div>
+        <p class="run">The dialogue above is from <strong>ELIZA</strong>, an early natural language processing
+        system that could carry on a limited conversation with a user by imitating the responses of a
+        Rogerian psychotherapist.</p>
+      </div>
+      <p class="note">Collects the section's terms into one band under the heading — closer to a chapter
+      summary than to a margin note. Reads well, but you lose <em>which paragraph</em> defines what, which is
+      the one thing the margin note was for.</p>
+    </div>
+  </section>
+
+  <!-- ================================================== D -->
+  <section id="d">
+    <div class="sec-head">
+      <span class="code">D</span>
+      <h2>Citations &amp; bibliography</h2>
+      <p>The PDF carries <strong>3,788 citation links</strong> as named destinations — <code>cite.Eliza</code>,
+      <code>cite.j:weiz</code> — each pointing at its bibliography entry. That means citations can be resolved
+      <strong>exactly</strong>, by BibTeX key, with no regex guessing. Right now every one of them is flat text.</p>
+    </div>
+
+    <div class="proof chosen">
+      <div class="proof-bar">
+        <span class="id">D1</span><span class="nm">Faithful link</span>
+        <span class="tags">
+          <span class="chip sel">approved</span>
+          <span class="chip ok">matches print</span>
+          <span class="chip risk">invisible in grayscale</span>
+        </span>
+      </div>
+      <div class="paper">
+        <p class="run">…by imitating the responses of a Rogerian psychotherapist
+        (<a class="cite-d1" href="#bib">Weizenbaum, 1966</a>). As a result, this work led researchers to first
+        think about the impacts of chatbots on their users (<a class="cite-d1" href="#bib">Weizenbaum, 1976</a>).</p>
+      </div>
+      <p class="note">Exactly what the print does — and toggle <em>E-ink</em> to see the problem: colour alone
+      leaves no trace on grey. Still tappable, just not visible as a link.</p>
+    </div>
+
+    <div class="proof">
+      <div class="proof-bar">
+        <span class="id">D2</span><span class="nm">Small-caps author</span>
+        <span class="tags">
+          <span class="chip ok">survives grayscale</span>
+          <span class="chip ok">scholarly register</span>
+        </span>
+      </div>
+      <div class="paper">
+        <p class="run">…by imitating the responses of a Rogerian psychotherapist
+        (<a class="cite-d2" href="#bib"><span class="au">Weizenbaum</span>, <span class="yr">1966</span></a>).
+        As a result, this work led researchers to first think about the impacts of chatbots on their users
+        (<a class="cite-d2" href="#bib"><span class="au">Weizenbaum</span>, <span class="yr">1976</span></a>).</p>
+      </div>
+      <p class="note">Author in small caps, year carrying the colour. The citation stays legible as a citation
+      on e-ink and gains a second cue on colour devices. <b>Caveat:</b> <code>font-variant: small-caps</code>
+      is honoured unevenly across Kindle firmware — the fallback is plain text, which is acceptable.</p>
+    </div>
+
+    <div class="proof">
+      <div class="proof-bar">
+        <span class="id">D3</span><span class="nm">Superscript marker</span>
+        <span class="tags">
+          <span class="chip ok">frees the measure</span>
+          <span class="chip risk">loses author at a glance</span>
+        </span>
+      </div>
+      <div class="paper">
+        <p class="run">…by imitating the responses of a Rogerian psychotherapist.<a class="cite-d3" href="#bib">[1]</a>
+        As a result, this work led researchers to first think about the impacts of chatbots on their
+        users.<a class="cite-d3" href="#bib">[2]</a></p>
+      </div>
+      <p class="note">Pulls the parenthetical out of the sentence entirely — noticeably better rhythm at 6″,
+      where <em>“(Weizenbaum, 1966)”</em> often costs a whole line. But this is a textbook: knowing it's
+      Weizenbaum without tapping is part of reading it.</p>
+    </div>
+
+    <div class="proof" id="bib">
+      <div class="proof-bar">
+        <span class="id">D·bib</span><span class="nm">Bibliography entry (applies to all three)</span>
+        <span class="tags"><span class="chip ok">real entries</span></span>
+      </div>
+      <div class="paper">
+        <h2 style="font-size:1.25em;margin:0 0 .7em">Bibliography</h2>
+        <div class="bib">
+          <p class="entry"><span class="au">Weizenbaum, J.</span> 1966. ELIZA — A computer program for the
+          study of natural language communication between man and machine. <span class="ti">CACM</span>,
+          9(1):36–45. <a class="back" href="#b">↩ 2</a></p>
+          <p class="entry"><span class="au">Weizenbaum, J.</span> 1976. <span class="ti">Computer Power and
+          Human Reason: From Judgement to Calculation.</span> W.H. Freeman &amp; Co. <a class="back" href="#d">↩ 1</a></p>
+          <p class="entry"><span class="au">Wells, J. C.</span> 1982. <span class="ti">Accents of English.</span>
+          Cambridge University Press.</p>
+        </div>
+      </div>
+      <p class="note">Hanging indent, author in small caps, title italic — and a back-link counting the places
+      that cite it, so the bibliography works in both directions. Titles stay in English; only the surrounding
+      apparatus is translated.</p>
+    </div>
+  </section>
+
+  <!-- ================================================== closing -->
+  <section class="closing">
+    <h2>What I need from you</h2>
+    <ul class="asklist">
+      <li><span class="q">A — opening</span><span class="a">One of A1–A4. My pick: <strong>A2</strong>, and A1 if you want fidelity above all.</span></li>
+      <li><span class="q">B — epigraph</span><span class="a">One of B1–B3. My pick: <strong>B2</strong> — it's the only one that still reads as an epigraph in grey.</span></li>
+      <li><span class="q">C — tags</span><span class="a">One of C1–C4. My pick: <strong>C2</strong> to ship now, <strong>C3</strong> if you want the better book and accept the matching work.</span></li>
+      <li><span class="q">D — citations</span><span class="a">One of D1–D3. My pick: <strong>D2</strong>.</span></li>
+    </ul>
+
+    <div class="caveat">
+      <h3>Found while measuring — these need fixing regardless of which styles you pick</h3>
+      <ul>
+        <li><b>The chapter numeral is being dropped.</b> It's in the text layer as a 60&nbsp;pt blue glyph;
+        the extractor keeps <em>“CHAPTER”</em> as a paragraph and discards the <em>“2”</em>.</li>
+        <li><b>The epigraph attribution leaks into the prose.</b> Chapter 2's first body block literally starts
+        <em>“Weizenbaum (1966) The dialogue above is from ELIZA…”</em>.</li>
+        <li><b>Multi-word tags are split.</b> <em>“regular expressions”</em> arrives as two separate margin
+        blocks; so does <em>“inflectional morphemes”</em>.</li>
+        <li><b>The margin classifier over-captures.</b> Book-wide it yields 3,843 blocks, but on the index and
+        bibliography pages it is picking up entries like <em>“$ (re end-of-line), 21”</em> as margin notes.</li>
+        <li><b>Cross-references beyond citations are also live in the PDF:</b> 520 figure, 314 section and
+        175 equation destinations, all currently flat text.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  function bind(id, cls) {
+    var b = document.getElementById(id);
+    b.addEventListener('click', function () {
+      var on = b.getAttribute('aria-pressed') === 'true';
+      b.setAttribute('aria-pressed', String(!on));
+      root.classList.toggle(cls, !on);
+    });
+  }
+  bind('sw-eink', 'eink');
+  bind('sw-narrow', 'narrow');
+})();
+</script>

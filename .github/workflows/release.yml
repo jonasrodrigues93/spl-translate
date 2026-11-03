@@ -1,7 +1,7 @@
 name: Gerar EPUB
 
-# Ao publicar uma release, empacota OEBPS/ em um EPUB e o anexa à release.
-# Não traduz nada: o conteúdo (corrigível à mão) é o que está em OEBPS/.
+# Ao publicar uma release, monta o EPUB a partir da tradução versionada em
+# traducao/livro.jsonl e o anexa à própria release. Não chama nenhum LLM.
 on:
   release:
     types: [published]
@@ -11,7 +11,11 @@ permissions:
   contents: write
 
 env:
-  # o nome do EPUB leva a versão da release (a tag); em execução manual, a ref
+  # PDF de origem. Os índices de bloco só casam com ESTE arquivo: se o hash
+  # não bater, a montagem para em vez de gerar um livro embaralhado.
+  PDF_SHA256: 88d0362c3bcb62a0cd09403fb80fd15e778dd53566943912ab1047cda3ff5c79
+  ED3BOOK_PDF: ${{ github.workspace }}/ed3book.pdf
+  # nome do EPUB leva a versão da release (a tag); em execução manual, o nome da ref
   EPUB: spl-ptBR-${{ github.event.release.tag_name || github.ref_name }}.epub
 
 jobs:
@@ -20,31 +24,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Empacotar OEBPS/ em EPUB
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Dependências
         run: |
-          python3 - <<'PY'
-          import os, zipfile
-          CONTAINER = ('<?xml version="1.0"?>\n<container version="1.0" '
-                       'xmlns="urn:oasis:names:tc:opendocument:xmlns:container">'
-                       '<rootfiles><rootfile full-path="OEBPS/content.opf" '
-                       'media-type="application/oebps-package+xml"/></rootfiles></container>')
-          with zipfile.ZipFile(os.environ["EPUB"], "w") as z:
-              # mimetype: 1º item e sem compressão (spec OCF)
-              z.writestr("mimetype", "application/epub+zip",
-                         compress_type=zipfile.ZIP_STORED)
-              z.writestr("META-INF/container.xml", CONTAINER,
-                         compress_type=zipfile.ZIP_DEFLATED)
-              for raiz, _, arqs in sorted(os.walk("OEBPS")):
-                  for a in sorted(arqs):
-                      p = os.path.join(raiz, a)
-                      z.write(p, p, compress_type=zipfile.ZIP_DEFLATED)
-          PY
+          sudo apt-get update
+          sudo apt-get install -y fonts-freefont-ttf fonts-noto-cjk fonts-dejavu-core python3-fonttools
+          pip install -r requirements.txt
+
+      - name: Baixar o PDF de origem
+        run: |
+          test -n "${{ vars.PDF_URL }}" || { echo "defina a variável de repositório PDF_URL"; exit 1; }
+          curl -fL "${{ vars.PDF_URL }}" -o "$ED3BOOK_PDF"
+          echo "$PDF_SHA256  $ED3BOOK_PDF" | sha256sum -c -
+
+      - name: Extrair, citações, fontes e capa
+        run: |
+          python extract.py
+          python bib.py
+          /usr/bin/python3 fonts.py      # Python do sistema: o fontTools está lá
+          python capa.py
+
+      - name: Montar o EPUB
+        run: python build_epub.py --jsonl "$GITHUB_WORKSPACE/traducao/livro.jsonl" --sem-links --out "$EPUB"
 
       - name: Conferir o XML
         run: |
-          python3 - <<'PY'
+          python - <<'PY'
           import os, zipfile, xml.dom.minidom as M
-          z = zipfile.ZipFile(os.environ["EPUB"])
+          z = zipfile.ZipFile("build/" + os.environ["EPUB"])
           ruins = []
           for n in z.namelist():
               if n.endswith((".xhtml", ".opf", ".xml")):
@@ -58,11 +69,11 @@ jobs:
         if: github.event_name == 'release'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload "${{ github.event.release.tag_name }}" "$EPUB" --clobber
+        run: gh release upload "${{ github.event.release.tag_name }}" "build/$EPUB" --clobber
 
       - name: Guardar como artefato (execução manual)
         if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.EPUB }}
-          path: ${{ env.EPUB }}
+          path: build/${{ env.EPUB }}

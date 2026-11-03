@@ -26,6 +26,6 @@ SOFTWARE.
 Scope: this license covers ONLY the code and documentation of this repository.
 It does NOT cover the book "Speech and Language Processing" by Daniel Jurafsky
 and James H. Martin, nor any translation, EPUB, image or font derived from it
-(for example the contents of `OEBPS/`, `traducao/` and the EPUB attached to releases).
+(for example the contents of `traducao/` and the EPUB attached to releases).
 Those remain subject to the copyright of the original authors ("Copyright (c) 2026. All rights reserved." in the draft
 of August 19, 2026). See README.md, section "Direitos autorais".

@@ -1,4 +1,4 @@
-# ed3book-ptbr
+# spl-translate
 
 Tradução para pt-BR de *Speech and Language Processing* (Jurafsky & Martin,
 3ª ed., rascunho de 6/1/2026) em EPUB para Kindle, para leitura pessoal.
@@ -21,16 +21,13 @@ python3 -m venv venv
 
 ## Rodar
 
-```
-./rodar.sh                  # livro inteiro: sobe o servidor, traduz, monta, confere
-./rodar.sh 5                # só o capítulo 5
-SO_MONTAR=1 ./rodar.sh      # remonta o EPUB do que já foi traduzido, sem LLM
-```
+Não há script único: rode o pipeline abaixo, passo a passo. O servidor local
+sobe com o comando do `README.md` — **sempre com `--n-cpu-moe`**.
 
 **É retomável.** O `translate.py` grava JSONL append-only e relê o que já
-traduziu; depois de uma queda, reexecutar continua de onde parou. O `rodar.sh`
-recusa subir se houver um llama-server de outro modelo no ar — 23 GB não
-comportam dois destes.
+traduziu; depois de uma queda, reexecutar continua de onde parou. Antes de
+subir um servidor, confira que não há outro `llama-server` no ar — 23 GB não
+comportam dois modelos destes.
 
 ## Pipeline, passo a passo
 
@@ -44,57 +41,22 @@ python3 fonts.py                  # fontes de reserva -> build/fonts/
 
 **`fonts.py` roda no Python do SISTEMA**, não no venv: o `fontTools` está lá.
 
-Conferência:
+Prévia sem tradução: `./venv/bin/python build_epub.py --cap N --jsonl NADA.jsonl`.
 
-```
-./venv/bin/python audit.py --livro --epub livro-estrutura.epub   # o livro todo
-./venv/bin/python audit.py --cap N            # cobertura PDF x EPUB
-./venv/bin/python inventory.py --perdas       # que classe de texto sumiu
-./venv/bin/python build_epub.py --cap N --jsonl NADA.jsonl   # prévia sem tradução
-```
+## Rede de segurança
 
-## Duas medidas de cobertura, e por que nenhuma basta sozinha
+**`extract.py` → `validar()`** — acusa glifo de fonte não decodificada e
+caractere ilegível chegando ao texto do leitor. Nasceu do exemplo (2.9), que
+saía `t-@-nk'e-mejN-@-...` porque a fonte fonética WSUIPA desenha AFI em slots
+ASCII. Não a remova sem substituí-la. Ao mexer na montagem, confira também o XML
+do EPUB com `xml.dom.minidom`.
 
-`audit.py` imprime as duas, e elas discordam de propósito:
+**Extrator e consumidores têm de ler igual.** `column_origins`, `col_index`,
+`backmatter_start`, `toc_pages`, `build_vocab` e `chapter_pages` vivem no
+`extract.py` e são importados por `bib.py`, `translate.py` e `build_epub.py`,
+em vez de reescritos em cada um.
 
-- **Cobertura de caracteres** — presença. Cada ocorrência de palavra do PDF
-  precisa de uma correspondente no EPUB, contada com multiplicidade. É a meta
-  ("o texto do PDF está todo no EPUB") e o número que se cobra: **99,96%**.
-- **Continuidade (4-gramas)** — ordem. Pega embaralhamento, que a presença não
-  veria. Fica em ~1,7%, e a maior parte disso não é perda: é o auditor lendo o
-  PDF numa ordem que o EPUB não tem por onde reproduzir (rótulo de desenho
-  entre as duas metades de uma palavra hifenizada, glosa interlinear).
-
-Medido em 7/2026: 458 caracteres sem contrapartida em 1.280.618. Deles, 161
-são o rótulo `CHAPTER` que o EPUB grafa "Capítulo"; o resto são metades de
-hifenização e três palavras.
-
-## Três redes de segurança, com propósitos distintos
-
-Cada uma nasceu de um defeito que passou despercebido. Não remova nenhuma
-sem substituí-la.
-
-1. **`extract.py` → `validar()`** — caractere. Acusa glifo de fonte não
-   decodificada e caractere ilegível chegando ao texto do leitor. Nasceu do
-   exemplo (2.9), que saía `t-@-nk'e-mejN-@-...` porque a fonte fonética
-   WSUIPA desenha AFI em slots ASCII.
-2. **`inventory.py`** — classe de estilo. Lista as 1.114 combinações de
-   (fonte, corpo, cor, coluna) e diz onde cada uma está caindo, separando
-   "dentro de imagem" (correto) de "sumiu" (defeito).
-3. **`audit.py`** — cobertura de conteúdo. Compara 4-gramas do PDF com o
-   EPUB, descontando o que virou imagem e a coluna de tags.
-
-Estado atual: cobertura de caracteres de 99,96% no livro inteiro (99,95% no
-cap. 2, 99,97% no 18, 99,95% no 23); duas únicas perdas no inventário, ambas o
-sumário do original (substituído pelo `nav.xhtml`).
-
-**O extrator e o auditor têm de ler igual.** Onde eles divergirem, o auditor
-acusa perda que não existe — e a divergência é dele. Por isso `column_origins`,
-`col_index`, `backmatter_start`, `toc_pages`, `build_vocab` e `chapter_pages`
-vivem no `extract.py` e são importados pelo `audit.py`, `bib.py`, `translate.py`
-e `build_epub.py`, em vez de reescritos em cada um.
-
-`chapter_pages` é o recorte de um capítulo, e vale para os quatro: recorte
+`chapter_pages` é o recorte de um capítulo, e vale para o tradutor e o montador: recorte
 diferente entre tradutor e montador desalinha índice de bloco com tradução e o
 EPUB sai como recorte aleatório. Ele cobre dois casos que a regra "páginas das
 seções N.x, mais 3" erra sozinha: o capítulo **sem seção numerada** (o 1 deste
@@ -107,8 +69,8 @@ começa, e a prévia saía com um capítulo 3 truncado).
 - **`llama-server` sem `--n-cpu-moe` trava a máquina.** A Radeon 780M
   também desenha a tela; com o modelo inteiro na iGPU o compositor não pega
   slot e o desktop congela — o kernel segue vivo. Foi o que causou o
-  desligamento forçado de 27/07. O `rodar.sh` já carrega a flag e se recusa a
-  subir sem ela; subir na mão é que é arriscado.
+  desligamento forçado de 27/07. Suba sempre com a flag (comando no
+  `README.md`).
 - **Dois modelos não cabem.** São 23 GB de RAM; o Gemma pede 14 e o Qwen 18.
   Antes de subir, confira se não há outro `llama-server` no ar — com `--mlock`
   ele não devolve memória, e a disputa reproduz o congelamento acima.

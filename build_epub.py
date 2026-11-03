@@ -24,7 +24,7 @@ import zipfile
 from pathlib import Path
 
 from extract import chapter_pages
-from template import CSS, NOTA_TRADUTOR, ESTILO
+from template import CSS, ESTILO
 
 HERE = Path(__file__).resolve().parent
 BUILD = HERE / "build"
@@ -35,6 +35,8 @@ NAMES = {"i": "em", "b": "strong", "code": "code",
          "sup": "sup", "sub": "sub"}
 
 BIB_FILE = "bibliografia.xhtml"
+NOTA_HTML = Path(__file__).parent / "nota-tradutor.html"   # editável à mão
+SEM_LINKS = False      # --sem-links: citação sem href (Kindle não volta do salto)
 
 # Tipos MIME que o Kindle e os leitores EPUB3 aceitam para fonte embutida
 FONT_MIME = {".ttf": "application/vnd.ms-opentype",
@@ -187,8 +189,9 @@ def link_cites(body: str, cites, used: set[str]) -> tuple[str, int, int]:
                      f'<span class="an">{an}</span>{tail}')
         else:
             inner = f'<span class="au">{txt}</span>'
-        link = (f'<a class="cite" href="{BIB_FILE}#c-{html.escape(key)}">'
-                f'{inner}</a>')
+        # sem href o <a> não é tocável, mas a.cite continua valendo no CSS
+        ref = "" if SEM_LINKS else f' href="{BIB_FILE}#c-{html.escape(key)}"'
+        link = f'<a class="cite"{ref}>{inner}</a>'
         body = body[:m.start()] + link + body[m.end():]
         used.add(key)
         hit += 1
@@ -653,7 +656,7 @@ def render_bib_extraido(entradas: list[dict], bib: dict,
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--jsonl", default="translated.jsonl")
-    ap.add_argument("--out", default="ed3book-ptBR.epub")
+    ap.add_argument("--out", default="spl-ptBR.epub")
     ap.add_argument("--oebps", default="OEBPS",
                     help="pasta para preservar o conteúdo editável do EPUB")
     ap.add_argument("--titulo", default="Processamento de Fala e Linguagem")
@@ -661,7 +664,12 @@ def main() -> int:
                     help="monta só um capítulo (prévia de estrutura; sem "
                          "--jsonl sai no original, para conferir a marcação "
                          "sem esperar a tradução)")
+    ap.add_argument("--sem-links", action="store_true",
+                    help="citações sem link para a bibliografia (no Kindle o "
+                         "toque acidental leva ao fim e não há como voltar)")
     args = ap.parse_args()
+    global SEM_LINKS
+    SEM_LINKS = args.sem_links
 
     blocks = json.loads((BUILD / "blocks.json").read_text(encoding="utf-8"))
     bibp = BUILD / "bib.json"
@@ -741,10 +749,22 @@ def main() -> int:
                   if fman.exists() else [])
         fontes = [f for f in fontes if (fdir / f["arquivo"]).exists()]
         z.writestr("OEBPS/style.css", montar_css(fontes))
-        z.writestr("OEBPS/nota.xhtml", xhtml("Nota do tradutor", NOTA_TRADUTOR))
+        z.writestr("OEBPS/nota.xhtml", xhtml("Nota do tradutor", NOTA_HTML.read_text(encoding="utf-8")))
 
         items, spine, nav = [], [], []
         items.append('<item id="css" href="style.css" media-type="text/css"/>')
+        capa = BUILD / "capa.png"
+        if capa.exists():                 # gerada por capa.py
+            z.writestr("OEBPS/capa.png", capa.read_bytes())
+            z.writestr("OEBPS/capa.xhtml", xhtml("Capa",
+                '<div style="text-align:center;margin:0;padding:0">'
+                '<img src="capa.png" alt="Capa" '
+                'style="max-width:100%;max-height:100%"/></div>'))
+            items.append('<item id="capa-img" href="capa.png" '
+                         'media-type="image/png" properties="cover-image"/>')
+            items.append('<item id="capa" href="capa.xhtml" '
+                         'media-type="application/xhtml+xml"/>')
+            spine.append('<itemref idref="capa"/>')
         for n, f in enumerate(fontes):
             src = fdir / f["arquivo"]
             z.writestr(f"OEBPS/fonts/{f['arquivo']}", src.read_bytes())
@@ -805,9 +825,10 @@ def main() -> int:
                    '<package xmlns="http://www.idpf.org/2007/opf" version="3.0" '
                    'unique-identifier="bid"><metadata '
                    'xmlns:dc="http://purl.org/dc/elements/1.1/">'
-                   f'<dc:identifier id="bid">ed3book-ptBR</dc:identifier>'
+                   f'<dc:identifier id="bid">spl-ptBR</dc:identifier>'
                    f'<dc:title>{html.escape(plain(args.titulo))}</dc:title>'
                    '<dc:language>pt-BR</dc:language>'
+                   + ('<meta name="cover" content="capa-img"/>' if (BUILD / "capa.png").exists() else '') +
                    '<dc:creator>Daniel Jurafsky; James H. Martin</dc:creator>'
                    '<meta property="dcterms:modified">2026-07-27T00:00:00Z</meta>'
                    f'</metadata><manifest>{"".join(items)}</manifest>'

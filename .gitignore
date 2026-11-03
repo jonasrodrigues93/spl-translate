@@ -1,6 +1,8 @@
 venv/
 build/
 __pycache__/
+.claude/
 *.pdf
 *.epub
 *.jsonl
+!traducao/*.jsonl

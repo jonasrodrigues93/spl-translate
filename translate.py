@@ -39,6 +39,7 @@ BUILD = HERE / "build"
 URL = "http://127.0.0.1:8099/v1/chat/completions"
 WORKERS = 4
 BACKEND = "local"
+SEM_THINKING = False   # --sem-thinking: servidor local sem raciocínio
 MODEL = ""
 HEADERS = {"Content-Type": "application/json"}
 
@@ -294,6 +295,8 @@ def call(text: str, max_tokens: int, retries: int = 3,
            if BACKEND == "openrouter" else {}),
         **({"thinking": {"type": "disabled"}}
            if BACKEND == "deepseek" else {}),
+        **({"chat_template_kwargs": {"enable_thinking": False}}
+           if BACKEND == "local" and SEM_THINKING else {}),
     }).encode()
     last = ""
     for attempt in range(retries):
@@ -364,7 +367,7 @@ def batch_max_tokens(text: str) -> int:
 
 
 def main() -> int:
-    global URL, WORKERS, BACKEND, MODEL, HEADERS
+    global URL, WORKERS, BACKEND, MODEL, HEADERS, SEM_THINKING
     ap = argparse.ArgumentParser()
     ap.add_argument("--cap", type=int, help="traduzir só um capítulo (piloto)")
     ap.add_argument("--out", default="translated.jsonl")
@@ -378,9 +381,13 @@ def main() -> int:
                     default="local",
                     help="backend de tradução (padrão: local)")
     ap.add_argument("--modelo", help="modelo no backend remoto")
+    ap.add_argument("--sem-thinking", action="store_true",
+                    help="backend local: desliga o raciocínio (thinking), que "
+                         "estoura max_tokens e devolve resposta vazia")
     args = ap.parse_args()
 
     BACKEND = args.backend
+    SEM_THINKING = args.sem_thinking
     if BACKEND == "openrouter":
         MODEL = args.modelo or "deepseek/deepseek-v4-flash"
     elif BACKEND == "deepseek":
@@ -414,8 +421,8 @@ def main() -> int:
             URL = "https://api.deepseek.com/chat/completions"
         HEADERS["Authorization"] = f"Bearer {key}"
         if BACKEND == "openrouter":
-            HEADERS["HTTP-Referer"] = "https://github.com/jonas/ed3book-ptbr"
-            HEADERS["X-Title"] = "ed3book-ptbr"
+            HEADERS["HTTP-Referer"] = "https://github.com/jonasrodrigues93/spl-translate"
+            HEADERS["X-Title"] = "spl-translate"
     else:
         URL = f"http://127.0.0.1:{args.porta}/v1/chat/completions"
     WORKERS = args.workers

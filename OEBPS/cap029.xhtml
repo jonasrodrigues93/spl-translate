@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="pt-BR" lang="pt-BR">
+<head><meta charset="utf-8"/><title>Léxicos para Sentimento, Afeto e Conotação</title><link rel="stylesheet" type="text/css" href="style.css"/></head>
+<body class="op-a1 op-b1 op-c2 op-d1">
+<div class="abertura"><div class="lado"><p class="rotulo">Capítulo</p><p class="numeral">23</p></div><div class="filete"></div><h1 class="titulo">Léxicos para Sentimento, Afeto e Conotação</h1></div>
+<div class="epigrafe"><p class="texto verso"><em>Some day we’ll be able to measure the power of words</em>
+[em português: &quot;Um dia nós poderemos medir o poder das palavras&quot;]</p><p class="atrib">Maya Angelou</p></div>
+<p class="tag"><span class="tagchip">afetivo</span><span class="tagchip">subjetividade</span></p>
+<p>Neste capítulo, voltamo-nos para ferramentas para interpretar o significado<strong> afetivo</strong>, estendendo nosso estudo de análise de sentimento no Apêndice B. Usamos a palavra ‘afetivo’, seguindo a tradição em<strong> *affective computing*</strong> (<a class="cite"><span class="au">Picard</span>, <span class="an">1995</span></a>) para significar emoção, sentimento, personalidade, humor e atitudes. O significado afetivo está intimamente relacionado à<strong> subjetividade</strong>, o estudo das avaliações, opiniões, emoções e especulações de um falante ou escritor (<a class="cite"><span class="au">Wiebe et al</span>., <span class="an">1999</span></a>).</p>
+<p>Como o significado afetivo deve ser definido? Uma tipologia influente de estados afetivos vem de <a class="cite"><span class="au">Scherer</span> (<span class="an">2000</span></a>), que define cada classe de estados afetivos por fatores como sua realização cognitiva e curso temporal (Fig. 23.1).</p>
+<div class="quadro">
+<p><strong>Emoção:</strong> Episódio relativamente breve de resposta à avaliação de um externo</p>
+<p>ou evento interno como sendo de grande importância.</p>
+<p>(<em>zangado, triste, alegre, assustado, envergonhado, orgulhoso, eufórico, desesperado</em>)</p>
+<p><strong>Humor:</strong> Estado afetivo difuso, mais pronunciado como mudança no sentimento subjetivo, de</p>
+<p>baixa intensidade, mas de duração relativamente longa, muitas vezes sem causa aparente.</p>
+<p>(<em>alegre, melancólico, irritável, apático, deprimido, efervescente</em>)</p>
+<p><strong>Postura interpessoal:</strong> Postura afetiva adotada em relação a outra pessoa em uma interac-</p>
+<p>ção específica, colorindo a troca interpessoal naquela situação.</p>
+<p>(«distante, frio, caloroso, solidário, contumaz, amigável»)</p>
+<p><strong>Atitude:</strong> Crenças, preferências relativamente duradouras e coloridas afetivamente, e pré-</p>
+<p>disposições em relação a objetos ou pessoas.</p>
+<p>(<em>gostar, amar, odiar, valorizar, desejar</em>)</p>
+<p><strong>Traços de personalidade:</strong> Disposições de personalidade estáveis e carregadas emocionalmente e be-</p>
+<p>tendências comportamentais, típicas de uma pessoa.</p>
+<p>(«nervoso, ansioso, imprudente, melancólico, hostil, ciumento»)</p>
+</div>
+<p class="legenda"><strong>Figura 23.1 </strong> A tipologia de estados afetivos de Scherer (Scherer, 2000).</p>
+<p>Podemos projetar extratores para cada um desses tipos de estados afetivos. O Apêndice B já introduziu a <em>análise de sentimento</em>, a tarefa de extrair a orientação positiva ou negativa que um escritor expressa em um texto. Isso corresponde na tipologia de Scherer à extração de <strong>atitudes</strong>: descobrir o que as pessoas gostam ou não gostam, a partir de textos ricos em afetos, como resenhas de livros ou filmes, editoriais de jornais ou sentimento público em blogs ou tweets.</p>
+<p>Detectar <strong>emoção</strong> e <strong>humores</strong> é útil para detectar se um aluno está confuso, engajado ou certo ao interagir com um sistema tutorial, se um chamador de uma linha de ajuda está frustrado, se os posts ou tweets de alguém indicam depressão. Detectar emoções como medo em romances, por exemplo, pode nos ajudar a rastrear quais grupos ou situações são temidos e como isso muda ao longo do tempo.</p>
+<p>Detectar diferentes <strong>posturas interpessoais</strong> pode ser útil ao extrair informações de conversas entre humanos. O objetivo aqui é detectar posturas como amigabilidade ou constrangimento em entrevistas ou conversas amigáveis, por exemplo, para resumir reuniões ou encontrar partes de uma conversa em que as pessoas estão especialmente animadas ou engajadas, <strong>pontos quentes</strong> conversacionais que podem ajudar no resumo de reuniões. Detectar a <strong>personalidade</strong> de um usuário — como se o usuário é um <strong>extrovertido</strong> ou a extensão em que ele é <strong>aberto à experiência</strong> — pode ajudar a melhorar agentes conversacionais, que parecem funcionar melhor se corresponderem às expectativas de personalidade dos usuários (<a class="cite"><span class="au">Mairesse and Walker</span>, <span class="an">2008</span></a>). E o afeto é importante para geração assim como para reconhecimento; sintetizar o afeto é importante para agentes conversacionais em vários domínios, incluindo tutores de alfabetização como livros de histórias infantis, ou jogos de computador.</p>
+<p>No Apêndice B, introduzimos o uso da classificação de Naive Bayes para classificar o sentimento de um documento. Vários classificadores foram aplicados com sucesso a muitas dessas tarefas, usando todas as palavras no conjunto de treinamento como entrada para um classificador que então determina o status afetivo do texto.</p>
+<p class="tag"><span class="tagchip">conotações</span></p>
+<p>Neste capítulo, focamos em um modelo alternativo, no qual, em vez de usar cada palavra como um *feature*, focamos apenas em certas palavras, aquelas que carregam pistas particularmente fortes de afeto ou sentimento. Chamamos essas listas de palavras de <strong>léxicos afetivos</strong> ou <strong>léxicos de sentimento</strong>. Esses léxicos pressupõem um fato sobre semântica: que as palavras têm <em>significados afetivos</em> ou <strong>conotações</strong>. A palavra <em>conotação</em> tem diferentes significados em diferentes campos, mas aqui a usamos para significar os aspectos do significado de uma palavra que estão relacionados às emoções, sentimentos, opiniões ou avaliações de um escritor ou leitor. Além de sua capacidade de ajudar a determinar o status afetivo de um texto, os léxicos de conotação podem ser *features* úteis para outros tipos de tarefas afetivas e para análise de ciências sociais computacionais.</p>
+<p>Nas próximas seções, introduzimos teorias básicas de emoção, mostramos como os léxicos de sentimento são um caso especial de léxicos de emoção e mencionamos alguns léxicos úteis. Em seguida, examinamos três maneiras de construir léxicos: rotulagem humana, semi-supervisionada e supervisionada. Finalmente, falamos sobre como detectar afeto em relação a uma entidade particular e introduzimos quadros de conotação.</p>
+<h2>23.1 Definindo Emoção</h2>
+<p class="tag"><span class="tagchip">emoção</span></p>
+<p>Uma das classes afetivas mais importantes é a <strong>emoção</strong>, que <a class="cite"><span class="au">Scherer</span> (<span class="an">2000</span></a>) define como um “episódio relativamente breve de resposta à avaliação de um evento externo ou interno como de grande importância”.</p>
+<p>A detecção de emoção tem o potencial de melhorar uma série de tarefas de processamento de linguagem. O reconhecimento de emoção pode ajudar sistemas de diálogo, como sistemas de tutoria, a detectar que um aluno estava infeliz, entediado, hesitante, confiante, e assim por diante. A detecção automática de emoções em avaliações ou respostas de clientes (raiva, insatisfação, confiança) pode ajudar as empresas a reconhecer áreas de problemas específicos ou aquelas que estão indo bem. A emoção pode desempenhar um papel em tarefas de NLP médico, como ajudar a diagnosticar depressão ou intenção suicida. A detecção de emoções expressas em relação a personagens em romances pode desempenhar um papel na compreensão de como diferentes grupos sociais eram vistos pela sociedade em diferentes épocas.</p>
+<p class="tag"><span class="tagchip">emoções básicas</span></p>
+<p>Os modelos computacionais de emoção em NLP têm se baseado principalmente em duas famílias de teorias de emoção (entre as muitas estudadas no campo da ciência afetiva). Em uma dessas famílias, as emoções são vistas como unidades atômicas fixas, limitadas em número, das quais outras são geradas, frequentemente chamadas de <strong> emoções básicas</strong> (<a class="cite"><span class="au">Tomkins</span></a> <a class="cite"><span class="au"></span><span class="an">1962</span></a>, <a class="cite"><span class="au">Plutchik</span> <span class="an">1962</span></a>), um modelo que remonta a Darwin. Talvez o mais conhecido desta família de teorias sejam as 6 emoções propostas por Ekman (por exemplo, <a class="cite"><span class="au">Ekman</span> <span class="an">1999</span></a>) como universalmente presentes em todas as culturas: <em> surpresa, felicidade, raiva, medo, nojo,</em> <em> tristeza</em>. Outra teoria atômica é a roda de emoção de <a class="cite"><span class="au">Plutchik</span> (<span class="an">1980</span></a>), composta por 8 emoções básicas em quatro pares opostos: <em> alegria–tristeza</em>, <em> raiva–medo</em>, <em> confiança–nojo</em> e <em> antecipação–surpresa</em>, juntamente com as emoções derivadas delas, mostradas na Fig. 23.2.</p>
+<figure><img src="images/fig0912.png" alt=""/><figcaption><strong>Figura 23.2 </strong>roda da emoção de Plutchik.</figcaption></figure>
+<p>A segunda classe de teorias de emoção amplamente utilizada em NLP vê a emoção como um espaço em 2 ou 3 dimensões (<a class="cite"><span class="au">Russell</span>, <span class="an">1980</span></a>). A maioria dos modelos inclui as duas dimensões <strong> valência</strong> e <strong> ativação</strong>, e muitos adicionam uma terceira, <strong> dominância</strong>. Estas podem ser definidas como:</p>
+<p><strong>valência:</strong> o prazer do estímulo</p>
+<p><strong> ativação:</strong> o nível de alerta, atividade ou energia provocado pelo estímulo</p>
+<p><strong> dominância:</strong> o grau de controle ou dominância exercido pelo estímulo ou</p>
+<p>O sentimento pode ser visto como um caso especial desta segunda visão das emoções como pontos no espaço. Em particular, a dimensão <strong> valência</strong>, que mede quão agradável ou desagradável uma palavra é, é frequentemente usada diretamente como medida de sentimento.</p>
+<p>Nestes modelos baseados em léxico de afeto, o significado afetivo de uma palavra é geralmente fixo, independentemente do contexto linguístico em que uma palavra é usada, ou do dialeto ou cultura do falante. Por outro lado, outros modelos na ciência afetiva representam as emoções como processos muito mais ricos envolvendo cognição (<a class="cite"><span class="au">Barrett et al</span>., <span class="an">2007</span></a>). Na <strong> teoria da avaliação</strong>, por exemplo, as emoções são processos complexos, nos quais uma pessoa considera como um evento é congruente com seus objetivos, levando em conta variáveis como a agência, certeza, urgência, novidade e controle associados ao evento (<a class="cite"><span class="au">Moors et al</span>., <span class="an">2013</span></a>). Os modelos computacionais em NLP que levam em conta estas teorias de emoção mais ricas provavelmente desempenharão um papel importante em trabalhos futuros.</p>
+<h2>23.2 Léxicos de Sentimento e Afeto Disponíveis</h2>
+<p>Uma grande variedade de léxicos de afeto foram criados e lançados. Os léxicos mais básicos rotulam palavras ao longo de uma dimensão de variabilidade semântica, geralmente chamada de &quot;sentimento&quot; ou &quot;valência&quot;.</p>
+<p class="tag"><span class="tagchip">General Inquirer</span></p>
+<p>Nos lexicons mais simples, esta dimensão é representada de forma binária, com uma lista de palavras para palavras positivas e uma lista de palavras para palavras negativas. O mais antigo é o <strong>General Inquirer</strong> (<a class="cite"><span class="au">Stone et al</span>., <span class="an">1966</span></a>), que se baseou em análise de conteúdo e em trabalhos iniciais na psicologia cognitiva do significado das palavras (<a class="cite"><span class="au">Osgood et al</span>., <span class="an">1957</span></a>). O General Inquirer possui um léxico de 1915 palavras positivas e um léxico de 2291 palavras negativas (além de outros léxicos discutidos abaixo). O léxico de subjetividade MPQA (<a class="cite"><span class="au">Wilson et al</span>., <span class="an">2005</span></a>) possui 2718 palavras positivas e 4912 palavras negativas retiradas de léxicos anteriores, mais uma lista de palavras e frases subjetivas por *bootstrapping* (Riloff e Wiebe, 2003). Cada entrada no léxico é rotulada manualmente quanto ao sentimento e também rotulada quanto à confiabilidade (fortemente subjetiva ou fracamente subjetiva). O léxico de polaridade de Hu e Liu (2004) fornece 2006 palavras positivas e 4783 palavras negativas, retiradas de avaliações de produtos, rotuladas usando um método de *bootstrapping* a partir do WordNet.</p>
+<figure><img src="images/fig0913.png" alt=""/><figcaption><strong>Figura 23.3</strong>Algumas palavras com sentimento consistente no General Inquirer (Stone et al., 1966), no léxico de subjetividade MPQA (Wilson et al., 2005) e no léxico de polaridade de Hu e Liu (2004).</figcaption></figure>
+<p>Um pouco mais gerais que esses léxicos de sentimento são os léxicos que atribuem a cada palavra um valor em todas as três dimensões afetivas. O léxico NRC Valence, Arousal, and Dominance (VAD) (<a class="cite"><span class="au">Mohammad</span>, <span class="an">2018a</span></a>) atribui pontuações de valência, excitação e dominância a 20.000 palavras. Alguns exemplos são mostrados na Fig. 23.4.</p>
+<figure><img src="images/fig0914.png" alt=""/><figcaption><strong>Figura 23.4</strong>Valores de palavras de amostra nas dimensões emocionais de Mohammad (2018a).</figcaption></figure>
+<p class="tag"><span class="tagchip">EmoLex</span></p>
+<p>O NRC Word-Emotion Association Lexicon, também chamado de <strong>EmoLex</strong> (Mohammad e Turney, 2013), utiliza as 8 emoções básicas definidas por <a class="cite"><span class="au">Plutchik</span> (<span class="an">1980</span></a>). O léxico inclui cerca de 14.000 palavras, incluindo palavras de léxicos anteriores, bem como substantivos, verbos, advérbios e adjetivos frequentes. Valores do léxico para algumas palavras de amostra:</p>
+<figure><img src="images/fig0915.png" alt=""/></figure>
+<p>Para um conjunto menor de 5.814 palavras, o NRC Emotion/Affect Intensity Lexicon (<a class="cite"><span class="au">Mohammad</span>, <span class="an">2018b</span></a>) contém pontuações de valor real de associação para raiva, medo, alegria e tristeza; a Fig. 23.5 mostra exemplos.</p>
+<figure><img src="images/fig0916.png" alt=""/><figcaption><strong>Figura 23.5</strong>Intensidades emocionais de amostra para palavras de raiva, medo, alegria e tristeza de Mohammad (2018b).</figcaption></figure>
+<p class="tag"><span class="tagchip">LIWC</span></p>
+<p>O <strong>LIWC</strong>, <strong>Linguistic Inquiry and Word Count</strong>, é um conjunto amplamente utilizado de 73 léxicos contendo mais de 2300 palavras (<a class="cite"><span class="au">Pennebaker et al</span>., <span class="an">2007</span></a>), projetado para capturar aspectos do significado lexical relevantes para tarefas de psicologia social. Além dos léxicos relacionados a sentimentos, como os de emoção negativa (<em>bad, weird, hate, problem, tough</em>) e emoção positiva (<em>love, nice, sweet</em>), o LIWC inclui léxicos para categorias como raiva, tristeza, mecanismos cognitivos, percepção, hesitante e inibição, mostrados na Fig. 23.6.</p>
+<p>Existem vários outros léxicos afetivos construídos manualmente. O General Inquirer inclui léxicos adicionais para dimensões como forte vs. fraco, ativo vs. passivo, exagerado vs. subestimado, bem como léxicos para categorias como prazer, dor, virtude, vício, motivação e orientação cognitiva.</p>
+<p class="tag"><span class="tagchip">concreto</span><span class="tagchip">abstrato</span></p>
+<p>Outro recurso útil para várias tarefas é a distinção entre palavras <strong>concretas</strong> como <em>banana</em> ou <em>bathrobe</em> e palavras <strong>abstratas</strong> como <em>belief</em> e <em>although</em>. O léxico em <a class="cite"><span class="au">Brysbaert et al</span>. (<span class="an">2014</span></a>) utilizou *crowdsourcing* para atribuir uma classificação de 1 a 5 da concretude de 40.000 palavras, atribuindo 5 a <em>banana</em>, <em>bathrobe</em> e <em>bagel</em>, 1.19 a <em>belief</em>, 1.07 a <em>although</em>, e entre palavras como <em>brisk</em> um 2.5.</p>
+<h2>23.3 Criando Léxicos de Afeto por Rotulagem Humana</h2>
+<p class="tag"><span class="tagchip">crowdsourcing</span></p>
+<p>O método mais antigo usado para construir léxicos afetivos, e ainda em uso comum, é fazer com que humanos rotulem cada palavra. Isso agora é mais comumente feito via <strong>crowdsourcing</strong>: dividindo a tarefa em pequenas partes e distribuindo-as para um grande número de anotadores.</p>
+<figure><img src="images/fig0917.png" alt=""/><figcaption><strong>Figura 23.6</strong>Amostras de 5 das 73 categorias lexicais no LIWC (Pennebaker et al., 2007). O * significa que as letras anteriores são um prefixo de palavra e todas as palavras com esse prefixo são incluídas na categoria.</figcaption></figure>
+<p>Tators. Vamos analisar algumas das escolhas metodológicas para dois léxicos de emoções criados por crowdsourcing.</p>
+<p>O NRC Emotion Lexicon (EmoLex) (<a class="cite"><span class="au">Mohammad and Turney</span>, <span class="an">2013</span></a>) rotulou as emoções em duas etapas. Para garantir que os anotadores estivessem julgando o sentido correto da palavra, eles primeiro responderam a uma pergunta de múltipla escolha de sinônimos que preparou o sentido correto da palavra (sem exigir que o anotador lesse uma definição de sentido potencialmente confusa). Estes foram criados automaticamente usando as palavras-chave associadas à categoria de sinônimos do sentido em questão no dicionário Macquarie e as palavras-chave de 3 categorias distratoras aleatórias. Um exemplo:</p>
+<pre>Which word is closest in meaning (most related) to startle?</pre>
+<div class="exemplo">• automobile
+• shake
+• honesty
+• entertain</div>
+<p>Para cada palavra (por exemplo, <em> startle</em>), o anotador foi então solicitado a classificar o quão associada essa palavra é a cada uma das 8 emoções (<em>joy</em>,<em> fear</em>,<em> anger</em>, etc.). As associações foram classificadas em uma escala de <em> not</em>,<em> weakly</em>,<em> moderately</em>, e<em> strongly</em> associada. As classificações atípicas foram removidas e, em seguida, cada termo foi atribuído à classe escolhida pela maioria dos anotadores, com empates resolvidos escolhendo a intensidade mais forte, e então os 4 níveis foram mapeados para um rótulo binário para cada palavra (não e fraco mapeados para 0, moderado e forte mapeados para 1).</p>
+<p class="tag"><span class="tagchip">escalonamento melhor-pior</span></p>
+<p>O NRC VAD Lexicon (<a class="cite"><span class="au">Mohammad</span>, <span class="an">2018a</span></a>) foi construído selecionando palavras e emoticons de léxicos anteriores e anotando-os com crowdsourcing usando <strong> best-worst scaling</strong> (<a class="cite"><span class="au">Louviere et al</span>. <span class="an">2015</span></a>, <a class="cite"><span class="au">Kiritchenko and Mohammad</span> <span class="an">2017</span></a>). No best-worst scaling, os anotadores recebem N itens (geralmente 4) e são perguntados qual item é o <strong> best</strong> (mais alto) e qual é o <strong> worst</strong> (mais baixo) em termos de alguma propriedade. O conjunto de palavras usado para descrever as extremidades das escalas é retirado da literatura anterior. Para valência, por exemplo, os avaliadores foram perguntados:</p>
+<p>Q1. Qual das quatro palavras abaixo está associada ao MAIS feliz-</p>
+<p>ness / prazer / positividade / satisfação / contentamento / esperança</p>
+<p>OU MENOS infelicidade / aborrecimento / negatividade / insatisfação /</p>
+<figure><img src="images/fig0918.png" alt=""/></figure>
+<p>melancolia / desespero? (Quatro palavras listadas como opções.)</p>
+<p>Q2. Qual das quatro palavras abaixo está associada ao MENOS feliz-</p>
+<p>ness / prazer / positividade / satisfação / contentamento / esperanç-</p>
+<p>ness OU MAIS infelicidade / aborrecimento / negatividade / insatisfação</p>
+<p class="tag"><span class="tagchip">confiabilidade de metade-divisão</span></p>
+<p>/ melancolia / desespero? (Quatro palavras listadas como opções.) A pontuação para cada palavra no léxico é a proporção de vezes que o item foi escolhido como o melhor (mais alto V/A/D) menos a proporção de vezes que o item foi escolhido como o pior (mais baixo V/A/D). O acordo entre as anotações é avaliado por <strong> split-half reliability</strong>: divide-se o corpus ao meio e calcula-se as correlações entre as anotações nas duas metades.</p>
+<h2>23.4 Indução Semi-supervisionada de Léxicos de Afeto</h2>
+<p>Outra maneira comum de aprender léxicos de sentimento é começar a partir de um conjunto de palavras-semente que definem dois polos de um eixo semântico (palavras como <em> good</em> ou <em> bad</em>), e então encontrar maneiras de rotular cada palavra <em> w</em> por sua similaridade com os dois conjuntos de sementes. Aqui resumimos duas famílias de algoritmos de indução de léxico semi-supervisionados baseados em sementes, baseados em eixo e baseados em grafo.</p>
+<h3>23.4.1 Métodos de Eixo Semântico</h3>
+<p>Um dos métodos de indução de léxico mais conhecidos, o algoritmo de <a class="cite"><span class="au">Turney and Littman</span> (<span class="an">2003</span></a>), recebe palavras-semente como <em> good</em> ou <em> bad</em>, e então para cada palavra <em> w</em> a ser rotulada, mede o quão semelhante ela é a <em> good</em> e o quão diferente ela é de <em> bad</em>. Aqui descrevemos uma leve extensão do algoritmo devido a <a class="cite"><span class="au">An et al</span>. (<span class="an">2018</span></a>), que é baseada no cálculo de um <strong> semantic axis</strong>.</p>
+<p>Na primeira etapa, escolhemos palavras-semente manualmente. Existem dois métodos para lidar com o fato de que o efeito de uma palavra é diferente em diferentes contextos: (1) começar com um único léxico-semente grande e confiar no algoritmo de indução para ajustá-lo ao domínio, ou (2) escolher palavras-semente diferentes para diferentes gêneros. <a class="cite"><span class="au">Hellrich et al</span>. (<span class="an">2019</span></a>) sugere que, para modelar o afeto em diferentes períodos históricos, começar com um dicionário de afeto moderno grande é melhor do que com conjuntos-semente pequenos ajustados para serem estáveis ao longo do tempo. Como exemplo da segunda abordagem, <a class="cite"><span class="au">Hamilton et al</span>. (<span class="an">2016a</span></a>) definem um conjunto de palavras-semente para análise de sentimento geral, um conjunto diferente para Twitter e outro conjunto para sentimento em texto financeiro:</p>
+<p>Na segunda etapa, calculamos os embeddings para cada uma das palavras-polo. Esses embeddings podem ser embeddings word2vec prontos para uso, ou podem ser calculados diretamente em um corpus específico (por exemplo, usando um corpus financeiro se o objetivo for um léxico financeiro), ou podemos fazer o fine-tuning de embeddings prontos para uso em um corpus. O fine-tuning é especialmente importante se tivermos um gênero de texto muito específico, mas não tivermos dados suficientes para treinar bons embeddings. No fine-tuning, começamos com embeddings prontos para uso, como word2vec, e continuamos treinando-os no pequeno corpus alvo.</p>
+<p>Uma vez que temos os *embeddings* para cada palavra polar, criamos um *embedding* que representa cada polo tomando o centróide dos *embeddings* de cada palavra semente; lembramos que o centróide é a versão multidimensional da média. Dado um conjunto de *embeddings* para as palavras semente positivas <em> S</em>+ = {<em>E</em>(<em>w</em>+<a class="notaref" epub:type="noteref" id="ref-29-1" href="#nota-29-1"><sup>1</sup></a> )<em>,E</em>(<em>w</em>+<sup>2</sup> )<em>,...,E</em>(<em>w</em>+<em>n</em> )}, e *embeddings* para as palavras semente negativas <em> S</em>−= {<em>E</em>(<em>w</em>−<sup>1</sup> )<em>,E</em>(<em>w</em>−<sup>2</sup> )<em>,...,E</em>(<em>w</em>−<em>m</em>)}, os centróides dos polos são:</p>
+<p class="formula"><img class="eqimg" src="images/eq0919.png" alt="Xn
+V+ = 1
+E(w+i )
+n
+Xm
+V−= 1
+E(w−i )
+m"/></p>
+<p>O eixo semântico definido pelos polos é computado simplesmente subtraindo os dois vetores:</p>
+<p class="formula"><img class="eqimg" src="images/eq0920.png" alt="Vaxis = V+ −V−"/></p>
+<p>Eixo, o eixo semântico, é um vetor na direção de sentimento positivo. Finalmente, calculamos (via similaridade de cosseno) o ângulo entre o vetor na direção de sentimento positivo e a direção do embedding de  w. Um cosseno mais alto significa que w está mais alinhado com S+ do que com S−.</p>
+<p class="formula"><img class="eqimg" src="images/eq0921.png" alt=" 
+score(w) = cos E(w),Vaxis
+E(w)·Vaxis
+=
+∥E(w)∥∥Vaxis∥"/></p>
+<p>Se um dicionário de palavras com pontuações de sentimento for suficiente, terminamos! Ou se precisarmos agrupar palavras em um léxico positivo e um negativo, podemos usar um limiar ou outro método para nos dar léxicos discretos.</p>
+<h3>23.4.2 Propagação de Rótulos</h3>
+<p>Uma família alternativa de métodos define léxicos propagando rótulos de sentimento em grafos, uma ideia sugerida em trabalhos iniciais de Hatzivassiloglou e McKeown (1997). Descreveremos o algoritmo SentProp (Propagação de Sentimento) simples de <a class="cite"><span class="au">Hamilton et al</span>. (<span class="an">2016a</span></a>), que possui quatro etapas:</p>
+<p> Defina um grafo: Dados os *word embeddings*, construa um grafo lexical ponderado por</p>
+<p>conectando cada palavra aos seus vizinhos mais próximos  (de acordo com a similaridade de cosseno)</p>
+<p>laridade). Os pesos da aresta entre as palavras <em> wi</em> e <em> wj</em> são definidos como:</p>
+<p class="formula"><img class="eqimg" src="images/eq0922.png" alt=" )
+wi⊤wj
+Ei,j = arccos − .
+∥wi∥∥wj∥"/></p>
+<p><strong> Define o conjunto de sementes:</strong> Escolha palavras semente positivas e negativas.</p>
+<p><strong> Propagar polaridades a partir do conjunto semente:</strong> Agora realizamos um passeio aleatório em</p>
+<figure><img src="images/fig0923.png" alt=""/></figure>
+<p>este grafo, começando no conjunto de sementes. Em uma caminhada aleatória, começamos em um nó e então escolhemos um nó para mover com probabilidade proporcional à probabilidade da aresta. A pontuação de polaridade de uma palavra para um conjunto de sementes é proporcional à probabilidade de uma caminhada aleatória a partir do conjunto de sementes cair naquela palavra (Fig. 23.7). 4.<strong> Criar pontuações de palavras</strong>: Percorremos a partir de conjuntos de sementes positivos e negativos, resultando em pontuações de rótulo brutas positivas (rawscore+(<em>wi</em>)) e negativas (rawscore−(<em>wi</em>)). Em seguida, combinamos esses valores em uma pontuação de polaridade positiva como:</p>
+<p>rawscore+(<em>wi</em>)</p>
+<p class="formula"><img class="eqimg" src="images/eq0925.png" alt="score+(wi) =
+rawscore+(wi)+rawscore−(wi)"/></p>
+<p>É frequentemente útil padronizar as pontuações para ter média zero e variância unitária dentro de um corpus. <strong> Atribuir confiança a cada pontuação:</strong> Como as pontuações de sentimento são influenciadas pelo conjunto semente, gostaríamos de saber o quanto a pontuação de uma palavra mudaria se um conjunto semente diferente fosse usado. Podemos usar amostragem bootstrap para obter regiões de confiança, calculando a propagação<em> B</em> vezes sobre subconjuntos aleatórios dos conjuntos semente positivo e negativo (por exemplo, usando<em> B</em> = 50 e escolhendo 7 dos 10 palavras semente cada vez). O desvio padrão das pontuações de polaridade amostradas por bootstrap fornece uma medida de confiança.</p>
+<figure><img src="images/fig0924.png" alt=""/><figcaption><strong>Figura 23.7 </strong>Intuição do algoritmo SENTPROP. (a) Executar caminhadas aleatórias a partir das palavras semente. (b) Atribuir pontuações de polaridade (mostradas aqui como cores verde ou vermelho) com base na frequência de visitas das caminhadas aleatórias.</figcaption></figure>
+<h3>23.4.3 Outros Métodos</h3>
+<p>O cerne dos algoritmos semi-supervisionados é a métrica para medir a similaridade com as palavras semente. As abordagens de Turney e Littman (2003) e <a class="cite"><span class="au">Hamilton et al</span>. (<span class="an">2016a</span></a>) acima utilizaram o cosseno de *embedding* como métrica de distância: as palavras eram rotuladas como positivas basicamente se seus *embeddings* tivessem cossenos altos com sementes positivas e cossenos baixos com sementes negativas. Outros métodos escolheram outros tipos de métricas de distância além do cosseno de *embedding*. Por exemplo, o algoritmo de Hatzivassiloglou e McKeown (1997) usa pistas sintáticas; dois adjetivos são considerados similares se foram frequentemente coordenados por  e  e raramente coordenados por  mas . Isso se baseia na intuição de que adjetivos coordenados pelas palavras  e  tendem a ter a mesma polaridade; adjetivos positivos são geralmente coordenados com positivos, negativos com negativos: *fair and legitimate*, *corrupt and brutal*, mas menos frequentemente adjetivos positivos coordenados com negativos: *fair and brutal*, *corrupt and legitimate*. Em contraste, adjetivos coordenados por  mas  provavelmente são de polaridade oposta:</p>
+<p>justo mas brutal</p>
+<p>Outra pista para polaridade oposta vem da negação morfológica (<em>un-</em>,<em> im-</em>, <em>-less</em>). Adjetivos com a mesma raiz, mas que diferem em uma negação morfológica (<em>adequate/inadequate</em>,<em> thoughtful/thoughtless</em>) tendem a ter polaridade oposta.</p>
+<p>Outro método para encontrar palavras que têm uma polaridade semelhante às palavras semente é fazer uso de um tesauro como o WordNet (Kim e Hovy 2004, Hu e Liu 2004). Os sinônimos de uma palavra presumivelmente compartilham sua polaridade, enquanto os antônimos de uma palavra provavelmente têm a polaridade oposta. Após a construção de um léxico semente, cada léxico é atualizado da seguinte forma, possivelmente iterado. Lex+: Adicionar sinônimos de palavras positivas (<em>well</em>) e antônimos (como<em> fine</em>) de palavras negativas</p>
+<p>palavras Lex−: Adicionar sinônimos de palavras negativas (<em>awful</em>) e antônimos (como<em> evil</em>) de palavras positivas</p>
+<p class="tag"><span class="tagchip">SentiWordNet</span></p>
+<p>Uma extensão deste algoritmo atribui polaridade aos sentidos do WordNet, chamado<strong> Senti- WordNet</strong> (<a class="cite"><span class="au">Baccianella et al</span>., <span class="an">2010</span></a>). A Fig. 23.8 mostra alguns exemplos.</p>
+<figure><img src="images/fig0926.png" alt=""/><figcaption><strong>Figura 23.8 </strong>Exemplos do SentiWordNet 3.0 (Baccianella et al., 2010). Note as diferenças entre os sentidos de palavras homônimas:<em> estimable#3</em> é puramente objetivo, enquanto<em> estimable#2</em> é positivo;<em> acute</em> pode ser positivo (<em>acute#6</em>), negativo (<em>acute#1</em>), ou neutro (<em>acute #4</em>).</figcaption></figure>
+<p>Neste algoritmo, a polaridade é atribuída a *synsets* inteiros em vez de palavras. Um léxico positivo é construído a partir de todos os *synsets* associados a 7 palavras positivas, e um léxico negativo a partir de *synsets* associados a 7 palavras negativas. Um classificador é então treinado a partir desses dados para pegar um gloss do WordNet e decidir se o sentido que está sendo definido é positivo, negativo ou neutro. Uma etapa adicional (envolvendo um algoritmo de caminhada aleatória) atribui uma pontuação a cada *synset* do WordNet para seu grau de positividade, negatividade e neutralidade.</p>
+<p>Em resumo, algoritmos semi-supervisionados usam um conjunto de palavras semente definido por humanos para os dois polos de uma dimensão e usam métricas de similaridade como cosseno de embedding, coordenação, morfologia ou estrutura de thesaurus para pontuar palavras com base em quão semelhantes elas são às sementes positivas e quão dissimilares são às sementes negativas.</p>
+<h2>23.5 Aprendizado Supervisionado de Sentimento de Palavras</h2>
+<p>Métodos semi-supervisionados requerem apenas supervisão humana mínima (na forma de conjuntos semente). Mas às vezes um sinal de supervisão existe no mundo e pode ser aproveitado. Um desses sinais são as pontuações associadas a avaliações online.</p>
+<p>A web contém um número enorme de avaliações online de restaurantes, filmes, livros ou outros produtos, cada um dos quais tem o texto da avaliação juntamente com uma</p>
+<figure><img src="images/fig0927.png" alt=""/><figcaption><strong>Figura 23.9 </strong>Trechos de algumas avaliações de vários sites de avaliação, todos em uma escala de 1 a 5 estrelas, exceto o IMDb, que é em uma escala de 1 a 10 estrelas.</figcaption></figure>
+<p>pontuação de avaliação associada: um valor que pode variar de 1 estrela a 5 estrelas, ou pontuando de 1 a 10. A Fig. 23.9 mostra amostras extraídas de avaliações de restaurantes, livros e filmes.</p>
+<p>Podemos usar essa pontuação de avaliação como supervisão: palavras positivas são mais propensas a aparecer em avaliações de 5 estrelas; palavras negativas em avaliações de 1 estrela. E em vez de apenas uma polaridade binária, esse tipo de supervisão nos permite atribuir a uma palavra uma representação mais complexa de sua polaridade: sua distribuição sobre as estrelas (ou outras pontuações).</p>
+<p>Assim, em um sistema de dez estrelas, poderíamos representar o sentimento de cada palavra como um 10-tuplo, cada número sendo uma pontuação representando a associação da palavra com aquele nível de polaridade. Essa associação pode ser uma contagem bruta, ou uma probabilidade <em> P</em>(<em>w</em>|<em>c</em>), ou alguma outra função da contagem, para cada classe<em> c</em> de 1 a 10.</p>
+<p>Por exemplo, poderíamos calcular a probabilidade IMDb de uma palavra como <em> disappoint(ed/ing)</em> ocorrer em uma resenha de 1 estrela dividindo o número de vezes que <em> disappoint(ed/ing)</em> ocorre em resenhas de 1 estrela no conjunto de dados IMDb (8.557) pelo número total de palavras que ocorrem em resenhas de 1 estrela (25.395.214), de modo que a estimativa IMDb de <em>P</em>(<em>disappointing</em>|1) é .0003.</p>
+<p>Uma leve modificação deste peso, a verossimilhança normalizada, pode ser usada como uma visualização esclarecedora (<a class="cite"><span class="au">Potts</span>, <span class="an">2011</span></a>)<sup>1</sup></p>
+<p><em>contar</em>(<em>w,c</em>)</p>
+<p class="formula"><img class="eqimg" src="images/eq0928.png" alt="P(w|c) = P
+w∈C count(w,c)
+P(w|c)
+PottsScore(w) = P
+c P(w|c)"/></p>
+<p>Dividir a estimativa IMDb <em> P</em>(<em>decepcionante</em>|1) de .0003 pela soma da verossimilhança<em> P</em>(<em>w</em>|<em>c</em>) sobre todas as categorias dá uma pontuação de Potts de 0.10. Assim, a palavra<em> decepcionante</em> está associada ao vetor [.10, .12, .14, .14, .13, .11, .08, .06, .06, .05]. O</p>
+<figure><img src="images/fig0929.png" alt=""/></figure>
+<figure><img src="images/fig0930.png" alt=""/></figure>
+<figure><img src="images/fig0931.png" alt=""/></figure>
+<figure><img src="images/fig0932.png" alt=""/></figure>
+<p class="tag"><span class="tagchip">diagrama de Potts</span></p>
+<figure><img src="images/fig0933.png" alt=""/><figcaption>Figura 23.10 Diagramas de Potts (Potts, 2011) para adjetivos escalares positivos e negativos, mostrando a forma de J e a forma de J invertido para adjetivos fortemente positivos e negativos, e a forma de colina para adjetivos mais fracamente polarizados.</figcaption></figure>
+<p>A Fig. 23.11 mostra os diagramas Potts para advérbios de ênfase e atenuação. Note que os enfáticos tendem a ter uma forma de J (mais provável de ocorrer nas avaliações mais positivas) ou uma forma de U (mais provável de ocorrer nas avaliações fortemente positivas e negativas). Os atenuadores têm todos a forma de colina, enfatizando o meio da escala e diminuindo os extremos. Os diagramas podem ser usados tanto como uma tipologia de sentimento lexical, quanto desempenhar um papel na modelagem da composição do sentimento.</p>
+<p>Além de funções como posterior <em> P</em>(<em>c</em>|<em>w</em>), verossimilhança <em> P</em>(<em>w</em>|<em>c</em>), ou verossimilhança normalizada (Eq. 23.6), muitas outras funções da contagem de uma palavra ocorrendo com um rótulo de sentimento foram usadas. Apresentaremos algumas dessas na página 534, incluindo ideias como normalizar as contagens por escritor na Eq. 23.14.</p>
+<h3>23.5.1 Prior Dirichet Informativo de Razão de Odds Log</h3>
+<p>Uma coisa que frequentemente queremos fazer com a polaridade de palavras é distinguir entre palavras que são mais propensas a ser usadas em uma categoria de textos do que em outra. Podemos, por exemplo, querer saber quais palavras estão mais associadas a avaliações de 1 estrela versus aquelas associadas a avaliações de 5 estrelas. Essas diferenças podem não estar apenas relacionadas ao sentimento. Podemos querer encontrar palavras usadas com mais frequência por membros Democratas do que Republicanos do Congresso, ou palavras usadas com mais frequência em menus de restaurantes caros.</p>
+<figure><img src="images/fig0934.png" alt=""/></figure>
+<figure><img src="images/fig0935.png" alt=""/></figure>
+<figure><img src="images/fig0936.png" alt=""/></figure>
+<figure><img src="images/fig0937.png" alt=""/></figure>
+<figure><img src="images/fig0938.png" alt=""/><figcaption><strong>Figura 23.11 </strong>Diagramas de Potts (Potts, 2011) para advérbios enfáticos e atenuantes.</figcaption></figure>
+<p>do que restaurantes baratos.</p>
+<p>Dados dois conjuntos de documentos, para encontrar palavras mais associadas a uma categoria do que a outra, poderíamos medir a diferença nas frequências (uma palavra <em> w</em> é mais frequente na categoria<em> A</em> ou na categoria<em> B</em>?). Ou, em vez da diferença nas frequências, poderíamos calcular a razão das frequências, ou calcular a razão de odds logarítmica (o logaritmo da razão entre as odds das duas palavras). Poderíamos então classificar as palavras de acordo com a medida de associação que escolhermos, variando de palavras superrepresentadas na categoria<em> A</em> a palavras superrepresentadas na categoria<em> B</em>.</p>
+<p>O problema com métodos simples de log-verossimilhança ou razão de odds logarítmica é que eles superenfatizam as diferenças em palavras muito raras e, muitas vezes, também em palavras muito frequentes. Palavras muito raras parecerão ocorrer de forma muito diferente nos dois corpora, pois com contagens minúsculas pode haver flutuações estatísticas, ou até ocorrências zero em um corpus em comparação com ocorrências não nulas no outro. Palavras muito frequentes também parecerão diferentes, pois todas as contagens são grandes.</p>
+<p>Nesta seção, analisamos os detalhes de uma solução para este problema: o método de “prior de Dirichlet informativo de razão de odds logarítmica” de <a class="cite"><span class="au">Monroe et al</span>. (<span class="an">2008</span></a>), que é um método particularmente útil para encontrar palavras que estão estatisticamente superrepresentadas em uma categoria particular de textos em comparação com outra. Ele se baseia na ideia de usar outro corpus grande para obter uma estimativa *prior* do que esperamos que seja a frequência de cada palavra.</p>
+<p class="tag"><span class="tagchip">razão de verossimilhança logarítmica</span></p>
+<p>Vamos começar com o objetivo: assumimos que queremos saber se a palavra<em> horrible</em> ocorre mais no corpus<em> i</em> ou no corpus<em> j</em>. Poderíamos calcular a<strong> razão de verossimilhança logarítmica</strong>, usando<em> f i</em>(<em>w</em>) para significar a frequência da palavra<em> w</em> no corpus<em> i</em>, e<em> ni</em> para significar o número total de palavras no corpus<em> i</em>:</p>
+<p>llr(<em>horrible</em>) = log<em> Pi</em>(<em>horrible</em>)</p>
+<p><em>Pj</em>(<em>horrible</em>)</p>
+<p>= log<em>Pi</em>(<em>horrible</em>)−log<em>Pj</em>(<em>horrible</em>)</p>
+<p>= log f<em>i</em>(<em>horrible</em>) −log f<em>j</em>(<em>horrible</em>)</p>
+<p class="tag"><span class="tagchip">razão de chances logarítmica</span></p>
+<p><em>ni nj</em> Em vez disso, vamos calcular a<strong> razão de odds logarítmica</strong>: a<em> horrible</em> tem odds mais altas em<em> i</em> ou em <em>j</em>:</p>
+<p class="formula"><img class="eqimg" src="images/eq0939.png" alt=" )  )
+Pi(horrible) Pj(horrible)"/></p>
+<p>lor(<em>horrible</em>) = log −log</p>
+<p>1−<em>Pi</em>(<em>horrible</em>) 1−<em>Pj</em>(<em>horrible</em>)</p>
+<p class="formula"><img class="eqimg" src="images/eq0940.png" alt="   
+fi(horrible) f j(horrible)
+ ni   n j 
+= log  −log  
+1−fi(horrible) 1−fj(horrible)
+ni nj
+ )  )
+fi(horribl"/></p>
+<p>A intuição de Dirichlet é usar um corpus de fundo grande para obter uma estimativa *prior* do que esperamos que seja a frequência de cada palavra<em> w</em>. Faremos isso de forma muito simples adicionando as contagens desse corpus ao numerador e ao denominador, de modo que essencialmente estamos reduzindo as contagens em direção a esse *prior*. É como perguntar quão grandes são as diferenças entre<em> i</em> e<em> j</em> dadas as expectativas de acordo com suas frequências em um corpus de fundo grande bem estimado.</p>
+<p>O método estima a diferença entre a frequência da palavra<em> w</em> em dois corpora<em> i</em> e<em> j</em> através da razão de odds logarítmica modificada pelo *prior* para<em> w</em>, $\delta$ (<em>i</em>−<em>j</em>)</p>
+<p>, que é estimado</p>
+<p><em>w</em> como:</p>
+<p class="formula"><img class="eqimg" src="images/eq0941.png" alt="!
+ )
+f i f j
+δ (i−j) w +αw w +αw
+= log −log
+w ni +α0 −(f iw +αw) nj +α0 −(f j
+w +αw)"/></p>
+<p>(onde<em> ni</em> é o tamanho do corpus<em> i</em>,<em> n j</em> é o tamanho do corpus<em> j</em>,<em> f i</em></p>
+<p><em>w</em> é a contagem da palavra <em>w</em> no corpus<em> i</em>,<em> f j</em></p>
+<p><em>w</em> é a contagem da palavra<em> w</em> no corpus<em> j</em>, α<sub>0</sub> é o tamanho escalado do corpus de fundo, e α<em>w</em> é a contagem escalada da palavra<em> w</em> no corpus de fundo.</p>
+<p>Além disso, <a class="cite"><span class="au">Monroe et al</span>. (<span class="an">2008</span></a>) utilizam uma estimativa para a variância da razão de odds logarítmica:</p>
+<p class="formula"><img class="eqimg" src="images/eq0942.png" alt="σ2  
+1 1
+ˆδ (i−j)
+≈ +
+w f j
+f iw +αw
+w +αw"/></p>
+<p>A estatística final para uma palavra é então o z-score de sua razão de odds logarítmica:</p>
+<p class="formula"><img class="eqimg" src="images/eq0943.png" alt="ˆδ (i−j)
+w
+r
+ 
+σ2 ˆδ (i−j)
+w"/></p>
+<p>O método de <a class="cite"><span class="au">Monroe et al</span>. (<span class="an">2008</span></a>) modifica assim a razão de odds logaritmo comumente usada de duas maneiras: ele usa os escores z da razão de odds logaritmo, o que controla a quantidade de variância na frequência de uma palavra, e ele usa contagens de um corpus de fundo para fornecer uma contagem prévia para as palavras.</p>
+<p>A Fig. 23.12 mostra o método aplicado a um conjunto de dados de avaliações de restaurantes do Yelp, comparando as palavras usadas em avaliações de 1 estrela com as palavras usadas em avaliações de 5 estrelas (Jurafsky et al., 2014). A maior diferença está nas palavras de sentimento óbvias, com as avaliações de 1 estrela usando palavras de sentimento negativo como <em> pior, ruim, horrível</em> e as avaliações de 5 estrelas usando palavras de sentimento positivo como <em> ótimo, melhor, incrível</em>. Mas há outras diferenças esclarecedoras. As avaliações de 1 estrela usam negação lógica (<em>não, not</em>), enquanto as avaliações de 5 estrelas usam enfáticos e enfatizam a universalidade (<em>muito, altamente, todo, sempre</em>). As avaliações de 1 estrela usam plurais da primeira pessoa (<em>nós, nós, nosso</em>) enquanto as avaliações de 5 estrelas usam a segunda pessoa. As avaliações de 1 estrela falam sobre pessoas (<em>gerente, garçom, cliente</em>) enquanto as avaliações de 5 estrelas falam sobre sobremesa e propriedades de restaurantes caros como pratos e atmosfera. Consulte Jurafsky et al. (2014) para mais detalhes. <strong>Comp </strong><em>to, that </em><strong>Prep, other </strong><em>in, of, die, city, mouth</em></p>
+<figure><img src="images/fig0944.png" alt=""/><figcaption><strong>Figura 23.12 </strong>As 50 palavras principais associadas a avaliações de restaurantes de uma estrela e cinco estrelas em um conjunto de dados do Yelp com 900.000 avaliações, usando o método de Monroe et al. (2008) (Jurafsky et al., 2014).</figcaption></figure>
+<h2>23.6 Usando Léxicos para Reconhecimento de Sentimento</h2>
+<p>Em Apêndice B, introduzimos o algoritmo de Naive Bayes para análise de sentimento. Os léxicos nos quais nos concentramos ao longo do capítulo até agora podem ser usados de várias maneiras para melhorar a detecção de sentimento.</p>
+<p>No caso mais simples, léxicos podem ser usados quando não temos dados de treinamento suficientes para construir um analisador de sentimento supervisionado; muitas vezes pode ser caro ter um humano atribuir sentimento a cada documento para treinar o classificador supervisionado.</p>
+<p>Em tais situações, léxicos podem ser usados em um algoritmo baseado em regras para classificação. A versão mais simples é apenas usar a razão de palavras positivas para palavras negativas: se um documento tiver mais palavras positivas do que negativas (usando o léxico para decidir a polaridade de cada palavra no documento), ele é classificado como positivo. Frequentemente, um limiar $\lambda$ é usado, no qual um documento é classificado como positivo somente se a razão for maior que $\lambda$. Se o léxico de sentimento inclui pesos positivos e negativos para cada palavra, $\theta^+$<em>w</em> e $\theta^-$<em>w</em> , estes também podem ser usados. Aqui está um algoritmo de sentimento simples:</p>
+<p class="formula"><img class="eqimg" src="images/eq0945.png" alt="X
+f + = θ +w count(w)
+w s.t. w∈positivelexicon
+X
+f −= θ −w count(w)
+w s.t. w∈negativelexicon
+
+if f +
+ + f −&gt; λ
+
+
+
+i"/></p>
+<p>Se dados de treinamento supervisionados estiverem disponíveis, essas contagens calculadas a partir de léxicos de sentimento, às vezes ponderadas ou normalizadas de várias maneiras, também podem ser usadas como *features* em um classificador juntamente com outras *features* lexicais ou não lexicais. Retornamos a tais algoritmos na Seção 23.7.</p>
+<h2>23.7 Usando Léxicos para Reconhecimento de Afeto</h2>
+<p>A detecção de emoção (e os outros tipos de significado afetivo descritos por <a class="cite"><span class="au">Scherer</span> (<span class="an">2000</span></a>)) pode ser feita generalizando os algoritmos descritos acima para detecção de sentimento.</p>
+<p>Os algoritmos mais comuns envolvem classificação supervisionada: um conjunto de treinamento é rotulado para o significado afetivo a ser detectado, e um classificador é construído usando *features* extraídas do conjunto de treinamento. Assim como na análise de sentimento, se o conjunto de treinamento for grande o suficiente, e o conjunto de teste for suficientemente semelhante ao conjunto de treinamento, simplesmente usar todas as palavras ou todos os bigramas como *features* em um classificador poderoso como regressão logística ou SVM é um excelente algoritmo cujo desempenho é difícil de superar. Assim, podemos tratar a classificação de significado afetivo de uma amostra de texto como classificação de documento simples.</p>
+<p>Contudo, modificações são frequentemente necessárias para conjuntos de dados muito grandes. Por exemplo, o estudo de <a class="cite"><span class="au">Schwartz et al</span>. (<span class="an">2013</span></a>) sobre personalidade, gênero e idade usando 700 milhões de palavras de postagens do Facebook utilizou apenas um subconjunto dos n-gramas de comprimentos 1-3. Apenas palavras e frases usadas por pelo menos 1% dos sujeitos foram incluídas como *features*, e os 2-gramas e 3-gramas foram mantidos apenas se tivessem um PMI suficientemente alto (PMI maior que 2*<em>length</em>, onde<em> length</em> é o número de palavras):</p>
+<p><em>p</em>(<em>phrase</em>)</p>
+<p class="formula"><img class="eqimg" src="images/eq0946.png" alt="pmi(phrase) = log Y
+p(w)
+w∈phrase"/></p>
+<p>Vários pesos podem ser usados para as *features*, incluindo a contagem bruta no conjunto de treinamento, ou alguma probabilidade normalizada ou probabilidade logarítmica. <a class="cite"><span class="au">Schwartz et al</span>. (<span class="an">2013</span></a>), por exemplo, transformam as contagens de *features* em probabilidades de frases normalizando-as pelo uso total de palavras de cada sujeito.</p>
+<p>freq(<em>phrase,subject</em>)</p>
+<p><em>p</em>(<em>phrase</em>|<em>subject</em>) = X (23.14)</p>
+<p>freq(<em>phrase</em>′<em>,subject</em>)</p>
+<p><em>phrase</em>′∈vocab(<em>subject</em>) Se os dados de treinamento forem mais esparsos, ou não tão semelhantes ao conjunto de teste, qualquer um dos léxicos que discutimos pode desempenhar um papel útil, seja sozinho ou em combinação com todas as palavras e n-gramas.</p>
+<p>Muitos valores possíveis podem ser usados para *features* de léxico. O mais simples é apenas uma função indicadora, na qual o valor de uma *feature*<em> fL</em> assume o valor 1 se um texto particular tiver alguma palavra do léxico relevante<em> L</em>. Usando a notação do Apêndice B, em que um valor de *feature* é definido para uma classe de saída particular<em> c</em> e documento<em> x</em>.</p>
+<p class="formula"><img class="eqimg" src="images/eq0947.png" alt="{
+1 if ∃w : w ∈L &amp; w ∈x &amp; class = c
+fL(c,x) =
+0 otherwise"/></p>
+<p>Alternativamente, o valor de um *feature*  $f_L$ para um léxico  $L$ pode ser o número total de *tokens* de palavras  que ocorrem no documento em  $L$:</p>
+<p class="formula"><img class="eqimg" src="images/eq0948.png" alt="X
+fL = count(w)
+w∈L"/></p>
+<p>Para léxicos nos quais cada palavra está associada a uma pontuação ou peso, a contagem pode ser multiplicada por um peso θ<em> Lw</em>:</p>
+<p class="formula"><img class="eqimg" src="images/eq0949.png" alt="X
+fL = θ Lwcount(w)
+w∈L"/></p>
+<p>As contagens podem ser alternativamente registradas ou normalizadas por escritor, como na Eq. 23.14.</p>
+<p>No entanto, como forem definidas, essas *features* de léxico são então usadas em um classificador supervisionado para prever a categoria afetiva desejada para o texto ou documento. Uma vez que um classificador é treinado, podemos examinar quais *features* de léxico estão associadas a quais classes. Para um classificador como regressão logística, o peso da *feature* dá uma indicação de quão associada a *feature* está à classe.</p>
+<h2>23.8 Métodos baseados em léxico para Afeto Centrado na Entidade</h2>
+<p>E se quisermos obter uma pontuação afetiva não para um documento inteiro, mas para uma entidade particular no texto? O método centrado na entidade de Field e Tsvetkov (2019) combina léxicos afetivos com *embeddings* contextuais para atribuir uma pontuação afetiva a uma entidade no texto. No contexto de afeto sobre pessoas, eles renomeiam a dimensão Valência/Ativação/Dominância como Sentimento/Agência/Poder. O algoritmo primeiro treina classificadores para mapear *embeddings* para pontuações:</p>
+<p>1. Para cada palavra<em> w</em> no corpus de treinamento:</p>
+<p>(a) Usar codificadores pré-treinados prontos para uso (como BERT) para extrair um *embedding* contextual</p>
+<p><strong> e</strong> para cada instância da palavra. Nenhum *fine-tuning* adicional é</p>
+<p>feito.</p>
+<p>(b) Calcular a média dos *embeddings* <strong> e</strong> de cada instância de<em> w</em> para obter um único</p>
+<p>vetor de embedding para um ponto de treinamento<em> w</em>.</p>
+<p>(c) Usar o Léxico NRC VAD para obter pontuações S, A e P para<em> w</em>.</p>
+<p>2. Treinar (três) modelos de regressão em todas as palavras<em> w</em> para prever as pontuações V, A, D a partir</p>
+<p>do *embedding* médio de uma palavra. Agora, dado um menção de entidade<em> m</em> em um texto, atribuímos pontuações afetivas da seguinte forma:</p>
+<p>1. Usar o mesmo LM pré-treinado para obter *embeddings* contextuais para<em> m</em> no contexto.</p>
+<p>2. Alimentar este *embedding* através dos 3 modelos de regressão para obter as pontuações S, A, P para</p>
+<p>a entidade. Isso resulta em uma tupla (S,A,P) para uma menção de entidade dada; Para obter pontuações para a representação de uma entidade em um documento completo, podemos executar a resolução de correferência e calcular a média das pontuações (S,A,P) para todas as menções. A Fig. 23.13 mostra as pontuações de seu algoritmo para personagens do filme<em> The Dark Knight</em> quando executado em textos de resumo da Wikipedia com correferência ouro.</p>
+<h2>23.9 Quadros de Conotação</h2>
+<p class="tag"><span class="tagchip">quadro de conotação</span></p>
+<p>Os léxicos que descrevemos até agora definem uma palavra como um ponto no espaço afetivo. Um <strong>quadro de conotação</strong>, por outro lado, é um léxico que incorpora um tipo mais rico de estrutura gramatical, combinando léxicos afetivos com os léxicos semânticos de quadro do Capítulo 22. A ideia básica dos léxicos de quadro de conotação é que um predicado, como um verbo, expressa conotações sobre os argumentos do verbo (<a class="cite"><span class="au">Rashkin et al</span>. <span class="an">2016</span></a>, <a class="cite"><span class="au">Rashkin et al</span>. <span class="an">2017</span></a>).</p>
+<p>Considere frases como:</p>
+<div class="numex"><span class="nx-num">(23.15)</span><span class="nx-corpo">Country A violated the sovereignty of Country B<br/>[em português: O País A violou a soberania do País B]</span></div>
+<figure><img src="images/fig0950.png" alt=""/></figure>
+<figure><img src="images/fig0952.png" alt=""/></figure>
+<figure><img src="images/fig0951.png" alt=""/><figcaption><strong>Figura 23.13 </strong>Poder (domínio), sentimento (valência) e agência (excitação) para personagens no filme<em> O Cavaleiro das Trevas</em> computados a partir de embeddings treinados no Léxico NRC VAD. Note que o protagonista (Batman) e o antagonista (o Coringa) têm pontuações altas de poder e agência, mas diferem em sentimento, enquanto a interesse amoroso Rachel tem baixo poder e agência, mas alto sentimento.</figcaption></figure>
+<div class="numex"><span class="nx-num">(23.16)</span><span class="nx-corpo">the teenager ... survived the Boston Marathon bombing”<br/>[em português: &quot;o adolescente ... sobreviveu ao atentado do Maratona de Boston&quot;]</span></div>
+<figure><img src="images/fig0953.png" alt=""/><figcaption><strong>Figura 23.14 </strong>Quadros de conotação para<em> sobreviver</em> e<em> violar</em>. (a) Para<em> sobreviver</em>, o escritor e o leitor têm sentimento positivo em relação ao Role1, o sujeito, e sentimento negativo em relação ao Role2, o objeto direto. (b) Para<em> violar</em>, o escritor e o leitor têm sentimento positivo em relação ao Role2, o objeto direto.</figcaption></figure>
+<p>Os léxicos de quadro de conotação de <a class="cite"><span class="au">Rashkin et al</span>. (<span class="an">2016</span></a>) e <a class="cite"><span class="au">Rashkin et al</span>. (<span class="an">2017</span></a>) também expressam outros aspectos conotativos do predicado em relação a cada argumento, incluindo o<em> efeito</em> (algo ruim aconteceu com x)<em> valor</em>: (x é valioso), e<em> estado mental</em>: (x está angustiado pelo evento). Os quadros de conotação também podem marcar o<em> diferencial de poder</em> entre os argumentos (usar o verbo<em> implore</em> significa que o argumento tema tem maior poder que o agente), e a<em> agência</em> de cada argumento (<em> waited</em> tem baixa agência). A Fig. 23.15 mostra uma visualização de <a class="cite"><span class="au">Sap et al</span>. (<span class="an">2017</span></a>).</p>
+<p>Os quadros de conotação podem ser construídos manualmente (<a class="cite"><span class="au">Sap et al</span>., <span class="an">2017</span></a>), ou podem ser aprendidos por aprendizado supervisionado (<a class="cite"><span class="au">Rashkin et al</span>., <span class="an">2016</span></a>), por exemplo, usando dados rotulados manualmente para supervisionar classificadores para cada uma das relações individuais, por exemplo, se S(escritor →Role1) é + ou -, e então melhorando a precisão através de restrições globais em todas as relações.</p>
+<figure><img src="images/fig0954.png" alt=""/></figure>
+<figure><img src="images/fig0955.png" alt=""/></figure>
+<figure><img src="images/fig0956.png" alt=""/><figcaption><strong>Figura 23.15 </strong>Os quadros de conotação de Sap et al. (2017), mostrando que o verbo<em> implore</em> implica que o agente tem menor poder que o tema (em contraste, digamos, com um verbo como<em> demanded</em>), e mostrando o baixo nível de agência do sujeito de<em> waited</em>. Figura de Sap et al. (2017).</figcaption></figure>
+<p></p>
+<h2>23.10 Resumo</h2>
+<p>• Podem distinguir vários tipos de estados afetivos, incluindo <em> emoções</em>, <em> humores</em>, <em> atitudes</em> (que incluem <em> sentimento</em>), <em> postura interpessoal</em> e <em> personalidade</em>. • <strong> Emoção</strong> pode ser representada por unidades atômicas fixas, frequentemente chamadas de <strong> emoções básicas</strong>, ou como pontos no espaço definidos por dimensões como <strong> valência</strong> e <strong> ativação</strong>. • As palavras têm aspectos <strong> conotativos</strong> relacionados a esses estados afetivos, e esse aspecto conotativo do significado da palavra pode ser representado em léxicos. • Léxicos afetivos podem ser construídos manualmente, usando <strong> crowdsourcing</strong> para rotular o conteúdo afetivo de cada palavra. • Léxicos podem ser construídos de forma <strong> semi-supervisionada</strong>, fazendo bootstrapping a partir de palavras-semente usando métricas de similaridade como o cosseno de embedding. • Léxicos podem ser aprendidos de maneira <strong> totalmente supervisionada</strong>, quando um sinal de treinamento conveniente pode ser encontrado no mundo, como avaliações atribuídas por usuários em um site de avaliações. • Palavras podem receber pesos em um léxico usando várias funções de contagens de palavras em textos de treinamento e métricas de razão como <strong> log odds ratio informative</strong> <strong> Dirichlet prior</strong>. • O afeto pode ser detectado, assim como o sentimento, usando técnicas padrão de <strong> classificação de texto</strong> <strong> supervisionada</strong>, usando todas as palavras ou bigramas em um texto como características. Características adicionais podem ser obtidas a partir de contagens de palavras em léxicos. • Léxicos também podem ser usados para detectar afeto em um <strong> classificador baseado em regras</strong> selecionando o sentimento de maioria simples com base nas contagens de palavras em cada léxico. • <strong> Quadros de conotação</strong> expressam relações mais ricas de significado afetivo que um predicado codifica sobre seus argumentos.</p>
+<h2>Notas Históricas</h2>
+<p>A ideia de representar formalmente o significado subjetivo das palavras começou com Osgood et al. (1957), o mesmo estudo pioneiro que propôs pela primeira vez o modelo de espaço vetorial de significado descrito no Capítulo 5. Osgood et al. (1957) fez com que os participantes avaliassem palavras em várias escalas e realizou análise fatorial nas avaliações. O fator mais significativo que eles descobriram foi a dimensão avaliativa, que distinguia entre pares como <em> bom/mau</em>, <em> valioso/sem valor</em>, <em> agradável/desagradável</em>. Este trabalho influenciou o desenvolvimento de dicionários iniciais de sentimento e significado afetivo no campo de <strong> análise de conteúdo</strong> (<a class="cite"><span class="au">Stone et al</span>., <span class="an">1966</span></a>).</p>
+<p class="tag"><span class="tagchip">subjetividade</span></p>
+<p><a class="cite"><span class="au">Wiebe</span> (<span class="an">1994</span></a>) iniciou uma linha de trabalho influente sobre a detecção de <strong> subjetividade</strong> em texto, começando com a tarefa de identificar sentenças subjetivas e os personagens subjetivos que são descritos no texto como possuidores de estados privados, crenças ou atitudes. Léxicos de sentimento aprendidos, como os léxicos de polaridade de Hatzivassiloglou e McKeown (1997), mostraram ser uma característica útil na detecção de subjetividade (Hatzivassiloglou e <a class="cite"><span class="au">Wiebe</span> <span class="an">2000</span></a>, Wiebe 2000).</p>
+<p>O termo <strong> sentimento</strong> parece ter sido introduzido em 2001 por Das e Chen (2001), para descrever a tarefa de medir o sentimento do mercado olhando para as palavras em fóruns de mensagens de negociação de ações. No mesmo artigo, Das e Chen (2001) também propuseram o uso de um léxico de sentimento. A lista de palavras no léxico foi criada manualmente, mas cada palavra recebeu pesos de acordo com o quanto ela discriminava uma classe particular (digamos, comprar versus vender) maximizando a variação entre classes e minimizando a variação dentro da classe. O termo <em> sentimento</em>, e o uso de léxicos, foram aceitos bastante rapidamente (por exemplo, inter alia, <a class="cite"><span class="au">Turney</span> <span class="an">2002</span></a>). <a class="cite"><span class="au">Pang et al</span>. (<span class="an">2002</span></a>) mostraram pela primeira vez o poder de usar todas as palavras sem um léxico de sentimento; veja também Wang e Manning (2012).</p>
+<p>A maioria dos métodos semi-supervisionados que descrevemos para estender dicionários de sentimento se baseou na ideia inicial de que sinônimos e antônimos tendem a coocorrer na mesma sentença (Miller e Charles 1991, Justeson e Katz 1991, Riloff e Shepherd 1997). Outros métodos semi-supervisionados para aprender pistas de significado afetivo dependem de técnicas de extração de informação, como os extratores de padrão AutoSlog (Riloff e Wiebe, 2003). Algoritmos baseados em grafos para sentimento foram sugeridos pela primeira vez por Hatzivassiloglou e McKeown (1997), e a propagação de grafos tornou-se um método padrão (Zhu e Ghahramani 2002, <a class="cite"><span class="au">Zhu et al</span>. <span class="an">2003</span></a>, <a class="cite"><span class="au">Zhou et al</span>. <span class="an">2004a</span></a>, <a class="cite"><span class="au">Velikovich et al</span>. <span class="an">2010</span></a>). O crowdsourcing também pode ser usado para melhorar a precisão filtrando o resultado do aprendizado de léxico semi-supervisionado (Riloff e Shepherd 1997, <a class="cite"><span class="au">Fast et al</span>. <span class="an">2016</span></a>).</p>
+<p>Muito trabalho recente foca em maneiras de aprender embeddings que codificam diretamente sentimento ou outras propriedades, como o algoritmo DENSIFIER de <a class="cite"><span class="au">Rothe et al</span>. (<span class="an">2016</span></a>) que aprende a transformar o espaço de embedding para focar em informação de sentimento (ou outra).</p>
+<h2>Exercícios</h2>
+<p><strong>23.1</strong> Mostrar que a relação entre uma palavra<em> w</em> e uma categoria<em> c</em> no Potts</p>
+<p>A pontuação na Eq. 23.6 é uma variante da informação mútua pontual pmi (<em>w,c</em>)</p>
+<p>sem o termo logarítmico.</p>
+<div class="notas">
+<aside class="nota" epub:type="footnote" id="nota-29-1"><p><a class="nota-volta" href="#ref-29-1">1</a> Each element of the Potts score of a word<em> w</em> and category<em> c</em> can be shown to be a variant of the pointwise mutual information pmi(<em>w,c</em>) without the log term; see Exercise 23.1.</p></aside>
+</div>
+</body></html>

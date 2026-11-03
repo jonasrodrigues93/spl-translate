@@ -25,12 +25,12 @@ inconsistência de terminologia e falhas de formatação.
 
 1. Abra uma *issue* "Erro de tradução" com: **capítulo e seção**, **trecho
    original**, **tradução atual** e **sugestão**. Ou vá direto ao passo 2.
-2. Edite `traducao/livro.jsonl`: cada linha é um bloco, `{"i": 64, "pt": "..."}`.
-   Ache a linha buscando o texto atual em português e altere só o campo `pt`.
-   Abra um *pull request*.
-3. Mantenha os marcadores intactos: `«i»…«/i»`, `«b»…«/b»`, `«code»…«/code»`,
-   `«sup»`/`«sub»`. O texto dentro deles **pode e deve ser traduzido**; só os
-   marcadores se preservam. Não mude o campo `i`.
+2. Edite o capítulo em `OEBPS/capNNN.xhtml` (um arquivo por capítulo;
+   `bibliografia.xhtml` e `nota.xhtml` também ficam lá) e abra um *pull
+   request*.
+3. Mantenha a marcação intacta: `<em>`, `<strong>`, `<code>` e as classes
+   existentes, e o XHTML bem formado (`<br/>`, não `<br>`). O texto dentro
+   dessas marcas **pode e deve ser traduzido**.
 4. Um PR por capítulo ou por tema. PRs pequenos são revisados mais rápido.
 
 O EPUB é gerado automaticamente a cada *release*; não há `.epub` no repositório.
@@ -51,7 +51,8 @@ python3 -m venv venv && ./venv/bin/pip install -r requirements.txt
 ```
 
 - Qualquer mudança em `extract.py` invalida os `.jsonl` já traduzidos: os
-  índices de bloco não são estáveis entre extrações.
+  índices de bloco não são estáveis entre extrações. Correções feitas em
+  `OEBPS/` não voltam para o `.jsonl`.
 - O extrator e os scripts que o usam têm de ler igual. Funções compartilhadas
   vivem em `extract.py` e são importadas por `bib.py`, `translate.py` e
   `build_epub.py`; não as reescreva em outro lugar.

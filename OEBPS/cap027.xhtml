@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="pt-BR" lang="pt-BR">
+<head><meta charset="utf-8"/><title>Rotulagem de Papel Semântico</title><link rel="stylesheet" type="text/css" href="style.css"/></head>
+<body class="op-a1 op-b1 op-c2 op-d1">
+<div class="abertura"><div class="lado"><p class="rotulo">Capítulo</p><p class="numeral">22</p></div><div class="filete"></div><h1 class="titulo">Rotulagem de Papel Semântico</h1></div>
+<div class="epigrafe"><p class="texto verso">“Who, What, Where, When, With what, Why, How”
+[em português: Quem, O quê, Onde, Quando, Com o quê, Por quê, Como]</p><p class="atrib">As sete circunstâncias, associadas a Hermagoras e Aristóteles (<a class="cite"><span class="au">Sloan</span>, <span class="an">2010</span></a>)</p></div>
+<p>Em algum momento entre os séculos VII e IV a.C., o gramático indiano Pān.ini<a class="notaref" epub:type="noteref" id="ref-27-1" href="#nota-27-1"><sup>1</sup></a> escreveu um tratado famoso sobre a gramática sânscrita, o As.t.ādhyāyī (‘8 livros’), um tratado que foi chamado de “um dos maiores monumentos da inteligência humana” (<a class="cite"><span class="au">Bloomfield</span>, <span class="an">1933</span></a>, 11). A obra descreve a linguística da língua sânscrita na forma de 3959 sutras, cada um expressando de forma muito eficiente (já que tinha que ser memorizado!) parte de um sistema de regras formais que antecipou brilhantemente os mecanismos modernos da teoria da linguagem formal (<a class="cite"><span class="au">Penn and Kiparsky</span>, <span class="an">2012</span></a>). Um conjunto de regras descreve os<strong> kārakas</strong>, relações semânticas entre um verbo e argumentos de substantivos, papéis como<em> agente</em>,<em> instrumento</em>, ou <em> destino</em>. A obra de Pān.ini foi a mais antiga que conhecemos que modelou a realização linguística de eventos e seus participantes. Esta tarefa de entender como os participantes se relacionam com os eventos—ser capaz de responder à pergunta “Quem fez o quê a quem” (e talvez também “quando e onde”)—é uma questão central do processamento de linguagem natural.</p>
+<p>Vamos avançar 2,5 milênios até o presente e considerar o objetivo muito mundano de entender um texto sobre a compra de ações pela XYZ Corporation. Este evento de compra e seus participantes podem ser descritos por uma grande variedade de formas superficiais. O evento pode ser descrito por um verbo (<em> sold, bought</em>) ou um substantivo (<em> purchase</em>), e a XYZ Corp pode ser o sujeito sintático (de<em> bought</em>), o objeto indireto (de<em> sold</em>), ou em uma relação genitiva ou de composto nominal (com o substantivo<em> purchase</em>) apesar de ter conceitualmente o mesmo papel em todos eles:</p>
+<p>• A XYZ corporation comprou as ações.</p>
+<p>• Eles venderam as ações para a XYZ corporation.</p>
+<p>• As ações foram compradas pela XYZ corporation.</p>
+<p>• A compra das ações pela XYZ corporation...</p>
+<p>• A compra das ações pela XYZ corporation...</p>
+<p>Neste capítulo, introduzimos um nível de representação que captura a comumidade entre essas sentenças: houve um evento de compra, os participantes foram a XYZ Corp e algumas ações, e a XYZ Corp foi a compradora. Essas representações semânticas superficiais,<strong> semantic roles</strong>, expressam o papel que os argumentos de um predicado assumem no evento, codificado em bancos de dados como PropBank e FrameNet. Introduziremos o<strong> semantic role labeling</strong>, a tarefa de atribuir papéis a *spans* em sentenças, e<strong> selectional restrictions</strong>, as preferências que os predicados expressam sobre seus argumentos, como o fato de que o tema de<em> eat</em> é geralmente algo comestível.</p>
+<h2>22.1 Papéis Semânticos</h2>
+<p>Considere os significados dos argumentos<em> Sasha</em>,<em> Pat</em>,<em> the window</em>, e<em> the door</em> nessas duas sentenças.</p>
+<div class="numex"><span class="nx-num">(22.1)</span><span class="nx-corpo">Sasha broke the window.<br/>[em português: Sasha quebrou a janela.]</span></div>
+<div class="numex"><span class="nx-num">(22.2)</span><span class="nx-corpo">Pat opened the door.<br/>[em português: Pat abriu a porta.]</span></div>
+<p>Os sujeitos<em> Sasha</em> e<em> Pat</em>, o que poderíamos chamar de<em> breaker</em> do evento de quebra da janela e o<em> opener</em> do evento de abertura da porta, têm algo em comum. Ambos são atores volitivos, frequentemente animados, e têm responsabilidade causal direta por seus eventos.</p>
+<p class="tag"><span class="tagchip">papéis temáticos</span><span class="tagchip">agentes</span><span class="tagchip">tema</span></p>
+<p><strong> Thematic roles</strong> é uma maneira de capturar essa comumidade semântica entre<em> breakers</em> e<em> openers</em>. Dizemos que os sujeitos de ambos esses verbos são<strong> agents</strong>. Assim, AGENT é o *thematic role* que representa uma ideia abstrata como a causalidade volitiva. Da mesma forma, os objetos diretos de ambos esses verbos, o<em> BrokenThing</em> e<em> OpenedThing</em>, são ambos objetos prototipicamente inanimados que são afetados de alguma forma pela ação. O *semantic role* para esses participantes é<strong> theme</strong>.</p>
+<figure><img src="images/fig0896.png" alt=""/><figcaption><strong> Figura 22.1 </strong> Alguns *thematic roles* com suas definições.</figcaption></figure>
+<p class="tag"><span class="tagchip">papéis semânticos</span></p>
+<p>Embora os *thematic roles* sejam um dos modelos linguísticos mais antigos, como vimos acima, sua formulação moderna deve-se a <a class="cite"><span class="au">Fillmore</span> (<span class="an">1968</span></a>) e <a class="cite"><span class="au">Gruber</span> (<span class="an">1965</span></a>). Embora não haja um conjunto de papéis universalmente acordado, as Figs. 22.1 e 22.2 listam alguns *thematic roles* que foram usados em vários artigos computacionais, juntamente com definições e exemplos aproximados. A maioria dos conjuntos de *thematic roles* tem cerca de uma dúzia de papéis, mas veremos conjuntos com números menores de papéis com significados ainda mais abstratos, e conjuntos com números muito grandes de papéis que são específicos de situações. Usaremos o termo geral<strong> semantic roles</strong> para todos os conjuntos de papéis, sejam eles pequenos ou grandes.</p>
+<h2>22.2 Alternâncias de Diatese</h2>
+<p>A principal razão pela qual os sistemas computacionais utilizam papéis semânticos é para atuar como uma representação de significado superficial que nos permite fazer inferências simples que não são possíveis a partir da string de palavras pura, ou mesmo da árvore de análise sintática. Para estender os exemplos anteriores, se um documento diz que <em> a Empresa A adquiriu a Empresa B </em>, gostaríamos de saber se isso responde à consulta <em> A Empresa B foi adquirida? </em>, apesar do fato de as duas sentenças terem sintaxe superficial muito diferente. De forma semelhante, essa semântica superficial pode servir como uma linguagem intermediária útil na tradução automática.</p>
+<figure><img src="images/fig0897.png" alt=""/><figcaption><strong>Figura 22.2 </strong>Alguns exemplos prototípicos de vários papéis temáticos.</figcaption></figure>
+<p>Os papéis semânticos, assim, ajudam a generalizar sobre diferentes realizações superficiais de argumentos de predicado. Por exemplo, enquanto o AGENT é frequentemente realizado como o sujeito da sentença, em outros casos o THEME pode ser o sujeito. Considere estas possíveis realizações dos argumentos temáticos do verbo <em> break </em>:</p>
+<div class="numex"><span class="nx-num">(22.3)</span><span class="nx-corpo">i» John broke the window.<br/>AGENT THEME</span></div>
+<div class="numex"><span class="nx-num">(22.4)</span><span class="nx-corpo">i» John broke the window with a rock.<br/>AGENT THEME INSTRUMENT</span></div>
+<div class="numex"><span class="nx-num">(22.5)</span><span class="nx-corpo">i» The rock broke the window.<br/>INSTRUMENT THEME</span></div>
+<div class="numex"><span class="nx-num">(22.6)</span><span class="nx-corpo">i» The window broke.<br/>THEME</span></div>
+<div class="numex"><span class="nx-num">(22.7)</span><span class="nx-corpo">i» The window was broken by John.<br/>THEME AGENT</span></div>
+<p class="tag"><span class="tagchip">grade temática</span><span class="tagchip">quadro de caso</span></p>
+<p>Estes exemplos sugerem que <em> break </em> tem (pelo menos) os argumentos possíveis AGENT, THEME e INSTRUMENT. O conjunto de argumentos de papel temático assumidos por um verbo é frequentemente chamado de <strong> grid temático </strong>, θ-grid, ou <strong> quadro de caso </strong>. Podemos ver que existem (entre outros) as seguintes possibilidades para a realização desses argumentos de <em> break </em>:</p>
+<p>AGENTE/Sujeito, TEMA/Objeto</p>
+<p>AGENTE/Sujeito, TEMA/Objeto, INSTRUMENTO/PPcom</p>
+<p>INSTRUMENTO/Sujeito, TEMA/Objeto</p>
+<p>TEMA/Sujeito</p>
+<p>Descobrimos que muitos verbos permitem que seus papéis temáticos sejam realizados em várias posições sintáticas. Por exemplo, verbos como <em> give </em> podem realizar os argumentos THEME e GOAL de duas maneiras diferentes:</p>
+<div class="numex"><span class="nx-num">(22.8)</span><span class="nx-corpo">a.<em> Doris gave the book to Cary.</em><br/>AGENT THEME GOAL<br/>b.<em> Doris gave Cary the book.</em><br/>AGENT GOAL THEME</span></div>
+<p class="tag"><span class="tagchip">alternância verbal alternância dativa</span></p>
+<p>Essas realizações de estrutura de argumento múltiplas (o fato de <em> break </em> poder aceitar AGENT, INSTRUMENT ou THEME como sujeito, e <em> give </em> poder realizar seu THEME e GOAL em qualquer ordem) são chamadas de <strong> alternâncias verbais </strong> ou <strong> alternâncias de diatése </strong>. A alternância que mostramos acima para <em> give </em>, a <strong> alternância dativa </strong>, parece ocorrer com classes semânticas particulares de verbos, incluindo “verbos de ter futuro” (<em> advance </em>, <em> allocate </em>, <em> offer </em>, <em> owe </em>), “verbos de enviar” (<em> forward </em>, <em> hand </em>, <em> mail </em>), “verbos de jogar” (<em> kick </em>, <em> pass </em>, <em> throw </em>), e assim por diante. <a class="cite"><span class="au">Levin</span> (<span class="an">1993</span></a>) lista para 3100 verbos em inglês as classes semânticas às quais eles pertencem (47 classes de alto nível, divididas em 193 classes mais específicas) e as várias alternâncias nas quais participam. Essas listas de classes de verbos foram incorporadas no recurso online VerbNet (<a class="cite"><span class="au">Kipper et al</span>., <span class="an">2000</span></a>), que vincula cada verbo a entradas tanto do WordNet quanto do FrameNet.</p>
+<h2>22.3 Papéis Semânticos: Problemas com Papéis Temáticos</h2>
+<p>Representar o significado no nível de papel temático parece que deveria ser útil ao lidar com complicações como as alternâncias de diatése. No entanto, provou ser bastante difícil chegar a um conjunto padrão de papéis, e igualmente difícil produzir uma definição formal de papéis como AGENT, THEME ou INSTRUMENT.</p>
+<p>Por exemplo, pesquisadores que tentam definir conjuntos de papéis frequentemente descobrem que precisam fragmentar um papel como AGENT ou THEME em muitos papéis específicos. Levin e Rappaport Hovav (2005) resumem vários desses casos, como o fato de parecer haver pelo menos dois tipos de INSTRUMENTOS, instrumentos <em> intermediary </em> que podem aparecer como sujeitos e instrumentos <em> enabling </em> que não podem:</p>
+<div class="numex"><span class="nx-num">(22.9)</span><span class="nx-corpo">a. Shelly cut the banana with a knife.<br/>b. The knife cut the banana.</span></div>
+<div class="numex"><span class="nx-num">(22.10)</span><span class="nx-corpo">a. Shelly ate the sliced banana with a fork.<br/>b. *The fork ate the sliced banana.</span></div>
+<p>Além do problema de fragmentação, há casos em que gostaríamos de raciocinar e generalizar através de papéis semânticos, mas as listas finitas e discretas de papéis não nos permitem fazer isso.</p>
+<p>Finalmente, provou ser difícil definir formalmente os papéis temáticos. Considere o papel AGENT; a maioria dos casos de AGENTS é animada, volitiva, senciente, causal, mas qualquer frase nominal individual pode não exibir todas essas propriedades.</p>
+<p class="tag"><span class="tagchip">papel semântico</span></p>
+<p>Esses problemas levaram a modelos alternativos de <strong> papel semântico </strong> que usam muito menos ou muito mais papéis.</p>
+<p class="tag"><span class="tagchip">proto-agente</span><span class="tagchip">proto-paciente</span></p>
+<p>Uma das primeiras opções é definir <strong> papéis semânticos generalizados </strong> que abstraem os papéis temáticos específicos. Por exemplo, PROTO-AGENT e PROTO-PATIENT são papéis generalizados que expressam significados aproximadamente semelhantes a agente e aproximadamente semelhantes a paciente. Esses papéis são definidos, não por condições necessárias e suficientes, mas sim por um conjunto de características heurísticas que acompanham significados mais semelhantes a agente ou mais semelhantes a paciente. Assim, quanto mais um argumento exibe propriedades semelhantes a agente (estar envolvido volitivamente no evento, causar um evento ou uma mudança de estado em outro participante, ser senciente ou intencionalmente envolvido, mover-se), maior é a probabilidade de o argumento poder ser rotulado como PROTO-AGENT. Quanto mais semelhantes a paciente as propriedades (sofrer mudança de estado, ser causalmente afetado por outro participante, estar estacionário em relação a outros participantes, etc.), maior é a probabilidade de o argumento poder ser rotulado como PROTO-PATIENT.</p>
+<p>A segunda direção é, em vez disso, definir papéis semânticos que são específicos de um verbo em particular ou de um grupo de verbos ou substantivos semanticamente relacionados.</p>
+<p>Nas próximas duas seções, descrevemos dois recursos lexicais comumente usados que utilizam essas versões alternativas de papéis semânticos. <strong> PropBank </strong> usa tanto protoroles quanto papéis semânticos específicos de verbos. <strong> FrameNet </strong> usa papéis semânticos que são específicos de uma ideia semântica geral chamada <em> frame </em>.</p>
+<h2>22.4 O Banco de Proposições</h2>
+<p class="tag"><span class="tagchip">PropBank</span></p>
+<p>O <strong> Proposition Bank </strong>, geralmente referido como <strong> PropBank </strong>, é um recurso de sentenças anotadas com papéis semânticos. O PropBank em inglês rotula todas as sentenças no Penn TreeBank; o PropBank em chinês rotula sentenças no Penn Chinese TreeBank. Devido à dificuldade de definir um conjunto universal de papéis temáticos, os papéis semânticos no PropBank são definidos em relação a um sentido de verbo individual. Cada sentido de cada verbo, portanto, tem um conjunto específico de papéis, que são dados apenas por números em vez de nomes: <strong> Arg0 </strong>, <strong> Arg1 </strong>, <strong> Arg2 </strong>, e assim por diante. Em geral, <strong> Arg0 </strong> representa o PROTO-AGENT, e <strong> Arg1 </strong>, o PROTO-PATIENT. A semântica dos outros papéis é menos consistente, sendo frequentemente definida especificamente para cada verbo. Não obstante, há alguma generalização; <strong> Arg2 </strong> é frequentemente o benefativo, instrumento, atributo ou estado final, <strong> Arg3 </strong> o ponto de partida, benefativo, instrumento ou atributo, e <strong> Arg4 </strong> o ponto final.</p>
+<p>Aqui estão algumas entradas do PropBank ligeiramente simplificadas para um sentido de cada dos verbos <em> agree </em> e <em> fall </em>. Tais entradas do PropBank são chamadas de <strong> frame files </strong>; note que as definições no frame file para cada papel (“Other entity agreeing”, “Extent, amount fallen”) são glossas informais destinadas a serem lidas por humanos, em vez de serem definições formais.</p>
+<div class="numex"><span class="nx-num">(22.11)</span><span class="nx-corpo">b» agree.01</span></div>
+<p>Arg0: Agreer</p>
+<p>Arg1: Proposição</p>
+<p>Arg2: Outra entidade concordante</p>
+<p>Ex1: [Arg0 The group] <em> agreed </em> [Arg1 it wouldn’t make an offer].</p>
+<p>Ex2: [ArgM-TMP Usually] [Arg0 John] <em> agrees </em> [Arg2 with Mary]</p>
+<p>[Arg1 em tudo].</p>
+<div class="numex"><span class="nx-num">(22.12)</span><span class="nx-corpo">b» fall.01</span></div>
+<p>Arg1: sujeito lógico, paciente, coisa caindo</p>
+<p>Arg2: extensão, quantidade caída</p>
+<p>Arg3: ponto de partida</p>
+<p>Arg4: ponto final, estado final de arg1</p>
+<p>Ex1: [Arg1 Sales] <em> fell </em> [Arg4 to $25 million] [Arg3 from $27 million].</p>
+<p>Ex2: [Arg1 The average junk bond] <em> fell </em> [Arg2 by 4.2%].</p>
+<p>Note que não há papel Arg0 para <em> fall </em>, porque o sujeito normal de <em> fall </em> é um PROTO-PATIENT.</p>
+<p>Os papéis semânticos do PropBank podem ser úteis na recuperação de informações semânticas superficiais sobre argumentos verbais. Considere o verbo <em> increase </em>:</p>
+<div class="numex"><span class="nx-num">(22.13)</span><span class="nx-corpo">b» increase.01 “go up incrementally”</span></div>
+<p>Arg0: causador do aumento</p>
+<p>Arg1: coisa aumentando</p>
+<p>Arg2: quantidade aumentada por, EXT, ou MNR</p>
+<p>Arg3: ponto de partida</p>
+<p>Arg4: ponto final</p>
+<p>Um rotulagem de papéis semânticos do PropBank nos permitiria inferir a comumidade nas estruturas de eventos dos três exemplos seguintes, ou seja, que em cada caso <em> Big </em> <em>Fruit Co.</em> é o AGENT e <em> the price of bananas </em> é o THEME, apesar das formas superficiais diferentes.</p>
+<div class="numex"><span class="nx-num">(22.14)</span><span class="nx-corpo">[Arg0 Big Fruit Co. ] increased [Arg1 the price of bananas].</span></div>
+<div class="numex"><span class="nx-num">(22.15)</span><span class="nx-corpo">[Arg1 The price of bananas] was increased again [Arg0 by Big Fruit Co. ]<br/>[em português: O preço das bananas foi aumentado novamente [por Big Fruit Co.]]</span></div>
+<div class="numex"><span class="nx-num">(22.16)</span><span class="nx-corpo">[Arg1 The price of bananas] increased [Arg2 5%].</span></div>
+<p>O PropBank também possui vários argumentos não numerados chamados <strong> ArgMs </strong>, (ArgM- TMP, ArgM-LOC, etc.) que representam significados de modificação ou adjunto. Estes são relativamente estáveis entre predicados, portanto, não são listados com cada frame file. Dados rotulados com esses modificadores podem ser úteis no treinamento de sistemas para detectar modificação temporal, de localização ou direcional entre predicados. Alguns dos ArgMs incluem:</p>
+<p><strong>TMP </strong>quando? ontem à noite, agora</p>
+<p><strong>LOC </strong>onde? no museu, em San Francisco</p>
+<p><strong>DIR </strong>para/de onde? para baixo, para Bangkok</p>
+<p><strong>MNR </strong>como? claramente, com muito entusiasmo</p>
+<p><strong>PRP/CAU</strong> por quê? porque ... , em resposta à decisão</p>
+<p><strong>REC </strong>eles mesmos, um ao outro</p>
+<p><strong>ADV </strong>diversos</p>
+<p><strong>PRD </strong>predicação secundária ...comeu a carne crua</p>
+<p class="tag"><span class="tagchip">NomBank</span></p>
+<p>Enquanto o PropBank foca em verbos, um projeto relacionado, <strong> NomBank</strong> (<a class="cite"><span class="au">Meyers et al</span>., <span class="an">2004</span></a>) adiciona anotações a predicados nominais. Por exemplo, o <em> agreement</em> do substantivo em <em>Apple’s agreement with IBM</em> seria rotulado com Apple como o Arg0 e IBM como o Arg2. Isso permite que rotuladores de papel semântico atribuam rótulos aos argumentos de predicados verbais e nominais.</p>
+<h2>22.5 FrameNet</h2>
+<p>Embora fazer inferências sobre as semelhanças semânticas entre diferentes sentenças com  seja útil, seria ainda mais útil se pudéssemos fazer tais inferências em muitas mais situações, entre diferentes verbos e também entre verbos e substantivos. Por exemplo, gostaríamos de extrair a similaridade entre estas três sentenças:</p>
+<div class="numex"><span class="nx-num">(22.17)</span><span class="nx-corpo">[Arg1 The price of bananas] increased [Arg2 5%].</span></div>
+<div class="numex"><span class="nx-num">(22.18)</span><span class="nx-corpo">[Arg1 The price of bananas] rose [Arg2 5%].</span></div>
+<div class="numex"><span class="nx-num">(22.19)</span><span class="nx-corpo">There has been a [Arg2 5%] rise [Arg1 in the price of bananas].</span></div>
+<p>Observamos que o segundo exemplo usa o verbo diferente <em> rise</em>, e o terceiro exemplo usa o substantivo em vez do verbo <em> rise</em>. Gostaríamos de um sistema que reconheça que <em> the</em> <em>price of bananas</em> é o que subiu, e que <em> 5%</em> é a quantidade em que subiu, independentemente de <em> 5%</em> aparecer como objeto do verbo <em> increased</em> ou como modificador nominal do substantivo <em> rise</em>.</p>
+<p class="tag"><span class="tagchip">FrameNet</span></p>
+<p>O projeto <strong> FrameNet</strong> é outro projeto de rotulagem de papel semântico que tenta abordar exatamente esse tipo de problema (<a class="cite"><span class="au">Baker et al</span>. <span class="an">1998</span></a>, <a class="cite"><span class="au">Fillmore et al</span>. <span class="an">2003</span></a>, <a class="cite"><span class="au">Fillmore and Baker</span> <span class="an">2009</span></a>, <a class="cite"><span class="au">Ruppenhofer et al</span>. <span class="an">2016</span></a>). Enquanto os papéis no projeto PropBank são específicos de um verbo individual, os papéis no projeto FrameNet são específicos de um <strong> frame</strong>.</p>
+<p>O que é um frame? Considere o seguinte conjunto de palavras:</p>
+<p><em>reservaç\text{ão}, voo, viagem, comprar, preço, custo, tarifa, taxas, refeição, avião</em></p>
+<p>Existem muitas relações lexicais individuais de hiponímia, sinonímia, e assim por diante, entre muitas das palavras nesta lista. O conjunto resultante de relações, no entanto, não soma uma explicação completa de como essas palavras estão relacionadas. Elas são claramente todas definidas em relação a um bloco coerente de informações de senso comum sobre viagens aéreas.</p>
+<p class="tag"><span class="tagchip">frame</span><span class="tagchip">modelo</span><span class="tagchip">roteiro</span></p>
+<p>Chamamos o conhecimento de fundo holístico que une essas palavras de <strong> frame</strong> (Fillmore, 1985). A ideia de que grupos de palavras são definidos em relação a alguma informação de fundo é difundida na inteligência artificial e na ciência cognitiva, onde, além de <strong> frame</strong>, vemos trabalhos relacionados como <strong> model</strong> (<a class="cite"><span class="au">Johnson-Laird</span>, <span class="an">1983</span></a>), ou até mesmo <strong> script</strong> (<a class="cite"><span class="au">Schank and Abelson</span>, <span class="an">1977</span></a>).</p>
+<p class="tag"><span class="tagchip">elementos de frame</span></p>
+<p>Um *frame* no FrameNet é uma estrutura de conhecimento de fundo que define um conjunto de papéis semânticos específicos do *frame*, chamados <strong> elementos do *frame</strong>, e inclui um conjunto de predicados que utilizam esses papéis. Cada palavra evoca um *frame* e perfila algum aspecto do *frame* e seus elementos. O conjunto de dados FrameNet inclui um conjunto de *frames* e elementos de *frame*, as unidades lexicais associadas a cada *frame*, e um conjunto de sentenças de exemplo rotuladas. Por exemplo, o *frame* <strong> mudança de posição em uma escala</strong> é definido da seguinte forma:</p>
+<p>Este quadro consiste em palavras que indicam a mudança da posição de um Item.</p>
+<p>ação em uma escala (o Atributo) de um ponto de partida (Valor inicial) para um</p>
+<p>ponto final (Valor final).</p>
+<p class="tag"><span class="tagchip">papéis centrais</span><span class="tagchip">papéis não centrais</span></p>
+<p>Alguns papéis semânticos (elementos de quadro) no quadro são definidos como na Fig. 22.3. Note que estes são separados em <strong>papéis centrais</strong>, que são específicos do quadro, e <strong>papéis não centrais</strong>, que são mais parecidos com os argumentos Arg-M no PropBank, expressando propriedades mais gerais de tempo, localização, e assim por diante.</p>
+<figure><img src="images/fig0898.png" alt=""/><figcaption>Figura 22.3 Os elementos do *frame* em um *frame* de escala, do FrameNet Labelers Guide (Ruppenhofer et al., 2016).</figcaption></figure>
+<p>Aqui estão alguns exemplos de frases:</p>
+<div class="numex"><span class="nx-num">(22.20)</span><span class="nx-corpo">[ITEM Oil]<em> rose</em> [ATTRIBUTE in price] [DIFFERENCE by 2%].</span></div>
+<div class="numex"><span class="nx-num">(22.21)</span><span class="nx-corpo">[ITEM It] has<em> increased</em> [FINAL STATE to having them 1 day a month].</span></div>
+<div class="numex"><span class="nx-num">(22.22)</span><span class="nx-corpo">[ITEM Microsoft shares]<em> fell</em> [FINAL VALUE to 7 5/8].</span></div>
+<div class="numex"><span class="nx-num">(22.23)</span><span class="nx-corpo">[ITEM Colon cancer incidence]<em> fell</em> [DIFFERENCE by 50%] [GROUP among</span></div>
+<p>homens].</p>
+<div class="numex"><span class="nx-num">(22.24)</span><span class="nx-corpo">a steady<em> increase</em> [INITIAL VALUE from 9.5] [FINAL VALUE to 14.3] [ITEM</span></div>
+<p>em dividendos]</p>
+<div class="numex"><span class="nx-num">(22.25)</span><span class="nx-corpo">a [DIFFERENCE 5%] [ITEM dividend]<em> increase</em>...</span></div>
+<p>Note que o quadro inclui palavras-alvo como <em> rise</em>, <em>fall</em>, e <em> increase</em>. De fato, o quadro completo consiste nas seguintes palavras:</p>
+<p>O FrameNet também codifica relações entre frames, permitindo que os frames herdem uns dos outros, ou representando relações entre frames como causalidade (e generalizações entre elementos de frame em diferentes frames também podem ser representadas por herança). Assim, existe um frame <strong>Mudança de posição em uma escala</strong> que está ligado ao frame <strong>Mudança de posição em uma escala</strong> pela relação <strong>causa</strong>, mas isso adiciona um papel AGENT e é usado para exemplos causativos como os seguintes:</p>
+<div class="numex"><span class="nx-num">(22.26)</span><span class="nx-corpo">[AGENT They]<em> raised</em> [ITEM the price of their soda] [DIFFERENCE by 2%].</span></div>
+<p>Juntos, esses dois frames permitiriam que um sistema de compreensão extraísse a semântica de evento comum de todos os usos verbais e nominais causativos e não causativos.</p>
+<p>Os FrameNets também foram desenvolvidos para muitos outros idiomas, incluindo espanhol, alemão, japonês, português, italiano e chinês.</p>
+<div class="notas">
+<aside class="nota" epub:type="footnote" id="nota-27-1"><p><a class="nota-volta" href="#ref-27-1">1</a> Figure shows a birch bark manuscript from Kashmir of the Rupavatra, a grammatical textbook based on the Sanskrit grammar of Panini. Image from the Wellcome Collection.</p></aside>
+</div>
+</body></html>

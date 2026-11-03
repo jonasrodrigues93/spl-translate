@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="pt-BR" lang="pt-BR">
+<head><meta charset="utf-8"/><title>Reconhecimento</title><link rel="stylesheet" type="text/css" href="style.css"/></head>
+<body class="op-a1 op-b1 op-c2 op-d1">
+<h1>Reconhecimento</h1>
+<p>Na rotulagem de sequências, a tarefa da rede é atribuir um rótulo escolhido de um pequeno conjunto fixo de rótulos a cada token na sequência. Uma das tarefas de rotulagem de sequências mais comuns é <strong> reconhecimento de entidade nomeada</strong>.</p>
+<h3>9.5.1 Entidades Nomeadas</h3>
+<p class="tag"><span class="tagchip">entidade nomeada</span><span class="tagchip">reconhecimento de entidade nomeada</span><span class="tagchip">NER</span></p>
+<p>Uma <strong> entidade nomeada</strong> é, grosso modo, qualquer coisa que pode ser referida por um nome próprio: uma pessoa, um local, uma organização. A tarefa de <strong> reconhecimento de entidade nomeada</strong> (<strong> NER</strong>) é encontrar trechos de texto que constituem nomes próprios e rotular o tipo da entidade. Quatro rótulos de entidade são mais comuns: <strong> PER</strong> (pessoa), <strong> LOC</strong> (localização), <strong> ORG</strong> (organização) ou <strong> GPE</strong> (entidade geopolítica). No entanto, o termo <strong> entidade nomeada</strong> é comumente estendido para incluir coisas que não são entidades em si, incluindo expressões temporais como datas e horas, e até mesmo expressões numéricas como preços. Aqui está um exemplo da saída de um rotulador NER:</p>
+<p>Citando altos preços de combustível, [ORG<strong> United Airlines</strong>] disse [TIME<strong> Friday</strong>] que</p>
+<p>aumentou as tarifas em [MONEY<strong> $6</strong>] por viagem de ida e volta em voos para alguns</p>
+<p>cidades também atendidas por companhias aéreas de baixo custo. [ORG<strong> American Airlines</strong>], uma</p>
+<p>unidade de [ORG<strong> AMR Corp.]</strong>, imediatamente acompanhou a medida, disse o porta-voz</p>
+<p>[PER<strong> Tim Wagner</strong>]. [ORG<strong> United]</strong>, uma unidade de [ORG<strong> UAL Corp.]</strong>,</p>
+<p>disse que o aumento entrou em vigor em [TIME<strong> Thursday]</strong> e se aplica à maioria das</p>
+<p>rotas onde compete com companhias aéreas de desconto, como [LOC<strong> Chicago]</strong></p>
+<p>de [LOC<strong> Dallas]</strong> e de [LOC<strong> Denver]</strong> para [LOC<strong> San Francisco]</strong>. O texto contém 13 menções de entidades nomeadas, incluindo 5 organizações, 4 locais, 2 tempos, 1 pessoa e 1 menção de dinheiro. A Figura 9.7 mostra tipos típicos genéricos de entidades nomeadas. Muitas aplicações também precisarão usar tipos de entidades específicos, como proteínas, genes, produtos comerciais ou obras de arte. Entidade Geopolítica (GPE) países, estados <strong>Palo Alto</strong> está aumentando as taxas de estacionamento.</p>
+<figure><img src="images/fig0457.png" alt=""/><figcaption><strong>Figura 9.7 </strong>Uma lista de tipos genéricos de entidades nomeadas com os tipos de entidades a que se referem.</figcaption></figure>
+<p>O reconhecimento de entidades nomeadas é uma etapa útil em várias tarefas de processamento de linguagem natural, incluindo a ligação de texto a informações em fontes de conhecimento estruturadas como a Wikipedia, a medição de sentimento ou atitudes em relação a uma entidade específica no texto, ou mesmo como parte da anonimização de texto para privacidade. A tarefa de NER é difícil devido à ambiguidade de segmentar os spans de NER, descobrindo quais tokens são entidades e quais não são, visto que a maioria das palavras em um texto não serão entidades nomeadas. Outra dificuldade é causada pela ambiguidade de tipo. A menção<code> Washington</code> pode se referir a uma pessoa, uma equipe esportiva, uma cidade ou ao governo dos EUA, como vemos na Fig. 9.8.</p>
+<p>Em junho, [GPE Washington] aprovou uma lei primária de cinto de segurança.</p>
+<figure><img src="images/fig0458.png" alt=""/><figcaption><strong>Figura 9.8 </strong>Exemplos de ambiguidades de tipo no uso do nome<em> Washington</em>.</figcaption></figure>
+<h3>9.5.2 Tagging BIO</h3>
+<p class="tag"><span class="tagchip">tagging BIO</span></p>
+<p>Uma abordagem padrão para rotulagem de sequências para um problema de reconhecimento de span como NER é<strong> BIO tagging</strong> (<a class="cite"><span class="au">Ramshaw and Marcus</span>, <span class="an">1995</span></a>). Este é um método que nos permite tratar NER como uma tarefa de rotulagem de sequências palavra por palavra, por meio de tags que capturam tanto o limite quanto o tipo de entidade nomeada. Considere a seguinte frase:</p>
+<p>[PER<strong> Jane Villanueva</strong> ] de [ORG<strong> United</strong>] , uma unidade da [ORG<strong> United Airlines</strong></p>
+<p><strong>Holding</strong>] , disse que a tarifa se aplica à rota [LOC<strong> Chicago</strong> ].</p>
+<p class="tag"><span class="tagchip">BIO</span></p>
+<p>A Figura 9.9 mostra o mesmo excerto representado com<strong> BIO</strong> tagging, bem como variantes chamadas<strong> IO</strong> tagging e<strong> BIOES</strong> tagging. No BIO tagging, rotulamos qualquer token que<em> começa</em> um span de interesse com o rótulo B, tokens que ocorrem<em> dentro</em> um span são rotulados com um I, e quaisquer tokens<em> fora</em> de qualquer span de interesse são rotulados O. Embora haja apenas um rótulo O, teremos tags B e I distintas para cada classe de entidade nomeada. O número de tags é, portanto, 2<em>n</em>+1, onde<em> n</em> é o número de tipos de entidade. O BIO tagging pode representar exatamente a mesma informação que a notação entre colchetes, mas tem a vantagem de que podemos representar a tarefa da mesma maneira simples de modelagem de sequências que a rotulagem de classes gramaticais: atribuindo um único rótulo<em> yi</em> a cada palavra de entrada<em> xi</em>:</p>
+<figure><img src="images/fig0459.png" alt=""/><figcaption><strong>Figura 9.9 </strong>NER como um modelo de sequência, mostrando as rotulações IO, BIO e BIOES.</figcaption></figure>
+<p>Também mostramos dois esquemas de rotulagem variantes: IO tagging, que perde alguma informação ao eliminar a tag B, e BIOES tagging, que adiciona uma tag de fim E para o fim de um span, e uma tag de span S para um span composto por apenas uma palavra.</p>
+<h3>9.5.3 Rotulagem de Sequências</h3>
+<figure><img src="images/fig0460.png" alt=""/></figure>
+<p>Em rotulagem de sequências, passamos o vetor de saída final correspondente a cada token de entrada para um classificador que produz uma distribuição softmax sobre o conjunto possível de tags. Para um classificador de camada feedforward única, o conjunto de pesos a serem aprendidos é <strong>WK</strong> de tamanho [<em>d</em> ×<em> k</em>], onde<em> k</em> é o número de tags possíveis para a tarefa. Uma abordagem gulosa, onde a tag argmax para cada token é tomada como uma resposta provável, pode ser usada para gerar a sequência final de tags de saída. A Fig. 9.10 ilustra um exemplo dessa abordagem, onde<strong> yi</strong> é um vetor de probabilidades sobre as tags, e<em> k</em> indexa as tags.</p>
+<p class="formula"><img class="eqimg" src="images/eq0462.png" alt="yi = softmax(hLi WK)
+ti = argmaxk(yi)"/></p>
+<p>Alternativamente, a distribuição sobre rótulos fornecida pelo softmax para cada entrada</p>
+<figure><img src="images/fig0461.png" alt=""/><figcaption><strong>Figura 9.10 </strong>Rotulagem de sequências para reconhecimento de entidades nomeadas com um codificador transformer bidirecional. O vetor de saída para cada token de entrada é passado para um classificador simples k-way.</figcaption></figure>
+<p><strong>Tokenização e NER</strong> Observamos que os dados de treinamento supervisionado para NER são tipicamente na forma de tags BIO associadas a texto segmentado no nível da palavra. Por exemplo, a seguinte frase contendo duas entidades nomeadas:</p>
+<p>[LOC<strong> Mt. Sanitas</strong> ] está em [LOC<strong> Sunshine Canyon</strong>] . teria o seguinte conjunto de tags BIO por palavra.</p>
+<div class="numex"><span class="nx-num">(9.9)</span><span class="nx-corpo"><em>Mt. Sanitas is in Sunshine Canyon .</em><br/>B-LOC I-LOC O O B-LOC I-LOC O</span></div>
+<p>Infelizmente, a sequência de tokens WordPiece para esta sentença não se alinha diretamente com as tags BIO na anotação:</p>
+<pre>’Mt’, ’.’, ’San’, ’##itas’, ’is’, ’in’, ’Sunshine’, ’Canyon’ ’.’</pre>
+<p>Para lidar com esse desalinhamento, precisamos de uma maneira de atribuir tags BIO aos tokens subword durante o treinamento e uma maneira correspondente de recuperar tags em nível de palavra a partir dos subwords durante a decodificação. Para o treinamento, podemos simplesmente atribuir a tag padrão associada a cada palavra a todos os tokens subword derivados dela.</p>
+<p>Para a decodificação, a abordagem mais simples é usar a tag BIO argmax associada ao primeiro token subword de uma palavra. Assim, em nosso exemplo, a tag BIO atribuída a “Mt” seria atribuída a “Mt.” e a tag atribuída a “San” seria atribuída a “Sanitas”, ignorando efetivamente a informação nas tags atribuídas a “.” e “##itas”. Abordagens mais complexas combinam a distribuição das probabilidades de tags entre os subwords em uma tentativa de encontrar uma tag ótima em nível de palavra.</p>
+<h3>9.5.4 Avaliando o Reconhecimento de Entidade Nomeada</h3>
+<p>Os reconhecedores de entidade nomeada são avaliados por  recall,  precisão e  medida F$1$. Lembre-se que recall é a razão entre o número de respostas rotuladas corretamente e o total que deveria ter sido rotulado; precisão é a razão entre o número de respostas rotuladas corretamente e o total rotulado; e a medida F$1$ é a média harmônica dos dois.</p>
+<p>Para saber se a diferença entre as pontuações F<sub>1</sub> de dois sistemas de NER é uma diferença significativa, usamos o teste bootstrap pareado, ou o teste de randomização similar (Seção 4.11).</p>
+<p>Para a rotulagem de entidades nomeadas, a <em> entidade</em> em vez da palavra é a unidade de resposta. Assim, no exemplo da Fig. 9.9, as duas entidades <em> Jane Villanueva</em> e <em> United Airlines</em> <em>Holding</em> e a não-entidade <em> discussed</em> seriam contadas como uma única resposta cada.</p>
+<p>O fato de a rotulagem de entidades nomeadas ter um componente de segmentação que não está presente em tarefas como categorização de texto ou rotulagem de classes gramaticais causa alguns problemas na avaliação. Por exemplo, um sistema que rotulou <em> Jane</em> mas não <em> Jane Villanueva</em> como pessoa causaria dois erros, um falso positivo para O e um falso negativo para I-PER. Além disso, usar entidades como unidade de resposta, mas palavras como unidade de treinamento, significa que há uma incompatibilidade entre as condições de treinamento e teste.</p>
+<h2>9.6 Resumo</h2>
+<p>Este capítulo introduziu o codificador bidirecional  e o modelo de linguagem mascarado . Aqui está um resumo dos pontos principais que cobrimos:</p>
+<p>Existem três arquiteturas principais para modelos de linguagem: o <strong> codificador</strong> (esta</p>
+<p>(capítulo), o<strong> decodificador</strong>, e o<strong> codificador-decodificador</strong>. Vimos modelos decodificadores em</p>
+<p>Capítulo 1 e Capítulo 7, e veremos codificadores-decodificadores no Capítulo 13.</p>
+<p>Codificadores bidirecionais podem ser usados para gerar representações contextualizadas</p>
+<p>dos embeddings de entrada usando o contexto de entrada inteiro.</p>
+<p>Modelos de linguagem pré-treinados baseados em codificadores bidirecionais podem ser aprendidos</p>
+<p>usando um objetivo de modelo de linguagem mascarado onde um modelo é treinado para adivinhar</p>
+<p>a informação ausente de uma entrada.</p>
+<p>O vetor de saída de cada bloco ou componente transformer em um determinado</p>
+<p>a coluna ken é um <strong> embedding contextual</strong> que representa algum aspecto do</p>
+<p>o significado de um token em contexto.</p>
+<p>Um <strong> sentido da palavra</strong> é uma representação discreta de um aspecto do significado de um</p>
+<p>embeddings contextuais oferecem um modelo contínuo de alta dimensão de</p>
+<p>significando algo mais rico do que sentidos totalmente discretos. • O cosseno entre os embeddings contextuais pode ser usado como uma maneira de modelar a similaridade entre duas palavras em contexto, embora algumas transformações nos embeddings sejam necessárias primeiro. • Modelos de linguagem pré-treinados podem ser ajustados (fine-tuned) para aplicações específicas adicionando camadas de classificador leves sobre as saídas do modelo pré-treinado. • Essas aplicações podem incluir tarefas de<strong> classificação de sequências</strong> como análise de sentimento, tarefas de<strong> classificação de pares de sequências</strong> como inferência de linguagem natural, ou tarefas de<strong> rotulagem de sequências</strong> como<strong> reconhecimento de entidade nomeada</strong>.</p>
+<h2>Notas Históricas</h2>
+<p>História A definir.</p>
+</body></html>

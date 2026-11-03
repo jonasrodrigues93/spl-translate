@@ -18,20 +18,21 @@ PDF original é distribuído pelos autores para leitura, e **este repositório n
 o inclui**: baixe-o você mesmo e aponte para ele.
 
 - **Código e documentação** deste repositório: licença MIT ([LICENSE](LICENSE)).
-- **Tradução** (`traducao/`) e **EPUB** das releases: obra derivada do livro,
-  que continua sob os direitos dos autores. A licença MIT **não** os cobre.
-  Situação da autorização dos autores para redistribuir: **pendente**.
+- **Tradução** (`OEBPS/`, `traducao/`) e **EPUB** das releases: obra derivada
+  do livro, que continua sob os direitos dos autores. A licença MIT **não** os
+  cobre.
 
 ## Onde está o EPUB
 
-O EPUB **não fica no repositório**: é gerado automaticamente pelo GitHub
-Actions (`.github/workflows/release.yml`) quando uma *release* é publicada, e
-anexado a ela com a versão no nome: `spl-ptBR-<tag>.epub` (por exemplo,
-`spl-ptBR-ed3-2026.08-r1.epub`). O texto traduzido vive em `traducao/livro.jsonl` (um bloco por
-linha: `i` é o índice do bloco, `pt` é a tradução). A montagem não chama LLM.
+O EPUB **não fica no repositório**. O conteúdo do livro está em `OEBPS/` (XHTML,
+CSS, imagens, fontes), na raiz, e pode ser corrigido à mão. Quando uma *release*
+é publicada, o GitHub Actions (`.github/workflows/release.yml`) empacota
+`OEBPS/` em um EPUB e o anexa à release, com a versão no nome:
+`spl-ptBR-<tag>.epub` (por exemplo, `spl-ptBR-ed3-2026.08-r1.epub`). O workflow
+não traduz nada.
 
-O workflow baixa o PDF de origem da variável de repositório `PDF_URL` e confere
-o hash SHA-256: os índices de bloco só casam com o PDF de 19/08/2026.
+`traducao/livro.jsonl` guarda a saída da tradução automática (um bloco por
+linha: `i` é o índice do bloco, `pt` é a tradução).
 
 ## Requisitos
 
@@ -55,9 +56,6 @@ python3 fonts.py                    # fontes de reserva -> build/fonts/ (Python 
 ./venv/bin/python translate.py --out livro.jsonl --porta 8099 --workers 2 --sem-thinking
 ./venv/bin/python build_epub.py --jsonl livro.jsonl --sem-links --out livro.epub
 ```
-
-Para montar a partir da tradução versionada, sem LLM:
-`build_epub.py --jsonl "$PWD/traducao/livro.jsonl" --sem-links`.
 
 - `translate.py` é **retomável**: grava JSONL de acréscimo e, depois de uma
   queda, reexecutar continua de onde parou. `--cap N` traduz só o capítulo N.
@@ -94,8 +92,9 @@ Não deixe dois modelos no ar ao mesmo tempo: a memória não comporta.
 | `build_epub.py` | monta o EPUB (e a árvore `OEBPS`) |
 | `template.py` | CSS e estilo do livro |
 | `capa.py` | gera a capa |
-| `traducao/livro.jsonl` | a tradução versionada (entrada do EPUB) |
-| `.github/workflows/release.yml` | gera o EPUB ao publicar uma release |
+| `OEBPS/` | conteúdo do EPUB, corrigível à mão |
+| `traducao/livro.jsonl` | saída da tradução automática |
+| `.github/workflows/release.yml` | empacota `OEBPS/` em EPUB ao publicar uma release |
 | `nota-tradutor.html` | texto da nota do tradutor |
 
 ## Decisões de tradução

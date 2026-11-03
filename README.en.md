@@ -20,22 +20,21 @@ at it.
 
 - **Code and documentation** in this repository: MIT license
   ([LICENSE](LICENSE)).
-- **Translation** (`traducao/`) and the **EPUB** attached to releases: derivative
-  work of the book, which remains under the authors' rights. The MIT license
-  does **not** cover them. Status of the authors' permission to redistribute:
-  **pending**.
+- **Translation** (`OEBPS/`, `traducao/`) and the **EPUB** attached to
+  releases: derivative work of the book, which remains under the authors'
+  rights. The MIT license does **not** cover them.
 
 ## Where the EPUB is
 
-The EPUB is **not stored in the repository**. GitHub Actions
-(`.github/workflows/release.yml`) builds it automatically when a *release* is
-published and attaches it to that release, with the version in the file name:
-`spl-ptBR-<tag>.epub` (for example `spl-ptBR-ed3-2026.08-r1.epub`). The
-translated text lives in `traducao/livro.jsonl` (one block per line: `i` is the
-block index, `pt` is the translation). Assembly does not call any LLM.
+The EPUB is **not stored in the repository**. The book content lives in
+`OEBPS/` (XHTML, CSS, images, fonts) at the root, and can be fixed by hand. When
+a *release* is published, GitHub Actions (`.github/workflows/release.yml`) packs
+`OEBPS/` into an EPUB and attaches it to the release, with the version in the
+file name: `spl-ptBR-<tag>.epub` (for example `spl-ptBR-ed3-2026.08-r1.epub`).
+The workflow does not translate anything.
 
-The workflow downloads the source PDF from the `PDF_URL` repository variable and
-checks its SHA-256: block indices only match the PDF of August 19, 2026.
+`traducao/livro.jsonl` holds the machine-translation output (one block per line:
+`i` is the block index, `pt` is the translation).
 
 ## Requirements
 
@@ -59,9 +58,6 @@ python3 fonts.py                    # fallback fonts -> build/fonts/ (SYSTEM Pyt
 ./venv/bin/python translate.py --out book.jsonl --porta 8099 --workers 2 --sem-thinking
 ./venv/bin/python build_epub.py --jsonl book.jsonl --sem-links --out book.epub
 ```
-
-To build from the versioned translation, with no LLM:
-`build_epub.py --jsonl "$PWD/traducao/livro.jsonl" --sem-links`.
 
 - `translate.py` is **resumable**: it appends to a JSONL file, so after a crash
   you just run it again. `--cap N` translates chapter N only.
@@ -98,8 +94,9 @@ Do not keep two models loaded at once: memory cannot hold them.
 | `build_epub.py` | builds the EPUB (and the `OEBPS` tree) |
 | `template.py` | CSS and book style |
 | `capa.py` | generates the cover |
-| `traducao/livro.jsonl` | the versioned translation (EPUB input) |
-| `.github/workflows/release.yml` | builds the EPUB when a release is published |
+| `OEBPS/` | EPUB content, fixable by hand |
+| `traducao/livro.jsonl` | machine-translation output |
+| `.github/workflows/release.yml` | packs `OEBPS/` into an EPUB when a release is published |
 | `nota-tradutor.html` | text of the translator's note |
 
 ## Translation decisions

@@ -38,7 +38,9 @@ jobs:
       - name: Baixar o PDF de origem
         run: |
           test -n "${{ vars.PDF_URL }}" || { echo "defina a variável de repositório PDF_URL"; exit 1; }
-          curl -fL "${{ vars.PDF_URL }}" -o "$ED3BOOK_PDF"
+          # O servidor de Stanford serve a cadeia de certificados incompleta, e o
+          # curl recusa a conexão. A integridade fica garantida pelo SHA-256 abaixo.
+          curl -fLk "${{ vars.PDF_URL }}" -o "$ED3BOOK_PDF"
           echo "$PDF_SHA256  $ED3BOOK_PDF" | sha256sum -c -
 
       - name: Extrair, citações, fontes e capa

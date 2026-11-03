@@ -49,13 +49,21 @@ no lugar. O passo a passo está no [CONTRIBUTING](CONTRIBUTING.md).
 
 ## Direitos autorais
 
-O livro é © 2026 Jurafsky & Martin, "all rights reserved" (página 1 do PDF). O
-PDF original é distribuído pelos autores para leitura, e este repositório não o
-inclui.
+Este é um projeto **não oficial** e **sem fins lucrativos**: quem faz esta
+tradução não busca renda alguma com ela.
+
+O livro é de Daniel Jurafsky e James H. Martin, e a página oficial dele, com o
+original em inglês para leitura gratuita, é
+**[web.stanford.edu/~jurafsky/slp3](https://web.stanford.edu/~jurafsky/slp3/)**.
+Em caso de dúvida, o original é sempre a referência.
+
+*Speech and Language Processing* © 2026 Daniel Jurafsky e James H. Martin.
+Todos os direitos reservados (página 1 do PDF). O PDF original não está
+neste repositório.
 
 - **Código e documentação** deste repositório: licença MIT ([LICENSE](LICENSE)).
-- **Texto traduzido** e **e-book** das versões: obra derivada do livro, que
-  continua sob os direitos dos autores. A licença MIT **não** os cobre.
+- **Texto traduzido** e **e-book** de cada versão: obra derivada do livro. Os
+  direitos continuam com os autores, e a licença MIT **não** os cobre.
 
 ## Para desenvolvedores
 

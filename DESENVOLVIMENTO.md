@@ -31,10 +31,11 @@ python3 -m venv venv
 ./venv/bin/python src/extract.py        # PDF -> build/blocks.json + build/images/
 ./venv/bin/python src/bib.py            # chaves de citação -> build/bib.json
 python3 src/fonts.py                    # fontes de reserva -> build/fonts/ (Python do SISTEMA)
-./venv/bin/python src/capa.py           # capa -> build/capa.png
+./venv/bin/python src/capa.py           # capa -> build/capa.jpg
 
 ./venv/bin/python src/translate.py --out livro.jsonl --porta 8099 --workers 2 --sem-thinking
 ./venv/bin/python src/build_epub.py --jsonl livro.jsonl --sem-links --out livro.epub
+python3 src/azw3.py build/livro.epub    # Kindle: AZW3 com tipo PDOC (capa na biblioteca)
 ```
 
 Para montar a partir da tradução versionada, sem LLM:
@@ -74,7 +75,8 @@ Não deixe dois modelos no ar ao mesmo tempo: a memória não comporta.
 | `src/translate.py` | traduz os blocos com o prompt e o glossário |
 | `src/build_epub.py` | monta o EPUB (e a árvore `OEBPS`) |
 | `src/template.py` | CSS e estilo do livro |
-| `src/capa.py` | gera a capa |
+| `src/capa.py` | gera a capa (3:4, a proporção da tela do Paperwhite) |
+| `src/azw3.py` | converte o EPUB em AZW3 e troca o tipo EBOK por PDOC |
 | `traducao/livro.jsonl` | a tradução versionada (entrada do EPUB) |
 | `.github/workflows/release.yml` | gera o EPUB ao publicar uma release |
 | `nota-tradutor.html` | texto da nota do tradutor |

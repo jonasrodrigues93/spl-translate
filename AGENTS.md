@@ -23,7 +23,7 @@ tipo(escopo): descrição
   caracteres.
 - **Corpo** (opcional): explica o porquê, não o quê.
 - **Mudança incompatível:** `!` depois do tipo/escopo e rodapé `BREAKING CHANGE:`.
-  Qualquer mudança no `extract.py` que invalide as traduções já feitas é
+  Qualquer mudança no `src/extract.py` que invalide as traduções já feitas é
   incompatível.
 - Um assunto por commit. Nunca inclua chaves de API, caminhos da sua máquina,
   o PDF ou arquivos de `build/`.
@@ -42,7 +42,7 @@ python3 -m venv venv
 ./venv/bin/pip install -r requirements.txt
 ```
 
-`fonts.py` continua sendo executado com `python3` do sistema, porque o
+`src/fonts.py` continua sendo executado com `python3` do sistema, porque o
 `fontTools` é uma dependência do sistema neste ambiente.
 
 ## Rodar
@@ -50,7 +50,7 @@ python3 -m venv venv
 Não há script único: rode o pipeline abaixo, passo a passo. O servidor local
 sobe com o comando do `DESENVOLVIMENTO.md` — **sempre com `--n-cpu-moe`**.
 
-**É retomável.** O `translate.py` grava JSONL append-only e relê o que já
+**É retomável.** O `src/translate.py` grava JSONL append-only e relê o que já
 traduziu; depois de uma queda, reexecutar continua de onde parou. Antes de
 subir um servidor, confira que não há outro `llama-server` no ar — 23 GB não
 comportam dois modelos destes.
@@ -58,20 +58,20 @@ comportam dois modelos destes.
 ## Pipeline, passo a passo
 
 ```
-./venv/bin/python extract.py      # PDF -> build/blocks.json + build/images/
-./venv/bin/python bib.py          # chaves de citação -> build/bib.json
-python3 fonts.py                  # fontes de reserva -> build/fonts/
-./venv/bin/python translate.py --cap N --out N.jsonl [--porta 8099]
-./venv/bin/python build_epub.py --jsonl N.jsonl --out livro.epub
+./venv/bin/python src/extract.py      # PDF -> build/blocks.json + build/images/
+./venv/bin/python src/bib.py          # chaves de citação -> build/bib.json
+python3 src/fonts.py                  # fontes de reserva -> build/fonts/
+./venv/bin/python src/translate.py --cap N --out N.jsonl [--porta 8099]
+./venv/bin/python src/build_epub.py --jsonl N.jsonl --out livro.epub
 ```
 
-**`fonts.py` roda no Python do SISTEMA**, não no venv: o `fontTools` está lá.
+**`src/fonts.py` roda no Python do SISTEMA**, não no venv: o `fontTools` está lá.
 
-Prévia sem tradução: `./venv/bin/python build_epub.py --cap N --jsonl NADA.jsonl`.
+Prévia sem tradução: `./venv/bin/python src/build_epub.py --cap N --jsonl NADA.jsonl`.
 
 ## Rede de segurança
 
-**`extract.py` → `validar()`** — acusa glifo de fonte não decodificada e
+**`src/extract.py` → `validar()`** — acusa glifo de fonte não decodificada e
 caractere ilegível chegando ao texto do leitor. Nasceu do exemplo (2.9), que
 saía `t-@-nk'e-mejN-@-...` porque a fonte fonética WSUIPA desenha AFI em slots
 ASCII. Não a remova sem substituí-la. Ao mexer na montagem, confira também o XML
@@ -79,7 +79,7 @@ do EPUB com `xml.dom.minidom`.
 
 **Extrator e consumidores têm de ler igual.** `column_origins`, `col_index`,
 `backmatter_start`, `toc_pages`, `build_vocab` e `chapter_pages` vivem no
-`extract.py` e são importados por `bib.py`, `translate.py` e `build_epub.py`,
+`src/extract.py` e são importados por `src/bib.py`, `src/translate.py` e `src/build_epub.py`,
 em vez de reescritos em cada um.
 
 `chapter_pages` é o recorte de um capítulo, e vale para o tradutor e o montador: recorte
@@ -103,11 +103,11 @@ começa, e a prévia saía com um capítulo 3 truncado).
 - **O PDF não é marcado** (sem `StructTreeRoot`). A única "tag" disponível é
   a assinatura tipográfica mais os desenhos que delimitam tabela, quadro e
   nota de rodapé.
-- **Editar `translate.py` com uma tradução em voo não afeta o processo em
+- **Editar `src/translate.py` com uma tradução em voo não afeta o processo em
   execução** — o módulo já está carregado. Foi assim que o bake-off
   Qwen×Gemma saiu inválido: cada modelo rodou uma versão diferente do código.
 - **Índices de bloco não são estáveis entre extrações.** Qualquer mudança em
-  `extract.py` invalida os `.jsonl` de tradução já produzidos.
+  `src/extract.py` invalida os `.jsonl` de tradução já produzidos.
 - **O pós-livro é composto em colunas** — três na bibliografia, quatro no
   índice remissivo — e com recuo PENDENTE, ao contrário do corpo: a entrada
   encosta na margem da coluna e as continuações é que entram. Lido com a regra
@@ -140,7 +140,7 @@ impresso. Escrita no fim da montagem, caía depois do índice.
 
 ## O exemplo linguístico nunca é traduzido
 
-Duas vias em `translate.py`: **MANTER** ou **GLOSAR** (original intacto mais o
+Duas vias em `src/translate.py`: **MANTER** ou **GLOSAR** (original intacto mais o
 equivalente entre colchetes). Havia uma terceira, TRADUZIR, e ela não se
 sustentou — o exemplo deste livro não é ilustração solta, é o objeto que a
 prosa ao redor mede, e ela está sempre a um parágrafo de distância:
@@ -176,7 +176,7 @@ for amostra de corpus ou listagem de dados.
 Aprovado em `docs/style-proofs.html`: **A1** (mastro fiel), **B1** (epígrafe
 recuada), **C2** (tag em etiqueta), **D1** (citação como link).
 
-Trocar A/B/D é **só CSS** — editar `ESTILO` em `template.py`. A marcação
+Trocar A/B/D é **só CSS** — editar `ESTILO` em `src/template.py`. A marcação
 emitida é a mesma para todas as variantes. Exceções que exigem remontagem:
 C3, C4 e D3, que mudam a marcação e não só a pintura.
 

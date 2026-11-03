@@ -18,7 +18,7 @@ o hash SHA-256: os índices de bloco só casam com o PDF de 19/08/2026.
 
 - Python 3.10+ e `llama.cpp` (`llama-server`) para o backend local.
 - O PDF do livro (`ed3book_aug26.pdf` ou outro, via `ED3BOOK_PDF`).
-- `fontTools` no Python do sistema (usado só pelo `fonts.py`).
+- `fontTools` no Python do sistema (usado só pelo `src/fonts.py`).
 
 ```
 python3 -m venv venv
@@ -28,19 +28,19 @@ python3 -m venv venv
 ## Gerar o EPUB
 
 ```
-./venv/bin/python extract.py        # PDF -> build/blocks.json + build/images/
-./venv/bin/python bib.py            # chaves de citação -> build/bib.json
-python3 fonts.py                    # fontes de reserva -> build/fonts/ (Python do SISTEMA)
-./venv/bin/python capa.py           # capa -> build/capa.png
+./venv/bin/python src/extract.py        # PDF -> build/blocks.json + build/images/
+./venv/bin/python src/bib.py            # chaves de citação -> build/bib.json
+python3 src/fonts.py                    # fontes de reserva -> build/fonts/ (Python do SISTEMA)
+./venv/bin/python src/capa.py           # capa -> build/capa.png
 
-./venv/bin/python translate.py --out livro.jsonl --porta 8099 --workers 2 --sem-thinking
-./venv/bin/python build_epub.py --jsonl livro.jsonl --sem-links --out livro.epub
+./venv/bin/python src/translate.py --out livro.jsonl --porta 8099 --workers 2 --sem-thinking
+./venv/bin/python src/build_epub.py --jsonl livro.jsonl --sem-links --out livro.epub
 ```
 
 Para montar a partir da tradução versionada, sem LLM:
-`build_epub.py --jsonl "$PWD/traducao/livro.jsonl" --sem-links`.
+`src/build_epub.py --jsonl "$PWD/traducao/livro.jsonl" --sem-links`.
 
-- `translate.py` é **retomável**: grava JSONL de acréscimo e, depois de uma
+- `src/translate.py` é **retomável**: grava JSONL de acréscimo e, depois de uma
   queda, reexecutar continua de onde parou. `--cap N` traduz só o capítulo N.
 - `--sem-thinking` desliga o raciocínio do modelo. Com ele ligado, o modelo gasta
   o limite de tokens pensando e devolve resposta vazia.
@@ -68,13 +68,13 @@ Não deixe dois modelos no ar ao mesmo tempo: a memória não comporta.
 
 | Arquivo | Papel |
 |---|---|
-| `extract.py` | PDF → blocos (`build/blocks.json`) e imagens |
-| `bib.py` | chaves de citação → `build/bib.json` |
-| `fonts.py` | fontes de reserva para glifos que o Kindle não tem |
-| `translate.py` | traduz os blocos com o prompt e o glossário |
-| `build_epub.py` | monta o EPUB (e a árvore `OEBPS`) |
-| `template.py` | CSS e estilo do livro |
-| `capa.py` | gera a capa |
+| `src/extract.py` | PDF → blocos (`build/blocks.json`) e imagens |
+| `src/bib.py` | chaves de citação → `build/bib.json` |
+| `src/fonts.py` | fontes de reserva para glifos que o Kindle não tem |
+| `src/translate.py` | traduz os blocos com o prompt e o glossário |
+| `src/build_epub.py` | monta o EPUB (e a árvore `OEBPS`) |
+| `src/template.py` | CSS e estilo do livro |
+| `src/capa.py` | gera a capa |
 | `traducao/livro.jsonl` | a tradução versionada (entrada do EPUB) |
 | `.github/workflows/release.yml` | gera o EPUB ao publicar uma release |
 | `nota-tradutor.html` | texto da nota do tradutor |
@@ -84,8 +84,8 @@ Não deixe dois modelos no ar ao mesmo tempo: a memória não comporta.
 - Exemplos linguísticos **nunca** são traduzidos: ficam em inglês, às vezes
   com a glosa em português entre colchetes.
 - Código e fórmulas ficam no original.
-- Terminologia segue o glossário em `translate.py`; termos de uso corrente
+- Terminologia segue o glossário em `src/translate.py`; termos de uso corrente
   (*token*, *embedding*, *prompt*…) ficam em inglês.
-- O estilo do EPUB muda só no CSS (`ESTILO` em `template.py`).
+- O estilo do EPUB muda só no CSS (`ESTILO` em `src/template.py`).
 
 Mais detalhes e armadilhas já encontradas estão no [AGENTS.md](AGENTS.md).

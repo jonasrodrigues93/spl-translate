@@ -73,7 +73,7 @@ def main():
     centro(p, ybase + 290, AUTORES, 58, SERIF_B, cinza(0.05))
     centro(p, H - 90, EDICAO, 34, SANS, cinza(0.35))
 
-    out = Path(__file__).parent / "build" / "capa.png"
+    out = Path(__file__).resolve().parent.parent / "build" / "capa.png"
     p.get_pixmap(dpi=72, colorspace=fitz.csGRAY).save(out)
     print(f"capa: {out}")
 

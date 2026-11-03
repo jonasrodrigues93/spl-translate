@@ -45,13 +45,13 @@ jobs:
 
       - name: Extrair, citações, fontes e capa
         run: |
-          python extract.py
-          python bib.py
-          /usr/bin/python3 fonts.py      # Python do sistema: o fontTools está lá
-          python capa.py
+          python src/extract.py
+          python src/bib.py
+          /usr/bin/python3 src/fonts.py      # Python do sistema: o fontTools está lá
+          python src/capa.py
 
       - name: Montar o EPUB
-        run: python build_epub.py --jsonl "$GITHUB_WORKSPACE/traducao/livro.jsonl" --sem-links --out "$EPUB"
+        run: python src/build_epub.py --jsonl "$GITHUB_WORKSPACE/traducao/livro.jsonl" --sem-links --out "$EPUB"
 
       - name: Conferir o XML
         run: |

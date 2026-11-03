@@ -21,10 +21,11 @@ from pathlib import Path
 import fitz
 
 HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent                    # raiz do projeto (src/ fica dentro dela)
 # O PDF acompanha este checkout; ED3BOOK_PDF permite apontar para outra cópia.
 PDF = (Path(os.environ["ED3BOOK_PDF"])
-       if "ED3BOOK_PDF" in os.environ else HERE / "ed3book_jan26.pdf")
-OUT = HERE / "build"
+       if "ED3BOOK_PDF" in os.environ else ROOT / "ed3book_jan26.pdf")
+OUT = ROOT / "build"
 
 # --- perfil tipográfico, derivado da análise do PDF -------------------------
 BODY = ("NimbusRomNo9L-Regu", 10.0)

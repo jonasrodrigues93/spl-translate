@@ -30,7 +30,8 @@ from pathlib import Path
 from extract import chapter_pages
 
 HERE = Path(__file__).resolve().parent
-BUILD = HERE / "build"
+ROOT = HERE.parent                    # raiz do projeto (src/ fica dentro dela)
+BUILD = ROOT / "build"
 # Servidor e concorrência vêm da linha de comando: mais de um llama-server
 # pode estar no ar (portas e modelos diferentes), e apontar para o errado
 # gasta horas de tradução com o modelo que não se queria. WORKERS tem de

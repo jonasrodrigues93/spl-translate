@@ -27,7 +27,8 @@ from extract import chapter_pages
 from template import CSS, ESTILO
 
 HERE = Path(__file__).resolve().parent
-BUILD = HERE / "build"
+ROOT = HERE.parent                    # raiz do projeto (src/ fica dentro dela)
+BUILD = ROOT / "build"
 
 MARK = re.compile(r"«(/?)(i|b|code|sup|sub)»")
 
@@ -35,7 +36,7 @@ NAMES = {"i": "em", "b": "strong", "code": "code",
          "sup": "sup", "sub": "sub"}
 
 BIB_FILE = "bibliografia.xhtml"
-NOTA_HTML = Path(__file__).parent / "nota-tradutor.html"   # editável à mão
+NOTA_HTML = ROOT / "nota-tradutor.html"   # editável à mão
 SEM_LINKS = False      # --sem-links: citação sem href (Kindle não volta do salto)
 
 # Tipos MIME que o Kindle e os leitores EPUB3 aceitam para fonte embutida

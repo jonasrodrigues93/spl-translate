@@ -49,7 +49,7 @@ O EPUB é gerado automaticamente a cada *release*; não há `.epub` no repositó
 - Exemplos linguísticos ficam em inglês (com glosa entre colchetes quando
   ajuda). Código e fórmulas ficam no original.
 - Use o mesmo termo para o mesmo conceito em todo o livro; consulte o glossário
-  no `translate.py` antes de propor outro.
+  no `src/translate.py` antes de propor outro.
 - Registro acadêmico, claro, na 1ª pessoa do plural quando o original usar
   *we* ("vemos que", "definimos").
 
@@ -59,14 +59,14 @@ O EPUB é gerado automaticamente a cada *release*; não há `.epub` no repositó
 python3 -m venv venv && ./venv/bin/pip install -r requirements.txt
 ```
 
-- Qualquer mudança em `extract.py` invalida os `.jsonl` já traduzidos: os
+- Qualquer mudança em `src/extract.py` invalida os `.jsonl` já traduzidos: os
   índices de bloco não são estáveis entre extrações.
 - O extrator e os scripts que o usam têm de ler igual. Funções compartilhadas
-  vivem em `extract.py` e são importadas por `bib.py`, `translate.py` e
-  `build_epub.py`; não as reescreva em outro lugar.
+  vivem em `src/extract.py` e são importadas por `src/bib.py`, `src/translate.py` e
+  `src/build_epub.py`; não as reescreva em outro lugar.
 - Ao mexer na montagem, confira o XML do EPUB gerado (`xml.dom.minidom`); o
   workflow já faz isso.
-- Não remova o `validar()` do `extract.py` sem substituí-lo. O `AGENTS.md`
+- Não remova o `validar()` do `src/extract.py` sem substituí-lo. O `AGENTS.md`
   explica por quê.
 
 ## Commits e branches
@@ -90,7 +90,7 @@ primeira versão, automática, sobre o rascunho de agosto de 2026;
 um rascunho novo, a série recomeça: `ed3-2027.01-r1`.
 
 **Código** — SemVer (`vMAJOR.MINOR.PATCH`). Uma mudança que invalida traduções
-já feitas (em geral, no `extract.py`) é `MAJOR`.
+já feitas (em geral, no `src/extract.py`) é `MAJOR`.
 
 Publicar uma *release* com a tag da edição dispara o workflow, que gera o EPUB
 e o anexa à release. Cada tag vem com uma entrada no `CHANGELOG.md` (o que foi

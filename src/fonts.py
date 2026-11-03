@@ -24,7 +24,8 @@ from fontTools.ttLib import TTFont, TTCollection
 from fontTools.subset import Subsetter, Options
 
 HERE = Path(__file__).resolve().parent
-BUILD = HERE / "build"
+ROOT = HERE.parent                    # raiz do projeto (src/ fica dentro dela)
+BUILD = ROOT / "build"
 OUT = BUILD / "fonts"
 
 # Ordem de prioridade. A FreeSerif vem primeiro por ser um clone de Times:

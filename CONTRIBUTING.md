@@ -23,15 +23,24 @@ inconsistência de terminologia e falhas de formatação.
 
 ## Corrigir a tradução
 
-1. Abra uma *issue* "Erro de tradução" com: **capítulo e seção**, **trecho
-   original**, **tradução atual** e **sugestão**. Ou vá direto ao passo 2.
-2. Edite `traducao/livro.jsonl`: cada linha é um bloco, `{"i": 64, "pt": "..."}`.
+Há duas formas.
+
+**1. Por issue (a mais simples)** — não precisa mexer em código nem em arquivo.
+Abra uma *issue* e coloque:
+
+- o **bloco de texto** específico a ser ajustado, como está no livro traduzido;
+- **o que deveria estar no lugar**.
+
+Se puder, diga o capítulo e a seção para facilitar a localização.
+
+**2. Por pull request** — edite o texto traduzido e abra um PR.
+
+1. Edite `traducao/livro.jsonl`: cada linha é um bloco, `{"i": 64, "pt": "..."}`.
    Ache a linha buscando o texto atual em português e altere só o campo `pt`.
-   Abra um *pull request*.
-3. Mantenha os marcadores intactos: `«i»…«/i»`, `«b»…«/b»`, `«code»…«/code»`,
+2. Mantenha os marcadores intactos: `«i»…«/i»`, `«b»…«/b»`, `«code»…«/code»`,
    `«sup»`/`«sub»`. O texto dentro deles **pode e deve ser traduzido**; só os
    marcadores se preservam. Não mude o campo `i`.
-4. Um PR por capítulo ou por tema. PRs pequenos são revisados mais rápido.
+3. Um PR por capítulo ou por tema. PRs pequenos são revisados mais rápido.
 
 O EPUB é gerado automaticamente a cada *release*; não há `.epub` no repositório.
 

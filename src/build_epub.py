@@ -754,15 +754,15 @@ def main() -> int:
 
         items, spine, nav = [], [], []
         items.append('<item id="css" href="style.css" media-type="text/css"/>')
-        capa = BUILD / "capa.png"
+        capa = BUILD / "capa.jpg"
         if capa.exists():                 # gerada por capa.py
-            z.writestr("OEBPS/capa.png", capa.read_bytes())
+            z.writestr("OEBPS/capa.jpg", capa.read_bytes())
             z.writestr("OEBPS/capa.xhtml", xhtml("Capa",
                 '<div style="text-align:center;margin:0;padding:0">'
-                '<img src="capa.png" alt="Capa" '
+                '<img src="capa.jpg" alt="Capa" '
                 'style="max-width:100%;max-height:100%"/></div>'))
-            items.append('<item id="capa-img" href="capa.png" '
-                         'media-type="image/png" properties="cover-image"/>')
+            items.append('<item id="capa-img" href="capa.jpg" '
+                         'media-type="image/jpeg" properties="cover-image"/>')
             items.append('<item id="capa" href="capa.xhtml" '
                          'media-type="application/xhtml+xml"/>')
             spine.append('<itemref idref="capa"/>')
@@ -829,11 +829,13 @@ def main() -> int:
                    f'<dc:identifier id="bid">spl-ptBR</dc:identifier>'
                    f'<dc:title>{html.escape(plain(args.titulo))}</dc:title>'
                    '<dc:language>pt-BR</dc:language>'
-                   + ('<meta name="cover" content="capa-img"/>' if (BUILD / "capa.png").exists() else '') +
+                   + ('<meta name="cover" content="capa-img"/>' if (BUILD / "capa.jpg").exists() else '') +
                    '<dc:creator>Daniel Jurafsky; James H. Martin</dc:creator>'
                    '<meta property="dcterms:modified">2026-07-27T00:00:00Z</meta>'
                    f'</metadata><manifest>{"".join(items)}</manifest>'
-                   f'<spine>{"".join(spine)}</spine></package>')
+                   f'<spine>{"".join(spine)}</spine>'
+                   + ('<guide><reference type="cover" title="Capa" href="capa.xhtml"/></guide>' if (BUILD / "capa.jpg").exists() else '')
+                   + '</package>')
 
     # Mantém uma cópia editável da árvore interna para correções manuais.
     # Não removemos arquivos existentes: uma nova montagem pode ser feita em

@@ -6,6 +6,32 @@ Tradução para pt-BR de *Speech and Language Processing* (Jurafsky & Martin,
 Fonte: `./ed3book_jan26.pdf` — 626 páginas, pdfTeX. Para usar outra cópia,
 defina `ED3BOOK_PDF`.
 
+## Commits
+
+Use **Conventional Commits**, em português.
+
+```
+tipo(escopo): descrição
+```
+
+- **Tipos:** `feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `build`, `ci`,
+  `chore`, `revert`. Mudança de aparência do EPUB (CSS) é `feat` ou `fix` com
+  escopo `estilo`.
+- **Escopo** (opcional): `capNN` para correção de tradução, ou `extract`,
+  `translate`, `build`, `template`, `capa`, `ci`, `docs`.
+- **Descrição:** no imperativo, em minúscula, sem ponto final, até 72
+  caracteres.
+- **Corpo** (opcional): explica o porquê, não o quê.
+- **Mudança incompatível:** `!` depois do tipo/escopo e rodapé `BREAKING CHANGE:`.
+  Qualquer mudança no `extract.py` que invalide as traduções já feitas é
+  incompatível.
+- Um assunto por commit. Nunca inclua chaves de API, caminhos da sua máquina,
+  o PDF ou arquivos de `build/`.
+
+Exemplos: `fix(cap3): corrige tradução de "perplexity"`,
+`feat(build): adiciona flag --sem-links`, `ci: anexa o EPUB à release`,
+`feat(extract)!: muda a ordem de leitura das colunas`.
+
 ## Preparar o ambiente
 
 Este checkout não inclui o ambiente virtual. Prepare-o uma vez, sem usar o
@@ -22,7 +48,7 @@ python3 -m venv venv
 ## Rodar
 
 Não há script único: rode o pipeline abaixo, passo a passo. O servidor local
-sobe com o comando do `README.md` — **sempre com `--n-cpu-moe`**.
+sobe com o comando do `DESENVOLVIMENTO.md` — **sempre com `--n-cpu-moe`**.
 
 **É retomável.** O `translate.py` grava JSONL append-only e relê o que já
 traduziu; depois de uma queda, reexecutar continua de onde parou. Antes de
@@ -70,7 +96,7 @@ começa, e a prévia saía com um capítulo 3 truncado).
   também desenha a tela; com o modelo inteiro na iGPU o compositor não pega
   slot e o desktop congela — o kernel segue vivo. Foi o que causou o
   desligamento forçado de 27/07. Suba sempre com a flag (comando no
-  `README.md`).
+  `DESENVOLVIMENTO.md`).
 - **Dois modelos não cabem.** São 23 GB de RAM; o Gemma pede 14 e o Qwen 18.
   Antes de subir, confira se não há outro `llama-server` no ar — com `--mlock`
   ele não devolve memória, e a disputa reproduz o congelamento acima.
